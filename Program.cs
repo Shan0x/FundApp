@@ -1,8 +1,18 @@
 using Dapper;
+using FundApp.Data;
+using Microsoft.EntityFrameworkCore;
+using Npgsql;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+var conn = builder.Configuration.GetConnectionString("AzureConnection");
+
+builder.Services.AddDbContext<ApiDbContext>(options =>
+    options.UseNpgsql(conn));
+
+
 
 builder.Services.AddControllersWithViews();
 
