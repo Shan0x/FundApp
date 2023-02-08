@@ -1,9 +1,14 @@
-using FundApp.Data;
-using FundApp.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using FundApp.Data;
+using FundApp.Models;
 
-namespace FundApp.Controllers
+namespace FundApp
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -16,25 +21,27 @@ namespace FundApp.Controllers
             _context = context;
         }
 
-        // GET: api/Employee
+        // GET: api/Employees
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Employee>>> GetEmployees()
-        {
-          if (_context.Employee == null)
-          {
-              return NotFound();
-          }
-            return await _context.Employee.ToListAsync();
-        }
+        //public async Task<ActionResult<IEnumerable<Employee>>> GetEmployee()
+        //{
+        //    if (_context.Employee == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return await _context.Employee.ToListAsync();
+        //}
+        public ActionResult<List<Employee>> GetAll(EmployeeService employeeService) => employeeService.GetAll();
 
-        // GET: api/Employee/5
+        // GET: api/Employees/5
+        // Retrieve a single employee
         [HttpGet("{id}")]
         public async Task<ActionResult<Employee>> GetEmployee(int id)
         {
-          if (_context.Employee == null)
-          {
-              return NotFound();
-          }
+            if (_context.Employee == null)
+            {
+                return NotFound();
+            }
             var employee = await _context.Employee.FindAsync(id);
 
             if (employee == null)
@@ -45,7 +52,7 @@ namespace FundApp.Controllers
             return employee;
         }
 
-        // PUT: api/Employee/5
+        // PUT: api/Employees/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutEmployee(int id, Employee employee)
@@ -76,24 +83,22 @@ namespace FundApp.Controllers
             return NoContent();
         }
 
-        // POST: api/Employee
+        // POST: api/Employees
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Employee>> PostEmployee(Employee employee)
         {
-          if (_context.Employee == null)
-          {
-              return Problem("Entity set 'ApiDbContext.Employees'  is null.");
-          }
+            if (_context.Employee == null)
+            {
+                return Problem("Entity set 'ApiDbContext.Employee'  is null.");
+            }
             _context.Employee.Add(employee);
             await _context.SaveChangesAsync();
 
-            //return CreatedAtAction("GetEmployee", new { id = employee.EmployeeId }, employee);
-            return CreatedAtAction(nameof(GetEmployee), new { id = employee.EmployeeId }, employee);
-
+            return CreatedAtAction("GetEmployee", new { id = employee.EmployeeId }, employee);
         }
 
-        // DELETE: api/Employee/5
+        // DELETE: api/Employees/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteEmployee(int id)
         {

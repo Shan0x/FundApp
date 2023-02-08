@@ -1,4 +1,3 @@
-using Dapper;
 using FundApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
@@ -43,7 +42,6 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-DefaultTypeMap.MatchNamesWithUnderscores = true;
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller}/{action=Index}/{id?}");

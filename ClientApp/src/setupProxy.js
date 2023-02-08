@@ -9,9 +9,14 @@ const context =  [
     "/api/Employee"
 ];
 
+const onError = (err, req, resp, target) => {
+    console.error(`${err.message}`);
+}
+
 module.exports = function(app) {
   const appProxy = createProxyMiddleware(context, {
     target: 'https://localhost:7187',
+    onError: onError,
     secure: false,
     headers: {
       Connection: 'Keep-Alive'
