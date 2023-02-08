@@ -3,7 +3,19 @@ using FundApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 
+
 var builder = WebApplication.CreateBuilder(args);
+
+// Enable Cross-Origin Requests (CORS)
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        policy =>
+        {
+            policy.WithOrigins("http://example.com",
+                                "http://www.contoso.com");
+        });
+});
 
 // Add services to the container.
 
@@ -14,7 +26,8 @@ builder.Services.AddDbContext<ApiDbContext>(options =>
 
 
 
-builder.Services.AddControllersWithViews();
+//builder.Services.AddControllersWithViews();
+builder.Services.AddControllers();
 
 var app = builder.Build();
 
@@ -27,6 +40,7 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
 app.UseRouting();
 
 DefaultTypeMap.MatchNamesWithUnderscores = true;

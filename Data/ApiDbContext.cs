@@ -11,6 +11,6 @@ namespace FundApp.Data
 
         }
 
-        public DbSet<Employee> Employees { get; set; }
+        public DbSet<FundApp.Models.Employee> Employee { get; set; } = default!;
     }
 }
