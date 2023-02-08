@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using FundApp.Data;
 using FundApp.Models;
+using Microsoft.AspNetCore.Cors;
 
 namespace FundApp
 {
@@ -14,35 +15,37 @@ namespace FundApp
     [ApiController]
     public class EmployeeController : ControllerBase
     {
-        private readonly ApiDbContext _context;
+        private readonly EmployeeContext _context;
 
-        public EmployeeController(ApiDbContext context)
+        public EmployeeController(EmployeeContext context)
         {
             _context = context;
         }
 
         // GET: api/Employees
+        [EnableCors]
         [HttpGet]
-        //public async Task<ActionResult<IEnumerable<Employee>>> GetEmployee()
-        //{
-        //    if (_context.Employee == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    return await _context.Employee.ToListAsync();
-        //}
-        public ActionResult<List<Employee>> GetAll(EmployeeService employeeService) => employeeService.GetAll();
+        public async Task<ActionResult<IEnumerable<Employee>>> GetEmployee()
+        {
+            var employees = _context.employees.AsQueryable();
+
+            if (_context.employees == null)
+            {
+                return NotFound();
+            }
+            return await employees.ToListAsync();
+        }
 
         // GET: api/Employees/5
         // Retrieve a single employee
         [HttpGet("{id}")]
         public async Task<ActionResult<Employee>> GetEmployee(int id)
         {
-            if (_context.Employee == null)
+            if (_context.employees == null)
             {
                 return NotFound();
             }
-            var employee = await _context.Employee.FindAsync(id);
+            var employee = await _context.employees.FindAsync(id);
 
             if (employee == null)
             {
@@ -57,7 +60,7 @@ namespace FundApp
         [HttpPut("{id}")]
         public async Task<IActionResult> PutEmployee(int id, Employee employee)
         {
-            if (id != employee.EmployeeId)
+            if (id != employee.employeeid)
             {
                 return BadRequest();
             }
@@ -88,31 +91,31 @@ namespace FundApp
         [HttpPost]
         public async Task<ActionResult<Employee>> PostEmployee(Employee employee)
         {
-            if (_context.Employee == null)
+            if (_context.employees == null)
             {
                 return Problem("Entity set 'ApiDbContext.Employee'  is null.");
             }
-            _context.Employee.Add(employee);
+            _context.employees.Add(employee);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetEmployee", new { id = employee.EmployeeId }, employee);
+            return CreatedAtAction("GetEmployee", new { id = employee.employeeid }, employee);
         }
 
         // DELETE: api/Employees/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteEmployee(int id)
         {
-            if (_context.Employee == null)
+            if (_context.employees == null)
             {
                 return NotFound();
             }
-            var employee = await _context.Employee.FindAsync(id);
+            var employee = await _context.employees.FindAsync(id);
             if (employee == null)
             {
                 return NotFound();
             }
 
-            _context.Employee.Remove(employee);
+            _context.employees.Remove(employee);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -120,7 +123,7 @@ namespace FundApp
 
         private bool EmployeeExists(int id)
         {
-            return (_context.Employee?.Any(e => e.EmployeeId == id)).GetValueOrDefault();
+            return (_context.employees?.Any(e => e.employeeid == id)).GetValueOrDefault();
         }
     }
 }

@@ -9,7 +9,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace FundApp.Migrations
 {
-    [DbContext(typeof(ApiDbContext))]
+    [DbContext(typeof(EmployeeContext))]
     partial class ApiDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

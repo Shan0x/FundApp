@@ -5,22 +5,11 @@ using Npgsql;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Enable Cross-Origin Requests (CORS)
-builder.Services.AddCors(options =>
-{
-    options.AddDefaultPolicy(
-        policy =>
-        {
-            policy.WithOrigins("http://example.com",
-                                "http://www.contoso.com");
-        });
-});
-
 // Add services to the container.
 
 var conn = builder.Configuration.GetConnectionString("AzureConnection");
 
-builder.Services.AddDbContext<ApiDbContext>(options =>
+builder.Services.AddDbContext<EmployeeContext>(options =>
     options.UseNpgsql(conn));
 
 
@@ -41,6 +30,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseCors();
 
 app.MapControllerRoute(
     name: "default",
