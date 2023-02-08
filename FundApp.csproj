@@ -90,6 +90,10 @@
     <Content Remove="C:\Users\Shannen\.nuget\packages\bootstrap\5.2.3\contentFiles\any\any\wwwroot\js\bootstrap.min.js.map" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
     <!-- Ensure Node.js is installed -->
     <Exec Command="node --version" ContinueOnError="true">
