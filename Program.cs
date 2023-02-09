@@ -7,9 +7,14 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-var conn = builder.Configuration.GetConnectionString("AzureConnection");
+//var conn = builder.Configuration.GetConnectionString("AzureConnection");
+var conn = builder.Configuration.GetConnectionString("awsconnection");
 
-builder.Services.AddDbContext<EmployeeContext>(options =>
+
+//builder.Services.AddDbContext<EmployeeContext>(options =>
+//    options.UseNpgsql(conn));
+
+builder.Services.AddDbContext<FundFriendsContext>(options =>
     options.UseNpgsql(conn));
 
 
