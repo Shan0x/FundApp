@@ -1,4 +1,13 @@
-﻿using System;
+﻿///////////////////////////////////////////////////////////////////////////////
+///Name:            TeamControllers.cs
+///Created by:      Shannen Lowe
+///Created on:      February 2023
+///About:           A public class containing the methods/actions of the Teams model.
+///TODO:             
+///Known Bugs:
+///////////////////////////////////////////////////////////////////////////////
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -36,7 +45,7 @@ namespace FundApp
             return await team.ToListAsync();
         }
 
-        // GET: api/Teams/5
+        // GET: api/Teams/2
         [HttpGet("{id}")]
         public async Task<ActionResult<Team>> GetTeam(int id)
         {
@@ -54,7 +63,7 @@ namespace FundApp
             return team;
         }
 
-        // PUT: api/Teams/5
+        // PUT: api/Teams/2
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutTeam(int id, Team team)
@@ -100,7 +109,7 @@ namespace FundApp
             return CreatedAtAction("GetTeam", new { id = team.studentid }, team);
         }
 
-        // DELETE: api/Teams/5
+        // DELETE: api/Teams/1
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTeam(int id)
         {
