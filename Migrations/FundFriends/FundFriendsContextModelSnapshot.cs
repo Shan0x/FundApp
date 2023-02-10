@@ -7,10 +7,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace FundApp.Migrations
+namespace FundApp.Migrations.FundFriends
 {
-    [DbContext(typeof(EmployeeContext))]
-    partial class ApiDbContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(FundFriendsContext))]
+    partial class FundFriendsContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -21,26 +21,26 @@ namespace FundApp.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("FundApp.Models.Employee", b =>
+            modelBuilder.Entity("FundApp.Models.Team", b =>
                 {
-                    b.Property<int>("EmployeeId")
+                    b.Property<int>("studentid")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("EmployeeId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("studentid"));
 
-                    b.Property<string>("DateOfJoining")
+                    b.Property<string>("major")
                         .HasColumnType("text");
 
-                    b.Property<string>("Department")
+                    b.Property<string>("name")
                         .HasColumnType("text");
 
-                    b.Property<string>("EmployeeName")
+                    b.Property<string>("role")
                         .HasColumnType("text");
 
-                    b.HasKey("EmployeeId");
+                    b.HasKey("studentid");
 
-                    b.ToTable("Employee");
+                    b.ToTable("team");
                 });
 #pragma warning restore 612, 618
         }
