@@ -7,16 +7,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-//var conn = builder.Configuration.GetConnectionString("AzureConnection");
+//*****************************************************************************
+//Block of code that connects to the database server.
+//ConnectionString can be found in appsettings.json
 var conn = builder.Configuration.GetConnectionString("awsconnection");
-
-
-//builder.Services.AddDbContext<EmployeeContext>(options =>
-//    options.UseNpgsql(conn));
-
 builder.Services.AddDbContext<FundFriendsContext>(options =>
     options.UseNpgsql(conn));
-
+//*****************************************************************************
 
 
 //builder.Services.AddControllersWithViews();
