@@ -9,6 +9,6 @@ namespace FundApp.Data
             : base(options) { }
 
         //DbSets map models to database tables.
-        public DbSet<FundApp.Models.Team> team { get; set; } = default!;
+        public DbSet<FundApp.Models.TeamMembers> team_members { get; set; } = default!;
     }
 }

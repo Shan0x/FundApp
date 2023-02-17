@@ -10,7 +10,12 @@ var builder = WebApplication.CreateBuilder(args);
 //*****************************************************************************
 //Block of code that connects to the database server.
 //ConnectionString can be found in appsettings.json
-var conn = builder.Configuration.GetConnectionString("awsconnection");
+//# --- REMOTE --- #
+//var conn = builder.Configuration.GetConnectionString("awsconnection");
+//
+//# --- LOCAL --- #
+var conn = builder.Configuration.GetConnectionString("localconnection");
+//
 builder.Services.AddDbContext<FundFriendsContext>(options =>
     options.UseNpgsql(conn));
 //*****************************************************************************
