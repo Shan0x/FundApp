@@ -22,7 +22,7 @@ export class Home extends Component {
           <li><a href = "/fundraisers">Fundraiser List</a></li>
           <li><a href = "/donate">Donation Page</a></li>
           <li><a href = "/u/home">Dashboard Page</a></li>
-          <li>Account Settings/User Profile</li>
+          <li><a href="/u/settings">Account Settings</a></li>
           <li>Fundraiser Creation</li>
         </ul>
      </div>

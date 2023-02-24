@@ -4,6 +4,7 @@ import { Home } from "./components/Home";
 import { Fundraisers } from "./components/Fundraisers";
 import { Donate } from "./components/Donate";
 import { Dashboard } from "./components/user/Dashboard";
+import { AccountSettings } from "./components/user/AccountSettings";
 
 const AppRoutes = [
   {
@@ -29,7 +30,13 @@ const AppRoutes = [
   {
     path: '/u/home',
     element: <Dashboard />
-  }
+  },
+  {
+    path: '/u/settings',
+    element: <AccountSettings />
+
+
+    }
 ];
 
 export default AppRoutes;
