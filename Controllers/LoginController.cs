@@ -27,10 +27,10 @@ namespace FundApp.Controllers
             if (ModelState.IsValid)
             {
                 var User = from row in _context.Users select row;
-                User = User.Where(s => s.username.Contains(model.username));
+                User = User.Where(s => s.userName.Contains(model.userName));
                 if (User.Count() != 0)
                 {
-                    if (User.First().userpass == model.userpass ) 
+                    if (User.First().userPassword == model.userPassword ) 
                     {
                         return RedirectToAction("SuccessLogin");
                     }

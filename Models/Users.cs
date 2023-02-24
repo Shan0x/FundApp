@@ -5,8 +5,12 @@ namespace FundApp.Models
     public class Users
     {
         [Key]
-        public int userid { get; set; }
-        public string? username { get; set; }
-        public string? userpass { get; set; }
+        public int userID { get; set; }
+        public string? userName { get; set; }
+        public string? userPassword { get; set; }
+        public string? userFirstName { get; set; }
+        public string? userLastName { get; set; }
+        public string? userEmail { get; set;}
+        public DateOnly userDOB { get; set; }
     }
 }

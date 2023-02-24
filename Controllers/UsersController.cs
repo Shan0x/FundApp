@@ -55,7 +55,7 @@ namespace FundApp.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUsers(int id, Users users)
         {
-            if (id != users.userid)
+            if (id != users.userID)
             {
                 return BadRequest();
             }
@@ -93,7 +93,7 @@ namespace FundApp.Controllers
             _context.Users.Add(users);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUsers", new { id = users.userid }, users);
+            return CreatedAtAction("GetUsers", new { id = users.userID }, users);
         }
 
         // DELETE: api/Users/5
@@ -118,7 +118,7 @@ namespace FundApp.Controllers
 
         private bool UsersExists(int id)
         {
-            return (_context.Users?.Any(e => e.userid == id)).GetValueOrDefault();
+            return (_context.Users?.Any(e => e.userID == id)).GetValueOrDefault();
         }
     }
 }
