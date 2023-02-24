@@ -1,10 +1,10 @@
 import { Signup } from "./components/Signup";
 import { Login } from "./components/Login";
 import { Home } from "./components/Home";
-import { Fundraisers } from "./components/Fundraisers";
+import { Fundraisers } from "./components/fundraiser/Fundraisers";
 import { Donate } from "./components/Donate";
 import { Dashboard } from "./components/user/Dashboard";
-import { AccountSettings } from "./components/user/AccountSettings";
+import { CreateFundraisers } from "./components/fundraiser/CreateFundraiser";
 
 const AppRoutes = [
   {
@@ -32,8 +32,8 @@ const AppRoutes = [
     element: <Dashboard />
   },
   {
-    path: '/u/settings',
-    element: <AccountSettings />
+    path: '/create',
+    element: <CreateFundraisers />
 
 
     }
