@@ -4,9 +4,10 @@ const { env } = require('process');
 const target = env.ASPNETCORE_HTTPS_PORT ? `https://localhost:${env.ASPNETCORE_HTTPS_PORT}` :
   env.ASPNETCORE_URLS ? env.ASPNETCORE_URLS.split(';')[0] : 'http://localhost:46249';
 
-const context =  [
+const context = [
     "/api/employees",
-    "/api/teammembers"
+    "/api/teammembers",
+    "/api/users"
 ];
 
 const onError = (err, req, resp, target) => {
