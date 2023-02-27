@@ -1,7 +1,11 @@
-import { Counter } from "./components/Counter";
-import { FetchData } from "./components/FetchData";
+import { Signup } from "./components/Signup";
+import { Login } from "./components/Login";
 import { Home } from "./components/Home";
-import Settings from "./Settings";
+import { Fundraisers } from "./components/fundraiser/Fundraisers";
+import { Donate } from "./components/Donate";
+import { Dashboard } from "./components/user/Dashboard";
+import { CreateFundraisers } from "./components/fundraiser/CreateFundraiser";
+import { Settings } from "./components/Settings";
 
 const AppRoutes = [
   {
@@ -9,21 +13,34 @@ const AppRoutes = [
     element: <Home />,
   },
   {
-    path: "/counter",
-    element: <Counter />,
+    path: '/sign-up',
+    element: <Signup />
   },
   {
-    path: "/fetch-data",
-    element: <FetchData />,
+    path: '/login',
+    element: <Login />
   },
   {
-    path: "/login",
-    element: <login />,
+    path: '/fundraisers',
+    element: <Fundraisers />
   },
+  {
+    path: '/donate',
+    element: <Donate />
+  },
+  {
+    path: '/u/home',
+    element: <Dashboard />
+  },
+  {
+    path: '/create',
+    element: <CreateFundraisers />
+    },
+    
   {
     path: "/settings",
     element: <Settings />,
-  },
+  }
 ];
 
 export default AppRoutes;
