@@ -5,7 +5,7 @@ import { Fundraisers } from './components/fundraiser/Fundraisers';
 import { Donate } from './components/Donate';
 import { Dashboard } from './components/user/Dashboard';
 import { CreateFundraisers } from './components/fundraiser/CreateFundraiser';
-import { Settings } from "./components/Settings";
+import { Settings } from './components/Settings';
 
 const AppRoutes = [
   {
@@ -38,7 +38,7 @@ const AppRoutes = [
     },
     
   {
-    path: "/settings",
+    path: '/settings',
     element: <Settings />,
   }
 ];
