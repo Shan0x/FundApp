@@ -5,6 +5,7 @@ import { Fundraisers } from "./components/fundraiser/Fundraisers";
 import { Donate } from "./components/Donate";
 import { Dashboard } from "./components/user/Dashboard";
 import { CreateFundraisers } from "./components/fundraiser/CreateFundraiser";
+import { Settings } from "./components/user/Settings";
 
 const AppRoutes = [
   {
@@ -34,9 +35,11 @@ const AppRoutes = [
   {
     path: '/create',
     element: <CreateFundraisers />
-
-
-    }
+  },
+  {
+    path: '/u/settings',
+    element: <Settings />
+  }
 ];
 
 export default AppRoutes;
