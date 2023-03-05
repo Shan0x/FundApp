@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Npgsql;
+using Microsoft.AspNetCore.Mvc;
+using FundApp.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,6 +10,13 @@ namespace FundApp.Controllers
     [ApiController]
     public class SignupController : ControllerBase
     {
+        private readonly IConfiguration _configuration;
+
+        public SignupController(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
         // GET: api/<SignupController>
         [HttpGet]
         public IEnumerable<string> Get()
@@ -24,8 +33,17 @@ namespace FundApp.Controllers
 
         // POST api/<SignupController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public string registration(Users users)
         {
+            NpgsqlConnection conn = new NpgsqlConnection(_configuration.GetConnectionString("localconnection").ToString());
+            NpgsqlCommand cmd = new NpgsqlCommand("INSERT INTO \"Users\"(\"userName\", \"userPassword\", \"userFirstName\", \"userLastName\", \"userEmail\", \"userDOB\") VALUES('" + users.userName + "','" + users.userPassword + "','" + users.userFirstName + "','" + users.userLastName + "','" + users.userEmail + "','" + users.userDOB + "')", conn);
+            conn.Open();
+            int i = cmd.ExecuteNonQuery();
+            conn.Close();
+            if (i > 0)
+                return "Data inserted";
+            else
+                return "Error";
         }
 
         // PUT api/<SignupController>/5
