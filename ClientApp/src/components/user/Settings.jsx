@@ -2,7 +2,7 @@
  * @fileoverview User settings page to update profile details.
  * @author
  * */
-import React, { Component, useState } from "react";
+import React, { useState } from "react";
 
 // Class Components
 /*export class Settings extends Component {
@@ -22,54 +22,74 @@ import React, { Component, useState } from "react";
 }*/
 
 // Functional components
-export const Settings = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+export const Settings = () =>
+{
+const [username, setUsername] = useState('');
+const [password, setPassword] = useState('');
 
-  const onDelete = () => {
+const onDelete = () =>
+{
     console.log('delete')
     // we need api route for deletion
   }
 
-  const onUpdateProfile = (e) => {
-    e.preventDefault();
-    console.log('submit data', { username, password })
-    // we need api to submit data
+  const onUpdateProfile = async (e) =>
+  {
+      e.preventDefault();
+      console.log('submit data', { username, password });
+      try
+      {
+          const response = await fetch('api/accountsettings', {
+          method: 'POST', // PUT
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            username,
+            password
+          })
+        });
+
+        const data = await response.json();
+        console.log('data', data)
+    } catch (error) {
+      console.error(error)
+     }
   }
 
   // we need api to fetch user profile data
 
   return (
-    <div>
-      <h1>Settings</h1>
-      <form onSubmit={onUpdateProfile}>
-        <div>
+    < div >
+      < h1 > Settings </ h1 >
+      < form onSubmit ={ onUpdateProfile}>
+        < div >
           Username:
-          <input
-            placeholder="username"
-            type="text"
-            name="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+          < input
+            placeholder = "username"
+            type = "text"
+            name = "username"
+            value ={ username}
+onChange ={ (e) => setUsername(e.target.value)}
           />
-        </div>
-        <div>
+        </ div >
+        < div >
           Password:
-          <input
-            placeholder="password"
-            type="text"
-            name="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+          < input
+            placeholder = "password"
+            type = "text"
+            name = "password"
+            value ={ password}
+onChange ={ (e) => setPassword(e.target.value)}
           />
-        </div>
-        <button type="submit">Update Profile</button>
-      </form>
+        </ div >
+        < button type = "submit" > Update Profile </ button >
+      </ form >
 
-      <div>Delete Your Account</div>
-      <button type="button" onClick={onDelete}>
+      < div > Delete Your Account</div>
+      <button type = "button" onClick={onDelete}>
         Delete Account
-      </button>
-    </div>
+      </ button >
+    </ div >
   );
 }
