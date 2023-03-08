@@ -1,4 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
+using FundApp.Models;
+using Npgsql;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,6 +11,13 @@ namespace FundApp.Controllers
     [ApiController]
     public class AccountSettingsController : ControllerBase
     {
+        private readonly IConfiguration _configuration;
+
+        public AccountSettingsController(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
         // GET: api/<AccountSettingsController>
         [HttpGet]
         public IEnumerable<string> Get()
@@ -24,9 +34,23 @@ namespace FundApp.Controllers
 
         // POST api/<AccountSettingsController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void Post([FromBody] Users user)
         {
+            NpgsqlConnection conn = new NpgsqlConnection(_configuration.GetConnectionString("localconnection").ToString());
+            NpgsqlCommand cmd = new NpgsqlCommand("UPDATE Users SET userPassword=\'" + user.userPassword + "\' WHERE userName=\'" + user.userName + "\';", conn);
 
+            conn.Open();
+            int i = cmd.ExecuteNonQuery();
+            conn.Close();
+
+            if (i > 0)
+            {
+                Console.WriteLine("Password change success!");
+            }
+            else
+            {
+                Console.WriteLine("Password change failure!");
+            }
         }
 
         // PUT api/<AccountSettingsController>/5
