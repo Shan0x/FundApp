@@ -11,6 +11,6 @@ namespace FundApp.Models
         public string userFirstName { get; set; }
         public string userLastName { get; set; }
         public string userEmail { get; set;}
-        public DateTime userDOB { get; set; }
+        public DateOnly userDOB { get; set; }
     }
 }
