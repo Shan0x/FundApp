@@ -3,7 +3,7 @@
  * @author Shannen Lowe
  * */
 import React, { Component } from 'react';
-import { SignupForm } from './forms/SignupForm';
+import { Registration } from '../forms/RegistrationForm';
 
 export class Signup extends Component {
   static displayName = Signup.name;
@@ -17,7 +17,7 @@ export class Signup extends Component {
       <div>
         <h1>
           Sign-up Page
-          <SignupForm />
+          <Registration />
         </h1>
       </div>
     );

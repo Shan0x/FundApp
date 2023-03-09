@@ -1,6 +1,16 @@
 {
   "dependencies": {
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "@hookform/resolvers": "^2.9.11",
+    "@mui/lab": "^5.0.0-alpha.122",
+    "@mui/material": "^5.11.12",
+    "@mui/styled-engine-sc": "^5.11.11",
     "postgres": "^3.3.3",
-    "server": "^1.0.38"
+    "react-hook-form": "^7.43.5",
+    "react-router-dom": "^6.8.2",
+    "server": "^1.0.38",
+    "styled-components": "^5.3.8",
+    "validator": "^13.9.0"
   }
 }
