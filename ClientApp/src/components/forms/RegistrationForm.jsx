@@ -8,8 +8,7 @@ const validateRegistration = FormValidators.validateRegistration;
 const zxcvbn = require("zxcvbn");
 const axios = require("axios");
 
-class RegistrationForm extends Component {
-
+export class RegistrationForm extends Component {
   constructor(props) {
     super(props);
 
@@ -36,39 +35,25 @@ class RegistrationForm extends Component {
     this.pwHandleChange = this.pwHandleChange.bind(this);
   }
 
-  handleChange(e) {
-    const field = e.target.name;
+  handleChange(event) {
+    const field = event.target.name;
     const user = this.state.user;
-    user[field] = e.target.value;
+    user[field] = event.target.value;
 
     this.setState({
       user
     });
   }
 
-  pwHandleChange(e) {
-    const field = e.target.name;
-    const user = this.state.user;
-    user[filed] = e.target.value;
+  pwHandleChange(event) {
+    const { name, value } = event.target;
 
-    this.setState({
-      user
+    this.setState(prevState => {
+      const user = { ...prevState.user, [name]: value };
+      const score = value ? zxcvbn(value).score + 1 : null;
+
+      return { user, score };
     });
-
-    if (e.target.value === "") {
-      this.setState(state =>
-        Object.assign({}, state, {
-          score: "null"
-        })
-      );
-    } else {
-      var pw = zxcvbn(e.target.value);
-      this.setState(state =>
-        Object.assign({}, state, {
-          score: pw.score + 1
-        })
-      );
-    }
   }
 
   submitRegistration(user) {
@@ -151,4 +136,3 @@ class RegistrationForm extends Component {
 
 }
 
-module.exports = RegistrationForm;

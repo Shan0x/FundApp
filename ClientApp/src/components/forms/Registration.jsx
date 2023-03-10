@@ -1,9 +1,10 @@
 ﻿import React from "react";
-import FlatButton from "material-ui/FlatButton";
-import RaisedButton from "material-ui/RaisedButton";
-import TextField from "material-ui/TextField";
-import { DatePicker } from "../../../../node_modules/@mui/lab/index";
+import { Button, TextField,  } from "@mui/material"
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import PasswordStr from "./PasswordStr"
+import "./Registration.css";
+
 
 const Registration = ({
   history,
@@ -15,7 +16,8 @@ const Registration = ({
   buttonText,
   type,
   pwMask,
-  onPassChange
+  onPassChange,
+  onDateChange
 }) => {
   return (
     <div classname="formContainer">
@@ -49,17 +51,23 @@ const Registration = ({
           value={user.lastName}
           onChange={onChange}
         />
-        <TextField
-          type={DatePicker}
-          floatingLabelText="Date of Birth"
-          value={value}
-          onChange={(newValue) => setValue(newValue)}
-          slotProps={{
-            textField: {
-              helperText: 'MM/DD/YYYY',
-            },
-          }}
-        />
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DatePicker
+            label="Date of Birth"
+            value={user.userDOB}
+            onChange={onChange}
+            inputFormat="MM/dd/yyyy"
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                variant="outlined"
+                margin="normal"
+                fullWidth
+                required
+              />
+            )}
+          />
+        </LocalizationProvider>
         <TextField
           type={type}
           name="Password*"
@@ -73,7 +81,7 @@ const Registration = ({
           {score >= 1 && (
             <div>
               <PasswordStr score={score} />
-              <FlatButton
+              <Button
                 className="pwShowHideBtn"
                 label={buttonText} onClick={pwMask}
                 style={{ position: 'relative', left: '50%', transform: 'translateX(-50%)' }}
@@ -90,7 +98,7 @@ const Registration = ({
           errorText={errors.passwordConfirm}
         />
         <br />
-        <RaisedButton
+        <Button
           className="registrationSubmit"
           primary={true}
           type="submit"
