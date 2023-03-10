@@ -16,7 +16,6 @@ export class Signup extends Component {
     return (
       <div>
         <h1>
-          Sign-up Page
           <RegistrationForm />
         </h1>
       </div>

@@ -26,28 +26,30 @@ const Registration = ({
 
       <form onSubmit={onSubmit}>
         <TextField
-          name="Username*"
-          floatingLabelText="Username"
+          name="userName"
+          label="Username"
           value={user.userName}
           onChange={onChange}
-          errorText={errors.userName}
+          error={Boolean(errors.userName)}
+          helperText={errors.userName}
         />
         <TextField
           name="Email Address*"
-          floatingLabelText="Email Address"
+          label="Email Address"
           value={user.userEmail}
           onChange={onChange}
-          errorText={errors.userEmail}
+          error={Boolean(errors.userEmail)}
+          helperText={errors.userEmail}
         />
         <TextField
           name="First Name"
-          floatingLabelText="Firstname"
+          label="Firstname"
           value={user.firstName}
           onChange={onChange}
         />
         <TextField
           name="Lastname"
-          floatingLabelText="Lastname"
+          label="Lastname"
           value={user.lastName}
           onChange={onChange}
         />
@@ -71,39 +73,44 @@ const Registration = ({
         <TextField
           type={type}
           name="Password*"
-          floatingLabelText="Password"
+          label="Password"
           value={user.userPassword}
           onChange={onPassChange}
           errorText={errors.userPassword}
         />
-
-        <div className="passwordStrengthRow">
+        <TextField
+          type={type}
+          name="passwordConfirm"
+          label="Confirm Password"
+          value={user.passwordConfirm}
+          onChange={onChange}
+          errorText={errors.passwordConfirm}
+        />
+        <div className="pwStrRow">
           {score >= 1 && (
             <div>
               <PasswordStr score={score} />
               <Button
                 className="pwShowHideBtn"
-                label={buttonText} onClick={pwMask}
+                variant="contained"
+                onClick={pwMask}
                 style={{ position: 'relative', left: '50%', transform: 'translateX(-50%)' }}
-              />
+              >
+                {buttonText}
+              </Button>
             </div>
           )}
         </div>
-        <TextField
-          type={type}
-          name="passwordConfirm"
-          floatingLabelText="Confirm Password"
-          value={user.passwordConfirm}
-          onChange={onChange}
-          errorText={errors.passwordConfirm}
-        />
+
         <br />
         <Button
-          className="registrationSubmit"
-          primary={true}
+          className="signUpSubmit"
+          variant="contained"
+          color="primary"
           type="submit"
-          label="submit"
-        />
+        >
+          Submit
+        </Button>
       </form>
     </div>
   );
