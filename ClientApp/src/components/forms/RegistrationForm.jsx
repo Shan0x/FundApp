@@ -2,6 +2,7 @@
  * @fileoverview: Registration form for new users using bootstrap.
  * */
 import React, { Component } from 'react';
+import Registration from "./Registration.jsx"
 const FormValidators = require("./validate");
 const validateRegistration = FormValidators.validateRegistration;
 const zxcvbn = require("zxcvbn");
@@ -130,5 +131,24 @@ class RegistrationForm extends Component {
     );
   }
 
+  render() {
+    return (
+      <div>
+        <Registration
+          onSubmit={this.validateForm}
+          onChange={this.handleChange}
+          onPassChange={this.pwHandleChange}
+          errors={this.state.errors}
+          user={this.state.errors}
+          score={this.state.score}
+          buttonText={this.state.buttonText}
+          type={this.state.type}
+          pwMask={this.pwMask}
+        />
+      </div>
+    );
+  }
 
 }
+
+module.exports = RegistrationForm;
