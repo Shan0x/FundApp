@@ -1,23 +1,4 @@
-﻿form {
-    background: #caffec;
-    width: 75%;
-    text-align: center;
-    left: 50%;
-    transform: translate(-50%, 20%);
-    padding: 20px;
-    position: relative;
-    box-shadow: 0 0 20px 2px rgba(0, 0, 0, 0.4);
-}
-
-.formContainer {
-    background-color: #7fffd4;
-}
-
-.signUpSubmit {
-    margin: 25px 0 15px 0;
-}
-
-.pwStrRow {
+﻿.pwStrRow {
     width: 63%;
     text-align: left;
     margin: auto;
@@ -43,8 +24,4 @@
     color: gray;
 }
 
-@media screen and (max-width: 550px) {
-    .formContainer {
-        width: 85%;
-    }
-}
+
