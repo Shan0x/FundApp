@@ -22,7 +22,7 @@ namespace FundApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(Users model)
+        public IActionResult Login(Users model)
         {
             if (ModelState.IsValid)
             {
@@ -30,7 +30,7 @@ namespace FundApp.Controllers
                 User = User.Where(s => s.userName.Contains(model.userName));
                 if (User.Count() != 0)
                 {
-                    if (User.First().userPassword == model.userPassword ) 
+                    if (User.First().userPassword == model.userPassword)
                     {
                         return RedirectToAction("SuccessLogin");
                     }
