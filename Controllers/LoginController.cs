@@ -1,52 +1,34 @@
 ﻿using FundApp.Data;
 using FundApp.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Npgsql;
+using System.Data;
 using System.Diagnostics.Contracts;
 
 namespace FundApp.Controllers
 {
-    public class LoginController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class LoginController : ControllerBase
     {
-        private readonly FundFriendsContext _context;
+        private readonly IConfiguration _configuration;
 
-        public LoginController(FundFriendsContext context)
+        public LoginController(IConfiguration configuration)
         {
-            _context = context;
-        }
-
-        [HttpGet]
-        public IActionResult Login()
-        {
-            return View();
+            _configuration = configuration;
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(Users model)
+        public string login(Users users)
         {
-            if (ModelState.IsValid)
-            {
-                var User = from row in _context.Users select row;
-                User = User.Where(s => s.userName.Contains(model.userName));
-                if (User.Count() != 0)
-                {
-                    if (User.First().userPassword == model.userPassword ) 
-                    {
-                        return RedirectToAction("SuccessLogin");
-                    }
-                }
-            }
-            return RedirectToAction("FailedLogin");
-        }
-
-        public IActionResult SuccessLogin()
-        {
-            return View();
-        }
-
-        public IActionResult FailedLogin()
-        {
-            return View();
+            NpgsqlConnection conn = new NpgsqlConnection(_configuration.GetConnectionString("localconnection").ToString());
+            NpgsqlDataAdapter da = new NpgsqlDataAdapter("SELECT * FROM \"Users\" WHERE \"userName\" = '"+users.userName+"' AND \"userPassword\" = '"+users.userPassword+"'", conn);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            if (dt.Rows.Count > 0)
+                return "User Found";
+            else
+                return "User not found";
         }
     }
 }
