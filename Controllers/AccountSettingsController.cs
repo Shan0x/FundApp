@@ -34,23 +34,45 @@ namespace FundApp.Controllers
 
         // POST api/<AccountSettingsController>
         [HttpPost]
-        public void Post([FromBody] Users user)
+        [Route("update/password")]
+        public bool updatePassword([FromBody] Users user)
         {
+            bool isQuerySuccess = true;
+
             NpgsqlConnection conn = new NpgsqlConnection(_configuration.GetConnectionString("localconnection").ToString());
-            NpgsqlCommand cmd = new NpgsqlCommand("UPDATE Users SET userPassword=\'" + user.userPassword + "\' WHERE userName=\'" + user.userName + "\';", conn);
+            NpgsqlCommand cmd = new NpgsqlCommand("UPDATE \"Users\" SET \"userPassword\"=\'" + user.userPassword + "\' WHERE \"userName\"=\'" + user.userName + "\';", conn);
 
             conn.Open();
-            int i = cmd.ExecuteNonQuery();
+            int queryExecutionStatus = cmd.ExecuteNonQuery();
             conn.Close();
 
-            if (i > 0)
+            if (queryExecutionStatus == 0)
             {
-                Console.WriteLine("Password change success!");
+                isQuerySuccess = false;
             }
-            else
+
+            return isQuerySuccess;
+        }
+
+        [HttpPost]
+        [Route("update/email")]
+        public bool updateEmail([FromBody] Users user)
+        {
+            bool isQuerySuccess = true;
+
+            NpgsqlConnection conn = new NpgsqlConnection(_configuration.GetConnectionString("localconnection").ToString());
+            NpgsqlCommand cmd = new NpgsqlCommand("UPDATE \"Users\" SET \"userEmail\"=\'" + user.userEmail + "\' WHERE \"userName\"=\'" + user.userName + "\';", conn);
+
+            conn.Open();
+            int queryExecutionStatus = cmd.ExecuteNonQuery();
+            conn.Close();
+
+            if (queryExecutionStatus == 0)
             {
-                Console.WriteLine("Password change failure!");
+                isQuerySuccess = false;
             }
+
+            return isQuerySuccess;
         }
 
         // PUT api/<AccountSettingsController>/5
