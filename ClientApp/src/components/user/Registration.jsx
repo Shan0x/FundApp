@@ -1,8 +1,8 @@
 ﻿/**
  * @fileoverview Sign-up page for FundFriends.
- * @author Shannen Lowe
  * */
 import React, { Component } from 'react';
+import { SignUpForm } from '../forms/Signup';
 
 export class Signup extends Component {
   static displayName = Signup.name;
@@ -15,7 +15,7 @@ export class Signup extends Component {
     return (
       <div>
         <h1>
-          Sign-up Page
+          <SignUpForm />
         </h1>
       </div>
     );
