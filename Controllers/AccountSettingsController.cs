@@ -37,8 +37,11 @@ namespace FundApp.Controllers
         [Route("update/password")]
         public bool updatePassword([FromBody] Users user)
         {
+            //Boolean to return to the frontend to inform it whether the query was successful or not
             bool isQuerySuccess = true;
 
+//!!!!!The query building is currently vulnerable to injection since there is no input sanitization at this time!!!!!
+            //Building query with input from the frontend/user
             NpgsqlConnection conn = new NpgsqlConnection(_configuration.GetConnectionString("localconnection").ToString());
             NpgsqlCommand cmd = new NpgsqlCommand("UPDATE \"Users\" SET \"userPassword\"=\'" + user.userPassword + "\' WHERE \"userName\"=\'" + user.userName + "\';", conn);
 
@@ -47,10 +50,11 @@ namespace FundApp.Controllers
             conn.Close();
 
             if (queryExecutionStatus == 0)
-            {
+            {//ExecuteNonQuery() returns 0 on a failed query
                 isQuerySuccess = false;
             }
 
+            //If the expected body element is missing, isQuerySuccess is true when returned
             return isQuerySuccess;
         }
 
@@ -58,8 +62,11 @@ namespace FundApp.Controllers
         [Route("update/email")]
         public bool updateEmail([FromBody] Users user)
         {
+            //Boolean to return to the frontend to inform it whether the query was successful or not
             bool isQuerySuccess = true;
 
+//!!!!!The query building is currently vulnerable to injection since there is no input sanitization at this time!!!!!
+            //Building query with input from the frontend/user
             NpgsqlConnection conn = new NpgsqlConnection(_configuration.GetConnectionString("localconnection").ToString());
             NpgsqlCommand cmd = new NpgsqlCommand("UPDATE \"Users\" SET \"userEmail\"=\'" + user.userEmail + "\' WHERE \"userName\"=\'" + user.userName + "\';", conn);
 
@@ -68,10 +75,11 @@ namespace FundApp.Controllers
             conn.Close();
 
             if (queryExecutionStatus == 0)
-            {
+            {//ExecuteNonQuery() returns 0 on a failed query
                 isQuerySuccess = false;
             }
 
+            //If the expected body element is missing, isQuerySuccess is true when returned
             return isQuerySuccess;
         }
 
