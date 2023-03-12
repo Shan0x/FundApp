@@ -1,4 +1,4 @@
-import { Signup } from "./components/Signup";
+import { Signup } from "./components/user/Registration";
 import { Login } from "./components/Login";
 import { Home } from "./components/Home";
 import { Fundraisers } from "./components/fundraiser/Fundraisers";
