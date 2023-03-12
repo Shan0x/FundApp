@@ -8,7 +8,8 @@ const context = [
     "/api/employees",
     "/api/teammembers",
     "/api/users",
-    "/api/Signup"
+    "/api/Signup",
+    "/api/Login"
 ];
 
 const onError = (err, req, resp, target) => {
