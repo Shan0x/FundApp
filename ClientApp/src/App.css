@@ -1,5 +1,5 @@
 /* Provide sufficient contrast against white background */
-a {
+/*a {
   color: #0366d6;
 }
 
@@ -16,4 +16,13 @@ code {
   color: #fff;
   background-color: #1b6ec2;
   border-color: #1861ac;
+}*/
+
+.App {
+text-align: center;
+display: flex;
+min-height: 100vh;
+align-items: center;
+justify-content: center;
+background-color: aliceblue;
 }
