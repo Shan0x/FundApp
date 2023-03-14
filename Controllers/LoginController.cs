@@ -1,24 +1,22 @@
-﻿using FundApp.Data;
+using FundApp.Data;
 using FundApp.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using System.Diagnostics.Contracts;
+using Microsoft.Extensions.Configuration;
+using System.Linq;
 
 namespace FundApp.Controllers
 {
-    public class LoginController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class LoginController : ControllerBase
     {
-        private readonly FundFriendsContext _context;
+        private readonly IConfiguration _configuration;
+        private readonly ApplicationDbContext _context;
 
-        public LoginController(FundFriendsContext context)
+        public LoginController(IConfiguration configuration, ApplicationDbContext context)
         {
+            _configuration = configuration;
             _context = context;
-        }
-
-        [HttpGet]
-        public IActionResult Login()
-        {
-            return View();
         }
 
         [HttpPost]
@@ -26,11 +24,11 @@ namespace FundApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                var User = from row in _context.Users select row;
-                User = User.Where(s => s.userName.Contains(model.userName));
-                if (User.Count() != 0)
+                var user = from row in _context.Users select row;
+                user = user.Where(s => s.userName.Contains(model.userName));
+                if (user.Count() != 0)
                 {
-                    if (User.First().userPassword == model.userPassword)
+                    if (user.First().userPassword == model.userPassword)
                     {
                         return RedirectToAction("SuccessLogin");
                     }
@@ -50,3 +48,4 @@ namespace FundApp.Controllers
         }
     }
 }
+
