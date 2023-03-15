@@ -1,9 +1,8 @@
-﻿using FundApp.Data;
+using FundApp.Data;
 using FundApp.Models;
 using Microsoft.AspNetCore.Mvc;
-using Npgsql;
-using System.Data;
-using System.Diagnostics.Contracts;
+using Microsoft.Extensions.Configuration;
+using System.Linq;
 
 namespace FundApp.Controllers
 {
@@ -12,23 +11,41 @@ namespace FundApp.Controllers
     public class LoginController : ControllerBase
     {
         private readonly IConfiguration _configuration;
+        private readonly ApplicationDbContext _context;
 
-        public LoginController(IConfiguration configuration)
+        public LoginController(IConfiguration configuration, ApplicationDbContext context)
         {
             _configuration = configuration;
+            _context = context;
         }
 
         [HttpPost]
-        public string login(Users users)
+        public IActionResult Login(Users model)
         {
-            NpgsqlConnection conn = new NpgsqlConnection(_configuration.GetConnectionString("localconnection").ToString());
-            NpgsqlDataAdapter da = new NpgsqlDataAdapter("SELECT * FROM \"Users\" WHERE \"userName\" = '"+users.userName+"' AND \"userPassword\" = '"+users.userPassword+"'", conn);
-            DataTable dt = new DataTable();
-            da.Fill(dt);
-            if (dt.Rows.Count > 0)
-                return "User Found";
-            else
-                return "User not found";
+            if (ModelState.IsValid)
+            {
+                var user = from row in _context.Users select row;
+                user = user.Where(s => s.userName.Contains(model.userName));
+                if (user.Count() != 0)
+                {
+                    if (user.First().userPassword == model.userPassword)
+                    {
+                        return RedirectToAction("SuccessLogin");
+                    }
+                }
+            }
+            return RedirectToAction("FailedLogin");
+        }
+
+        public IActionResult SuccessLogin()
+        {
+            return View();
+        }
+
+        public IActionResult FailedLogin()
+        {
+            return View();
         }
     }
 }
+
