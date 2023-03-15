@@ -9,7 +9,8 @@ const context = [
     "/api/teammembers",
     "/api/users",
     "/api/Signup",
-    "/api/Login"
+    "/api/Login",
+    "/api/accountsettings"
 ];
 
 const onError = (err, req, resp, target) => {
