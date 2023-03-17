@@ -3,6 +3,8 @@
  * @author Shannen Lowe
  * */
 import React, { Component } from 'react';
+import { LoginForm } from './forms/LoginForm';
+
 
 export class Login extends Component {
     static displayName = Login.name;
@@ -14,7 +16,7 @@ export class Login extends Component {
   render() {
     return (
       <div>
-        <h1>Login Page</h1>
+        <h1><LoginForm /></h1>
       </div>
     );
   }

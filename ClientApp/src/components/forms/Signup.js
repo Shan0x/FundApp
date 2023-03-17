@@ -1,5 +1,5 @@
 ﻿/**
- * @fileoverview: Registration form for new users using bootstrap.
+ * @fileoverview: Registration form for new users using MaterialUI.
  * @todo
 * //const FormValidators = require("./validate");
 * //const validateRegistration = FormValidators.validateRegistration;
