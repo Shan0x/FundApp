@@ -1,5 +1,5 @@
 import { Signup } from "./components/user/Registration";
-import { Login } from "./components/Login";
+import { Login } from "./components/user/Login";
 import { Home } from "./components/Home";
 import { Fundraisers } from "./components/fundraiser/Fundraisers";
 import { Donate } from "./components/Donate";

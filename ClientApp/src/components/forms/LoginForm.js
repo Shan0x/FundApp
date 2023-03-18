@@ -20,15 +20,16 @@ import {
   Box,
   Grid
 } from '@mui/material';
+import axios from 'axios';
 
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#B5E3BB',
+      main: '#F589A3',
     },
     secondary: {
-      main: '#F589A3',
+      main: '#B5E3BB', 
     },
   },
 });
@@ -37,15 +38,37 @@ export function LoginForm() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+
+    // Create a user object
+    const User = {
+      userName: data.get('username'),
+      userPassword: data.get('password')
+    };
+
+
+    axios.post('https://localhost:44442/api/Login', User)
+      .then(response => {
+        if (response.data) {
+          //If login is successful, create a new session.
+          //Redirect to dashboard.
+          console.log(response.data);
+        } else {
+          //If login fails, display error
+          console.log('Login unsuccessful');
+          console.log(response.data.message);
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+
+    
   };
 
   return (
     <ThemeProvider theme={theme}>
-      <Grid container component="main" sx={{ padding: '40px', width: '80%', height: '70vh', margin: 'auto' }}>
+      <Grid container component="main" sx={{ padding: '30px', width: '80%', height: '70vh', margin: 'auto' }}>
         <CssBaseline />
         <Grid item xs={false} sm={4} md={7} sx={{
             backgroundImage: 'url(https://source.unsplash.com/random/?charity)',
@@ -77,10 +100,10 @@ export function LoginForm() {
                 margin="normal"
                 required
                 fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
+                id="username"
+                label="Username"
+                name="username"
+                autoComplete="user"
                 autoFocus
               />
               <TextField

@@ -1,7 +1,12 @@
 using FundApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
-
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Identity;
+using FundApp.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,16 +20,34 @@ var builder = WebApplication.CreateBuilder(args);
 //
 //# --- LOCAL --- #
 var conn = builder.Configuration.GetConnectionString("localconnection");
-//
 builder.Services.AddDbContext<FundFriendsContext>(options =>
     options.UseNpgsql(conn));
 //*****************************************************************************
 
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.Cookie.Name = "FundFriends.Cookie";
+    options.Cookie.HttpOnly = true;
+    options.Cookie.SameSite = SameSiteMode.Strict;
+    options.ExpireTimeSpan = System.TimeSpan.FromMinutes(60);
+    options.LoginPath = "/api/auth/dashboard";
+    //options.LogoutPath = "/api/auth/logout";
+    options.SlidingExpiration = true;
+});
 
-//builder.Services.AddControllersWithViews();
+//builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+//    .AddCookie(options =>
+//    {
+//        options.LoginPath = "/api/auth/dashboard";
+//        //options.LogoutPath = "/api/auth/logout";
+//    });
+
+
+
 builder.Services.AddControllers();
 
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -35,11 +58,10 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseCors();
-
+app.MapControllers();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller}/{action=Index}/{id?}");
