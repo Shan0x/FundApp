@@ -1,11 +1,14 @@
 ﻿/**
  * @fileoverview Home page registered users will see when they are logged in.
- * @author Shannen Lowe
+ * @todo Only allow logged in users to access this page.
  * */
 import React, { Component } from 'react';
+import { DashboardContent } from './DashboardContent';
 
-export class Dashboard extends Component {
-  static displayName = Dashboard.name;
+
+
+export class UserDashboard extends Component {
+  static displayName = UserDashboard.name;
 
   constructor(props) {
     super(props);
@@ -15,7 +18,7 @@ export class Dashboard extends Component {
     return (
       <div>
         <h1>
-          Dashboard
+          <DashboardContent />
         </h1>
       </div>
     );

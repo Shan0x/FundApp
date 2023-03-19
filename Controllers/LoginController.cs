@@ -1,9 +1,11 @@
-﻿using FundApp.Data;
-using FundApp.Models;
+﻿using FundApp.Models;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.Scripting;
 using Npgsql;
 using System.Data;
-using System.Diagnostics.Contracts;
+using static System.Net.WebRequestMethods;
+using System.Net;
 
 namespace FundApp.Controllers
 {
@@ -19,16 +21,27 @@ namespace FundApp.Controllers
         }
 
         [HttpPost]
-        public string login(Users users)
+        public async Task<IActionResult> login(Users users)
         {
             NpgsqlConnection conn = new NpgsqlConnection(_configuration.GetConnectionString("localconnection").ToString());
             NpgsqlDataAdapter da = new NpgsqlDataAdapter("SELECT * FROM \"Users\" WHERE \"userName\" = '"+users.userName+"' AND \"userPassword\" = '"+users.userPassword+"'", conn);
             DataTable dt = new DataTable();
             da.Fill(dt);
             if (dt.Rows.Count > 0)
-                return "User Found";
+            {
+                int userId = Convert.ToInt32(dt.Rows[0].Field<object>("userID"));
+
+                // Create a cookie with the authenticated user's ID
+                Response.Cookies.Append("UserID", userId.ToString(), new CookieOptions
+                {
+                    HttpOnly = false, // This allows access via client side.
+                    Expires = DateTimeOffset.UtcNow.AddDays(2),
+                    SameSite = SameSiteMode.Lax
+                });
+                return Ok(new { userId });
+            }
             else
-                return "User not found";
+                return Unauthorized();
         }
     }
 }

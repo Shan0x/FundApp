@@ -1,5 +1,5 @@
 ﻿/**
- * @fileoverview: Registration form for new users using bootstrap.
+ * @fileoverview: Registration form for new users using MaterialUI.
  * @todo
 * //const FormValidators = require("./validate");
 * //const validateRegistration = FormValidators.validateRegistration;
@@ -14,7 +14,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { CssBaseline, Link, Grid, Box, Typography, Container } from "@mui/material";
 import { Avatar, Button, TextField, } from "@mui/material"
 import axios from 'axios';
-
+// zxcvbn is a password strength estimator.
 const zxcvbn = require("zxcvbn");
 
 
@@ -51,18 +51,18 @@ export function SignUpForm() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
-  // Create a new user object
-  const newUser = {
-      userName: data.get('username'),
-      userPassword: data.get('password'),
-      userFirstName: data.get('firstName'),
-      userLastName: data.get('lastName'),
-      userEmail: data.get('email'),
-    userDOB: selectedDate ? selectedDate.format('YYYY-MM-DD') : null, // This will log the selected date in the format "YYYY-MM-DD"
-  };
+    // Create a new user object
+    const newUser = {
+        userName: data.get('username'),
+        userPassword: data.get('password'),
+        userFirstName: data.get('firstName'),
+        userLastName: data.get('lastName'),
+        userEmail: data.get('email'),
+      userDOB: selectedDate ? selectedDate.format('YYYY-MM-DD') : null, // This will log the selected date in the format "YYYY-MM-DD"
+    };
 
     // POST the user data to the server using axios
-    axios.post('https://localhost:44442/api/users', newUser)
+    axios.post('https://localhost:44442/api/Signup', newUser)
       .then(response => {
         console.log(response.data);
       })

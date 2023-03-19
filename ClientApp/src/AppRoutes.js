@@ -1,9 +1,9 @@
 import { Signup } from "./components/user/Registration";
-import { Login } from "./components/Login";
+import { Login } from "./components/user/Login";
 import { Home } from "./components/Home";
 import { Fundraisers } from "./components/fundraiser/Fundraisers";
 import { Donate } from "./components/Donate";
-import { Dashboard } from "./components/user/Dashboard";
+import { UserDashboard } from "./components/user/UserDashboard";
 import { CreateFundraisers } from "./components/fundraiser/CreateFundraiser";
 import { Settings } from "./components/user/Settings";
 
@@ -30,7 +30,7 @@ const AppRoutes = [
   },
   {
     path: '/u/home',
-    element: <Dashboard />
+    element: <UserDashboard />
   },
   {
     path: '/create',

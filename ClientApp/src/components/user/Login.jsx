@@ -3,7 +3,7 @@
  * @author Shannen Lowe
  * */
 import React, { Component } from 'react';
-import { LoginForm } from './forms/LoginForm';
+import { LoginForm } from '../forms/LoginForm';
 
 
 export class Login extends Component {
