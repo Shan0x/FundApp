@@ -24,25 +24,16 @@ builder.Services.AddDbContext<FundFriendsContext>(options =>
     options.UseNpgsql(conn));
 //*****************************************************************************
 
-builder.Services.ConfigureApplicationCookie(options =>
-{
-    options.Cookie.Name = "FundFriends.Cookie";
-    options.Cookie.HttpOnly = true;
-    options.Cookie.SameSite = SameSiteMode.Strict;
-    options.ExpireTimeSpan = System.TimeSpan.FromMinutes(60);
-    options.LoginPath = "/api/auth/dashboard";
-    //options.LogoutPath = "/api/auth/logout";
-    options.SlidingExpiration = true;
-});
-
-//builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-//    .AddCookie(options =>
-//    {
-//        options.LoginPath = "/api/auth/dashboard";
-//        //options.LogoutPath = "/api/auth/logout";
-//    });
-
-
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+        .AddCookie(options =>
+        {
+            options.Cookie.Name = "FundFriends.Cookie";
+            options.Cookie.HttpOnly = true;
+            options.Cookie.SameSite = SameSiteMode.Strict;
+            options.ExpireTimeSpan = System.TimeSpan.FromMinutes(60);
+            options.LoginPath = "/Login";
+            options.SlidingExpiration = true;
+        });
 
 builder.Services.AddControllers();
 
@@ -60,6 +51,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
+app.UseAuthorization();
 app.UseCors();
 app.MapControllers();
 app.MapControllerRoute(

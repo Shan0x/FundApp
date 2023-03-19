@@ -48,22 +48,13 @@ export function LoginForm() {
 
     axios.post('https://localhost:44442/api/Login', User)
       .then(response => {
-        if (response.data) {
-          //If login is successful, create a new session.
-          //Redirect to dashboard.
-          console.log(response.data);
-        } else {
-          //If login fails, display error
-          console.log('Login unsuccessful');
-          console.log(response.data.message);
-        }
+        const userId = response.data.userId;
+        console.log('Request successful!' + ' User ID:', userId);
+        window.location.href = '/u/home';
       })
       .catch(error => {
-        console.log(error);
+        console.error('Request failed:', error);
       });
-
-
-    
   };
 
   return (
