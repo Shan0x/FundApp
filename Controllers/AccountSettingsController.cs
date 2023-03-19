@@ -25,25 +25,18 @@ namespace FundApp.Controllers
             return new string[] { "value1", "value2" };
         }
 
-        // GET api/<AccountSettingsController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
         // POST api/<AccountSettingsController>
         [HttpPost]
         [Route("update/password")]
-        public bool updatePassword([FromBody] Users user)
+        public bool updatePassword([FromBody] SettingsUpdateRequest req)
         {
             //Boolean to return to the frontend to inform it whether the query was successful or not
             bool isQuerySuccess = true;
 
-//!!!!!The query building is currently vulnerable to injection since there is no input sanitization at this time!!!!!
+            //!!!!!The query building is currently vulnerable to injection since there is no input sanitization at this time!!!!!
             //Building query with input from the frontend/user
             NpgsqlConnection conn = new NpgsqlConnection(_configuration.GetConnectionString("localconnection").ToString());
-            NpgsqlCommand cmd = new NpgsqlCommand("UPDATE \"Users\" SET \"userPassword\"=\'" + user.userPassword + "\' WHERE \"userName\"=\'" + user.userName + "\';", conn);
+            NpgsqlCommand cmd = new NpgsqlCommand("UPDATE \"Users\" SET \"userPassword\"=\'" + req.newUserPassword + "\' WHERE \"userName\"=\'" + req.userName + "\' AND \"userPassword\"=\'" + req.userPassword + "\';", conn);
 
             conn.Open();
             int queryExecutionStatus = cmd.ExecuteNonQuery();
@@ -60,15 +53,15 @@ namespace FundApp.Controllers
 
         [HttpPost]
         [Route("update/email")]
-        public bool updateEmail([FromBody] Users user)
+        public bool updateEmail([FromBody] SettingsUpdateRequest req)
         {
             //Boolean to return to the frontend to inform it whether the query was successful or not
             bool isQuerySuccess = true;
 
-//!!!!!The query building is currently vulnerable to injection since there is no input sanitization at this time!!!!!
+            //!!!!!The query building is currently vulnerable to injection since there is no input sanitization at this time!!!!!
             //Building query with input from the frontend/user
             NpgsqlConnection conn = new NpgsqlConnection(_configuration.GetConnectionString("localconnection").ToString());
-            NpgsqlCommand cmd = new NpgsqlCommand("UPDATE \"Users\" SET \"userEmail\"=\'" + user.userEmail + "\' WHERE \"userName\"=\'" + user.userName + "\';", conn);
+            NpgsqlCommand cmd = new NpgsqlCommand("UPDATE \"Users\" SET \"userEmail\"=\'" + req.userEmail + "\' WHERE \"userName\"=\'" + req.userName + "\' AND \"userPassword\"='" + req.userPassword + "\';", conn);
 
             conn.Open();
             int queryExecutionStatus = cmd.ExecuteNonQuery();
@@ -83,16 +76,25 @@ namespace FundApp.Controllers
             return isQuerySuccess;
         }
 
-        // PUT api/<AccountSettingsController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPost]
+        [Route("update/delete")]
+        public bool deleteAccount([FromBody] SettingsUpdateRequest req)
         {
-        }
+            bool isQuerySuccess = true;
 
-        // DELETE api/<AccountSettingsController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            NpgsqlConnection conn = new NpgsqlConnection(_configuration.GetConnectionString("localconnection").ToString());
+            NpgsqlCommand cmd = new NpgsqlCommand("DELETE FROM \"Users\" WHERE \"userName\"=\'" + req.userName + "\' AND \"userPassword\"=\'" + req.userPassword + "\';", conn);
+
+            conn.Open();
+            int queryExecutionStatus = cmd.ExecuteNonQuery();
+            conn.Close();
+
+            if (queryExecutionStatus == 0)
+            {
+                isQuerySuccess = false;
+            }
+
+            return isQuerySuccess;
         }
     }
 }
