@@ -33,7 +33,7 @@ namespace FundApp.Controllers
             //Boolean to return to the frontend to inform it whether the query was successful or not
             bool isQuerySuccess = true;
 
-            //!!!!!The query building is currently vulnerable to injection since there is no input sanitization at this time!!!!!
+//!!!!!The query building is currently vulnerable to injection since there is no input sanitization at this time!!!!!
             //Building query with input from the frontend/user
             NpgsqlConnection conn = new NpgsqlConnection(_configuration.GetConnectionString("localconnection").ToString());
             NpgsqlCommand cmd = new NpgsqlCommand("UPDATE \"Users\" SET \"userPassword\"=\'" + req.newUserPassword + "\' WHERE \"userName\"=\'" + req.userName + "\' AND \"userPassword\"=\'" + req.userPassword + "\';", conn);
@@ -47,7 +47,6 @@ namespace FundApp.Controllers
                 isQuerySuccess = false;
             }
 
-            //If the expected body element is missing, isQuerySuccess is true when returned
             return isQuerySuccess;
         }
 
@@ -58,7 +57,7 @@ namespace FundApp.Controllers
             //Boolean to return to the frontend to inform it whether the query was successful or not
             bool isQuerySuccess = true;
 
-            //!!!!!The query building is currently vulnerable to injection since there is no input sanitization at this time!!!!!
+//!!!!!The query building is currently vulnerable to injection since there is no input sanitization at this time!!!!!
             //Building query with input from the frontend/user
             NpgsqlConnection conn = new NpgsqlConnection(_configuration.GetConnectionString("localconnection").ToString());
             NpgsqlCommand cmd = new NpgsqlCommand("UPDATE \"Users\" SET \"userEmail\"=\'" + req.userEmail + "\' WHERE \"userName\"=\'" + req.userName + "\' AND \"userPassword\"='" + req.userPassword + "\';", conn);
@@ -72,7 +71,6 @@ namespace FundApp.Controllers
                 isQuerySuccess = false;
             }
 
-            //If the expected body element is missing, isQuerySuccess is true when returned
             return isQuerySuccess;
         }
 
@@ -80,8 +78,11 @@ namespace FundApp.Controllers
         [Route("update/delete")]
         public bool deleteAccount([FromBody] SettingsUpdateRequest req)
         {
+            //Boolean to return to the frontend to inform it whether the query was successful or not
             bool isQuerySuccess = true;
 
+//!!!!!The query building is currently vulnerable to injection since there is no input sanitization at this time!!!!!
+            //Building query with input from the frontend/user
             NpgsqlConnection conn = new NpgsqlConnection(_configuration.GetConnectionString("localconnection").ToString());
             NpgsqlCommand cmd = new NpgsqlCommand("DELETE FROM \"Users\" WHERE \"userName\"=\'" + req.userName + "\' AND \"userPassword\"=\'" + req.userPassword + "\';", conn);
 
@@ -90,7 +91,7 @@ namespace FundApp.Controllers
             conn.Close();
 
             if (queryExecutionStatus == 0)
-            {
+            {//ExecuteNonQuery() returns 0 on a failed query
                 isQuerySuccess = false;
             }
 
