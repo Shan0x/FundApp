@@ -7,11 +7,13 @@ export class Layout extends Component {
 
   render() {
     return (
-      <div>
-        <NavMenu />
-        <Container>
-          {this.props.children}
-        </Container>
+      <div style={{ height: "100vh", border: "48px solid #B5E3BB", borderRadius: "20px" }}>
+        <div style={{ height: "100%" }}>
+          <NavMenu />
+          <Container>
+            {this.props.children}
+          </Container>
+        </div>
       </div>
     );
   }
