@@ -1,8 +1,4 @@
-﻿/**
- * @fileoverview A page that contains the donation form to allow users to
- * donate money to their chosen fundraiser.
- * @author Shannen Lowe
- * */
+﻿
 import React, { Component } from 'react';
 
 export class Donate extends Component {
