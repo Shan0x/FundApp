@@ -9,12 +9,17 @@ userName and userEmail(for an email update)
 
 I have it return "true" if the update succeeds and "false" if the update fails.
  lder/different LoginController version that isn't functional. Specifically, the LoginController on the branch is trying to use ApplicationDdContext which isn't used in the newer versions. It was updated in merge #6 at the earliest based on Shannen's working branch. Your branch has merge #6 update for the LandingController but not the LoginController, so I'm not sure what happened
+<<<<<<< HEAD
  * */
 import React, { useState } from "react";
 import axios from 'axios';
 import { Container, Avatar, Grid, Button, TextField,Stack } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import PersonAddRoundedIcon from '@mui/icons-material/PersonAddRounded';
+import React, { useState } from "react";
+import axios from 'axios';
+import { Container, Grid, Button, TextField } from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const theme = createTheme({
   palette: {
@@ -28,15 +33,15 @@ const theme = createTheme({
 });
 
 export const Settings = () => {
-  const username = 'Manos'
+  const username = 'hardcoded';
 
   const [email, setEmail] = useState('');
-  const [newEmail,setNewEmail] = useState('');
+  const [newEmail, setNewEmail] = useState('');
   const [password, setPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
 
   const onDelete = () => {
-    console.log('delete')
+    console.log('delete');
     // we need api route for deletion
   }
 
@@ -64,30 +69,15 @@ export const Settings = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Container maxWidth="lg">
-
-        <Stack direction="column" alignItems="center" spacing={2}>
-        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <PersonAddRoundedIcon/>
-        </Avatar>
-        <Stack pb={1} borderBottom="1px solid black">
-            <h3>Change Email</h3>
-            </Stack>
-
-          <Stack>
+      <Container maxWidth="sm">
+        <Grid container direction="column" alignItems="center" spacing={2}>
+          <Grid item>
+            <h1>Settings</h1>
+          </Grid>
+          <Grid item>
             <form onSubmit={onUpdateEmail}>
-              <Stack direction="row" spacing={2}>
-               <Stack>
-                  <TextField
-                    label="Username"
-                    placeholder="Username"
-                    type="text"
-                    name="Username"
-                    value={username}
-
-                  />
-                </Stack>
-                <Stack>
+              <Grid container direction="column" spacing={1}>
+                <Grid item>
                   <TextField
                     label="Email"
                     placeholder="Email"
@@ -96,69 +86,58 @@ export const Settings = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
-                    style={{width:200}}
                   />
-                </Stack>
-                  <Stack>
+                </Grid>
+                <Grid item>
                   <TextField
                     label="New Email"
-                    placeholder="Eenter your newEmail"
+                    placeholder="Enter your new email"
                     type="text"
-                    name="email"
+                    name="new-email"
                     value={newEmail}
                     onChange={(e) => setNewEmail(e.target.value)}
                     required
-                    style={{width:200}}
                   />
-                </Stack>
-                <Grid item>
-                  <Button style={{width:200,height:56}} variant="contained" type="submit">Update Email</Button>
                 </Grid>
-              </Stack>
+                <Grid item>
+                  <Button variant="outlined" type="submit">Update Email</Button>
+                </Grid>
+              </Grid>
             </form>
-          </Stack>
-          <Stack pb={1} borderBottom="1px solid black">
-            <h3>Change Password</h3>
-          </Stack>
-          <Stack>
+          </Grid>
+          <Grid item>
             <form onSubmit={onUpdatePassword}>
-              <Stack direction="row" spacing={2}>
-                <Stack>
+              <Grid container direction="column" spacing={1}>
+                <Grid item>
                   <TextField
                     label="Password"
-                    placeholder="password"
-                    type="text"
+                    placeholder="Password"
+                    type="password"
                     name="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
                   />
-                </Stack>
-                 <Stack>
+                </Grid>
+                <Grid item>
                   <TextField
                     label="New Password"
-                    placeholder="New password"
-                    type="text"
-                    name="password"
+                    placeholder="Enter your new password"
+                    type="password"
+                    name="new-password"
                     value={newPassword}
                     onChange={(e) => setNewPassword(e.target.value)}
                     required
                   />
-                </Stack>
-                <Stack>
-                  <Button style={{width:200,height:56}} variant="contained" type="submit">Update Password</Button>
-                </Stack>
-              </Stack>
+                </Grid>
+                <Grid item>
+                  <Button variant="outlined" type="submit">Update Password</Button>
+                </Grid>
+              </Grid>
             </form>
-          </Stack>
-          <Stack pb={1} borderBottom="1px solid black">
-            <h3>Delete Your Account</h3>
-          </Stack>
-          <Grid item>
-            <Button style={{width:200,height:56}} variant="contained" type="submit"onClick={onDelete}>Delete Account</Button>
           </Grid>
-        </Stack>
+        </Grid>
       </Container>
     </ThemeProvider>
   );
-};
+}

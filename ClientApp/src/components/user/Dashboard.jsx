@@ -2,6 +2,7 @@
  * @fileoverview Home page registered users will see when they are logged in.
  * @author Shannen Lowe
  * */
+ 
 import React, { Component } from 'react';
 
 export class Dashboard extends Component {

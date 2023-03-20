@@ -68,7 +68,11 @@ export class NavMenu extends Component {
     return (
       <header>
         <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white box-shadow mb-3" container light>
+<<<<<<< HEAD
           <NavbarBrand tag={Link} to="/"><img src="/fund.png" alt="FundFriendsLOGO" style={{width: '200px', height: '200px' }} /></NavbarBrand>
+=======
+          <NavbarBrand tag={Link} to="/">FundFriendsLOGO</NavbarBrand>
+>>>>>>> 9b25cf43cf83b6881688f5d89d8db1c73fea5c0c
        <Search>
             <SearchIconWrapper>
               <SearchIcon />
