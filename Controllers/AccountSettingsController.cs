@@ -59,7 +59,7 @@ namespace FundApp.Controllers
 //!!!!!The query building is currently vulnerable to injection since there is no input sanitization at this time!!!!!
             //Building query with input from the frontend/user
             NpgsqlConnection conn = new NpgsqlConnection(_configuration.GetConnectionString("localconnection").ToString());
-            NpgsqlCommand cmd = new NpgsqlCommand("UPDATE \"Users\" SET \"userEmail\"=\'" + req.userEmail + "\' WHERE \"userName\"=\'" + req.userName + "\' AND \"userPassword\"='" + req.userPassword + "\';", conn);
+            NpgsqlCommand cmd = new NpgsqlCommand("UPDATE \"Users\" SET \"userEmail\"=\'" + req.userEmail + "\' WHERE \"userName\"=\'" + req.userName + "\';", conn);
 
             conn.Open();
             int queryExecutionStatus = cmd.ExecuteNonQuery();
