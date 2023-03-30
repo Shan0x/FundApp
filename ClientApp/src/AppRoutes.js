@@ -6,6 +6,7 @@ import { Donate } from "./components/Donate";
 import { UserDashboard } from "./components/user/UserDashboard";
 import { CreateFundraisers } from "./components/fundraiser/CreateFundraiser";
 import { Settings } from "./components/user/Settings";
+import { ForgotPassword } from "./components/user/ForgotPassword";
 
 const AppRoutes = [
   {
@@ -39,7 +40,12 @@ const AppRoutes = [
   {
     path: '/u/settings',
     element: <Settings />
+  },
+  {
+    path: '/forgot-password',
+    element: <ForgotPassword />
   }
+
 ];
 
 export default AppRoutes;

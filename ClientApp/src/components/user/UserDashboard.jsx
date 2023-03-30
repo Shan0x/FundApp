@@ -4,7 +4,7 @@
  * */
 import React, { Component } from 'react';
 import { DashboardContent } from './DashboardContent';
-
+import { DashboardContentA } from './DashboardContentA';
 
 
 export class UserDashboard extends Component {
@@ -18,7 +18,7 @@ export class UserDashboard extends Component {
     return (
       <div>
         <h1>
-          <DashboardContent />
+          <DashboardContentA />
         </h1>
       </div>
     );
