@@ -2,8 +2,6 @@
  * @format
  * @fileoverview User settings page to update profile details.
  * @author SBD
- ** No more console.log()
- ** updated delete warning
  */
 
 import React, { useState } from "react";
@@ -13,9 +11,10 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Typography from "@mui/material/Typography";
-import { DialogContentText, Box, TextField, Stack, Button } from "@mui/material/";
+import { Box, TextField, Stack, Button } from "@mui/material/";
 import axios from "axios";
 import { UserInfo } from "./DonationInfo/UserInfo";
+import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
 
 export const Settings = () => {
   const [newEmail, setNewEmail] = useState("");
@@ -57,7 +56,7 @@ export const Settings = () => {
     setOpenDialog(false);
   };
   //added to delete account
-  const handleDelete = () => {
+  const handleAccountDelete = () => {
     axios
       .post("api/accountsettings/update/delete", {
         userName: user.userName,
@@ -73,6 +72,7 @@ export const Settings = () => {
       });
          setOpenDialog(false);
   };
+const [openDialog, setOpenDialog] = useState(false);
 
   return (
     <>
@@ -210,6 +210,7 @@ export const Settings = () => {
         onClick={handleDelete}>
         Delete Account
       </Button>
+      </Stack>
       <Dialog
         open={openDialog}
         onClose={handleDialogClose}
@@ -224,12 +225,18 @@ export const Settings = () => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleDialogClose}>Cancel</Button>
-          <Button onClick={handleDialogConfirm} autoFocus>
+          <Button onClick={handleAccountDelete} autoFocus>
             Delete
           </Button>
         </DialogActions>
       </Dialog>
-            <div>
+            <Stack
+             position='absolute'
+            width='100%'
+            bottom={"10px"}
+            direction='row'
+            columnGap={3}
+            justifyContent='right'>
               <Button
                 variant='contained'
                 sx={{
@@ -242,10 +249,9 @@ export const Settings = () => {
                 onClick={handleUpdate}>
                 Update
               </Button>
-            </div>
+            </Stack>
           </Stack>
         </Stack>
-      </Stack>
     </>
   );
 };
