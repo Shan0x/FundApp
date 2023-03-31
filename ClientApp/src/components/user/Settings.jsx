@@ -78,6 +78,15 @@ export const Settings = () => {
         // show error message to user
       });
     setOpenDialog(false);
+const password = prompt("Please enter your password to confirm account deletion:");
+  
+  if (password === user.userPassword) {
+    setOpenDialog(true);
+  } else {
+    // Show an error message to the user if the password is incorrect
+    alert("Incorrect password. Please try again.");
+  }
+
   };
   const [openDialog, setOpenDialog] = useState(false);
 
