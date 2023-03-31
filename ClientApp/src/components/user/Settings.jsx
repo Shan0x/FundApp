@@ -2,6 +2,7 @@
  * @format
  * @fileoverview User settings page to update profile details.
  * @author SBD
+I updated the implementation for AccountSettingsController. There are 3 POST requests possible: update email, update password, and delete account.
  */
 
 import React, { useState } from "react";
@@ -14,7 +15,13 @@ import Typography from "@mui/material/Typography";
 import { Box, TextField, Stack, Button } from "@mui/material/";
 import axios from "axios";
 import { UserInfo } from "./DonationInfo/UserInfo";
-import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions
+} from "@mui/material";
 
 export const Settings = () => {
   const [newEmail, setNewEmail] = useState("");
@@ -47,8 +54,8 @@ export const Settings = () => {
         // show error message to user
       });
   };
-//added alert
- const handleDelete = () => {
+  //added alert
+  const handleDelete = () => {
     setOpenDialog(true);
   };
 
@@ -70,9 +77,9 @@ export const Settings = () => {
         console.log(error);
         // show error message to user
       });
-         setOpenDialog(false);
+    setOpenDialog(false);
   };
-const [openDialog, setOpenDialog] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
 
   return (
     <>
@@ -204,55 +211,49 @@ const [openDialog, setOpenDialog] = useState(false);
             columnGap={3}
             justifyContent='center'>
             <Button
-        variant='contained'
-        color='error'
-        sx={{ height: 40, borderRadius: "20px", width: 200 }}
-        onClick={handleDelete}>
-        Delete Account
-      </Button>
-      </Stack>
-      <Dialog
-        open={openDialog}
-        onClose={handleDialogClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">{"Delete Account"}</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Are you sure you want to delete your account?
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleDialogClose}>Cancel</Button>
-          <Button onClick={handleAccountDelete} autoFocus>
-            Delete
-          </Button>
-        </DialogActions>
-      </Dialog>
-            <Stack
-             position='absolute'
-            width='100%'
-            bottom={"10px"}
-            direction='row'
-            columnGap={3}
-            justifyContent='right'>
-              <Button
-                variant='contained'
-                sx={{
-                  height: 40,
-                  width: 200,
-                  backgroundColor: "#B5E3BB",
-                  color: "black",
-                  borderRadius: "20px"
-                }}
-                onClick={handleUpdate}>
-                Update
+              variant='contained'
+              color='error'
+              sx={{ height: 40, borderRadius: "20px", width: 200 }}
+              onClick={handleDelete}>
+              Delete Account
+            </Button>
+          </Stack>
+          <Dialog
+            open={openDialog}
+            onClose={handleDialogClose}
+            aria-labelledby='alert-dialog-title'
+            aria-describedby='alert-dialog-description'>
+            <DialogTitle id='alert-dialog-title'>
+              {"Delete Account"}
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText id='alert-dialog-description'>
+                Are you sure you want to delete your account?
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleDialogClose}>Cancel</Button>
+              <Button onClick={handleAccountDelete} autoFocus>
+                Delete
               </Button>
-            </Stack>
+            </DialogActions>
+          </Dialog>
+          <Stack sx={{ position: "absolute", bottom: "10px", right: "10px" }}>
+            <Button
+              variant='contained'
+              sx={{
+                height: 40,
+                width: 200,
+                backgroundColor: "#B5E3BB",
+                color: "black",
+                borderRadius: "20px"
+              }}
+              onClick={handleUpdate}>
+              Update
+            </Button>
           </Stack>
         </Stack>
+      </Stack>
     </>
   );
 };
-
