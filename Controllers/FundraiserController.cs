@@ -6,7 +6,7 @@ namespace FundApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class FundraiserCreationController : ControllerBase
+    public class FundraiserController : ControllerBase
     {
         // GET: api/<FundraiserCreationController>
         [HttpGet]
