@@ -24,18 +24,7 @@ builder.Services.AddDbContext<FundFriendsContext>(options =>
     options.UseNpgsql(conn));
 //*****************************************************************************
 
-<<<<<<< HEAD
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-        .AddCookie(options =>
-        {
-            options.Cookie.Name = "FundFriends.Cookie";
-            options.Cookie.HttpOnly = true;
-            options.Cookie.SameSite = SameSiteMode.Strict;
-            options.ExpireTimeSpan = System.TimeSpan.FromMinutes(60);
-            options.LoginPath = "/Login";
-            options.SlidingExpiration = true;
-        });
-=======
+
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.Cookie.Name = "FundFriends.Cookie";
@@ -55,7 +44,6 @@ builder.Services.ConfigureApplicationCookie(options =>
 //    });
 
 
->>>>>>> ea4aab6 (Functional login page.)
 
 builder.Services.AddControllers();
 
@@ -73,10 +61,6 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
-<<<<<<< HEAD
-app.UseAuthorization();
-=======
->>>>>>> ea4aab6 (Functional login page.)
 app.UseCors();
 app.MapControllers();
 app.MapControllerRoute(

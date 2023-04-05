@@ -65,6 +65,7 @@ export function SignUpForm() {
     axios.post('https://localhost:44442/api/Signup', newUser)
       .then(response => {
         console.log(response.data);
+        window.location.href = '/login';
       })
       .catch(error => {
         console.error(error);
