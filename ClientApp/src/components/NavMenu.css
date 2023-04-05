@@ -14,5 +14,7 @@ html {
 }
 
 .box-shadow {
-    box-shadow: 0 .125rem .25rem rgba(245, 137, 163, 1);
+    border-bottom: 6px solid rgba(245, 137, 163, 1);
 }
+
+

@@ -1,6 +1,6 @@
 ﻿import { forwardRef, other } from 'react';
 import { alpha, styled } from '@mui/material/styles';
-import { Card, Typography, Box } from '@mui/material';
+import { Stack, Typography, Box } from '@mui/material';
 import { Icon } from '@iconify/react';
 import React from 'react';
 import PrettyNumber from 'react-pretty-numbers';
@@ -24,9 +24,8 @@ const IconStyle = styled('div')(({ theme }) => ({
 
 export function FundSummary({ title, total, icon, color = 'primary', sx, ...other }) {
   return (
-    <Card sx={{
+    <Stack sx={{
       py: 5,
-      boxShadow: 1,
       textAlign: 'center',
       color: (theme) => theme.palette[color].darker,
       bgcolor: (theme) => theme.palette[color].lighter,
@@ -53,6 +52,6 @@ export function FundSummary({ title, total, icon, color = 'primary', sx, ...othe
         {title}
       </Typography>
 
-    </Card>
+    </Stack>
   );
 }
