@@ -92,7 +92,7 @@ export class Home extends Component {
             <a href='/u/home'>Dashboard Page</a>
           </li>
           <li>
-            <a href='/create'>Fundraiser Creation Page</a>
+            <a href='/u/create'>Fundraiser Creation Page</a>
           </li>
           <li>
             <a href='/u/settings'>Account Settings</a>

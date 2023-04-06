@@ -12,7 +12,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { CssBaseline, Link, Grid, Box, Typography, Container } from "@mui/material";
-import { Avatar, Button, TextField, } from "@mui/material"
+import { Avatar, Button, TextField } from "@mui/material"
 import axios from 'axios';
 // zxcvbn is a password strength estimator.
 const zxcvbn = require("zxcvbn");
