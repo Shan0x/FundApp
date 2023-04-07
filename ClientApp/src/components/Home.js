@@ -43,11 +43,12 @@ export class Home extends Component {
           }}>
           <Button
             variant='outlined'
+            href="/u/create"
             style={{
               borderRadius: "20px",
               borderWidth: "6px",
               borderColor: "#B5E3BB",
-              color: "black"
+              color: "black",
             }}>
             <h5>Create your community</h5>
           </Button>
@@ -92,7 +93,7 @@ export class Home extends Component {
             <a href='/u/home'>Dashboard Page</a>
           </li>
           <li>
-            <a href='/create'>Fundraiser Creation Page</a>
+            <a href='/u/create'>Fundraiser Creation Page</a>
           </li>
           <li>
             <a href='/u/settings'>Account Settings</a>
