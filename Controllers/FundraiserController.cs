@@ -20,7 +20,7 @@ namespace FundApp.Controllers
         private bool checkUserFundraiserEntries(int? userID)
         {//Checks if the specified user has less than 5 fundraiser entries in the DB
             NpgsqlConnection conn = new NpgsqlConnection(_configuration.GetConnectionString("localconnection").ToString());
-            NpgsqlCommand cmd = new NpgsqlCommand("SELECT COUNT(\"userID\") FROM \"Fundraiser\" WHERE \"userID\"=" + userID + ";", conn);
+            NpgsqlCommand cmd = new NpgsqlCommand("SELECT COUNT(\"userID\") FROM \"Fundraiser\" WHERE \"userID\"=" + userID + " AND \"fundraiserStatus\"=\'ACTIVE\';", conn);
 
             conn.Open();
             NpgsqlDataReader reader = cmd.ExecuteReader();
@@ -62,8 +62,8 @@ namespace FundApp.Controllers
             double? fundGoalAmt = fundraiser.fundraiserGoalAmount;
             bool isQuerySuccess = true;
 
-            if ((userID < 1) || (fundGoalAmt < 0) || (fundName == "") || (fundSummary == "") || (userID == null) || (fundName == null) || (fundSummary == null) || (fundGoalAmt == null))
-            {//Check if any of the required fields are null
+            if ((userID < 1) || (fundGoalAmt < 100) || (fundName == "") || (fundSummary == "") || (userID == null) || (fundName == null) || (fundSummary == null) || (fundGoalAmt == null))
+            {//General variable validation
                 return false;
             }
 
@@ -72,7 +72,7 @@ namespace FundApp.Controllers
                 return false;
             }
             else
-            {
+            {//User has not reached fundraiser limit
                 NpgsqlConnection conn = new NpgsqlConnection(_configuration.GetConnectionString("localconnection").ToString());
                 NpgsqlCommand cmd = new NpgsqlCommand("INSERT INTO \"Fundraiser\"(\"userID\", \"fundraiserName\", \"fundraiserSummary\", \"fundraiserGoalAmount\") VALUES(" + userID + ", \'" + fundName + "\', \'" + fundSummary + "\', " + fundGoalAmt + ");", conn);
 
@@ -81,11 +81,12 @@ namespace FundApp.Controllers
                 conn.Close();
 
                 if (queryExecutionStatus == 0)
-                {
+                {//The query didn't affect any rows
                     isQuerySuccess = false;
                 }
             }
 
+            //Successful execution exit
             return isQuerySuccess;
         }
 
