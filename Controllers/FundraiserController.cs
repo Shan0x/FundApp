@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Drawing.Text;
+using Npgsql;
 using FundApp.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -10,6 +10,33 @@ namespace FundApp.Controllers
     [ApiController]
     public class FundraiserController : ControllerBase
     {
+        private readonly IConfiguration _configuration;
+
+        public FundraiserController(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
+        private bool checkUserFundraiserEntries(int? userID)
+        {//Checks if the specified user has less than 5 fundraiser entries in the DB
+            NpgsqlConnection conn = new NpgsqlConnection(_configuration.GetConnectionString("localconnection").ToString());
+            NpgsqlCommand cmd = new NpgsqlCommand("SELECT COUNT(\"userID\") FROM \"Fundraiser\" WHERE \"userID\"=" + userID + ";", conn);
+
+            conn.Open();
+            NpgsqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                if (reader.GetInt32(0) >= 5)
+                {//User has 5 or mor(somehow) fundraiser entries
+                    return false;
+                }
+            }
+            conn.Close();
+
+            return true;
+        }
+
         // GET: api/<FundraiserCreationController>
         [HttpGet]
         public IEnumerable<string> Get()
@@ -27,23 +54,39 @@ namespace FundApp.Controllers
         // POST api/<FundraiserCreationController>
         [HttpPost]
         [Route("create")]
-        public int createFundraiser([FromBody] Fundraiser fundraiser)
+        public bool CreateFundraiser([FromBody] Fundraiser fundraiser)
         {
             int? userID = fundraiser.userID;
             string? fundName = fundraiser.fundraiserName;
             string? fundSummary = fundraiser.fundraiserSummary;
             double? fundGoalAmt = fundraiser.fundraiserGoalAmount;
+            bool isQuerySuccess = true;
 
-            //TODO
-            /*
-             * >Confirm variables are not empty or null
-             * >Confirm user does not already have 5 fundraiser entries
-             * >Create DB connection
-             * >Create DB query
-             * >Execut query
-             */
+            if ((userID < 1) || (fundGoalAmt < 0) || (fundName == "") || (fundSummary == "") || (userID == null) || (fundName == null) || (fundSummary == null) || (fundGoalAmt == null))
+            {//Check if any of the required fields are null
+                return false;
+            }
 
-            return 0;
+            if(!checkUserFundraiserEntries(userID))
+            {//User has reached fundraiser limit
+                return false;
+            }
+            else
+            {
+                NpgsqlConnection conn = new NpgsqlConnection(_configuration.GetConnectionString("localconnection").ToString());
+                NpgsqlCommand cmd = new NpgsqlCommand("INSERT INTO \"Fundraiser\"(\"userID\", \"fundraiserName\", \"fundraiserSummary\", \"fundraiserGoalAmount\") VALUES(" + userID + ", \'" + fundName + "\', \'" + fundSummary + "\', " + fundGoalAmt + ");", conn);
+
+                conn.Open();
+                int queryExecutionStatus = cmd.ExecuteNonQuery();
+                conn.Close();
+
+                if (queryExecutionStatus == 0)
+                {
+                    isQuerySuccess = false;
+                }
+            }
+
+            return isQuerySuccess;
         }
 
         // PUT api/<FundraiserCreationController>/5
