@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Drawing.Text;
+using FundApp.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -24,8 +26,24 @@ namespace FundApp.Controllers
 
         // POST api/<FundraiserCreationController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        [Route("create")]
+        public int createFundraiser([FromBody] Fundraiser fundraiser)
         {
+            int? userID = fundraiser.userID;
+            string? fundName = fundraiser.fundraiserName;
+            string? fundSummary = fundraiser.fundraiserSummary;
+            double? fundGoalAmt = fundraiser.fundraiserGoalAmount;
+
+            //TODO
+            /*
+             * >Confirm variables are not empty or null
+             * >Confirm user does not already have 5 fundraiser entries
+             * >Create DB connection
+             * >Create DB query
+             * >Execut query
+             */
+
+            return 0;
         }
 
         // PUT api/<FundraiserCreationController>/5
