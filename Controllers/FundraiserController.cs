@@ -44,12 +44,42 @@ namespace FundApp.Controllers
             return new string[] { "value1", "value2" };
         }
 
-        // GET api/<FundraiserCreationController>/5
+
+        // GET api/<FundraiserController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult Get(int id)
         {
-            return "value";
+            NpgsqlConnection conn = new NpgsqlConnection(_configuration.GetConnectionString("localconnection").ToString());
+            NpgsqlCommand cmd = new NpgsqlCommand("SELECT * FROM \"Fundraiser\" WHERE \"fundraiserID\"=" + id + ";", conn);
+
+            conn.Open();
+            NpgsqlDataReader reader = cmd.ExecuteReader();
+
+            if (reader.HasRows)
+            {
+                reader.Read();
+                Fundraiser fundraiser = new Fundraiser()
+                {
+                    fundraiserID = reader.GetInt32(0),
+                    userID = reader.GetInt32(1),
+                    fundraiserStatus = reader.GetString(2),
+                    fundraiserName = reader.GetString(3),
+                    fundraiserSummary = reader.GetString(4),
+                    fundraiserGoalAmount = reader.GetDouble(5),
+                    fundraiserDateCreated = DateOnly.FromDateTime(reader.GetDateTime(6))
+                };
+                conn.Close();
+
+                return Ok(fundraiser);
+            }
+            else
+            {
+                conn.Close();
+
+                return NotFound();
+            }
         }
+
 
         // POST api/<FundraiserCreationController>
         [HttpPost]
