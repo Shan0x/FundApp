@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Npgsql;
 using FundApp.Models;
+using System.Text.RegularExpressions;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -39,6 +40,7 @@ namespace FundApp.Controllers
 
         // GET: api/<FundraiserCreationController>
         [HttpGet]
+        [Route("sum/{id}")]
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
@@ -46,18 +48,29 @@ namespace FundApp.Controllers
 
 
         // GET api/<FundraiserController>/5
-        [HttpGet("{id}")]
+        [HttpGet]
+        [Route("{id}")]
         public IActionResult Get(int id)
         {
             NpgsqlConnection conn = new NpgsqlConnection(_configuration.GetConnectionString("localconnection").ToString());
-            NpgsqlCommand cmd = new NpgsqlCommand("SELECT * FROM \"Fundraiser\" WHERE \"fundraiserID\"=" + id + ";", conn);
+            NpgsqlCommand cmd = new NpgsqlCommand(@"
+                SELECT F.*, SUM(D.""donationAmount"") AS ""totalDonations""
+                FROM ""Fundraiser"" f
+                INNER JOIN ""Donations"" D ON F.""fundraiserID"" = D.""fundraiserID""
+                WHERE F.""fundraiserID"" = @id
+                GROUP BY F.""fundraiserID"";", conn);
+            cmd.Parameters.AddWithValue("id", id);
 
             conn.Open();
             NpgsqlDataReader reader = cmd.ExecuteReader();
 
+
+
+
             if (reader.HasRows)
             {
                 reader.Read();
+
                 Fundraiser fundraiser = new Fundraiser()
                 {
                     fundraiserID = reader.GetInt32(0),
@@ -66,8 +79,10 @@ namespace FundApp.Controllers
                     fundraiserName = reader.GetString(3),
                     fundraiserSummary = reader.GetString(4),
                     fundraiserGoalAmount = reader.GetDouble(5),
+                    totalDonations = reader.GetDouble(7),
                     fundraiserDateCreated = DateOnly.FromDateTime(reader.GetDateTime(6))
                 };
+
                 conn.Close();
 
                 return Ok(fundraiser);
