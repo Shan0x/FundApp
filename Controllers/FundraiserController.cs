@@ -41,7 +41,6 @@ namespace FundApp.Controllers
 
         // GET api/<FundraiserController>/5
         [HttpGet]
-        [Route("{id}")]
         public IActionResult Get(int id)
         {
             NpgsqlConnection conn = new NpgsqlConnection(_configuration.GetConnectionString("localconnection").ToString());
@@ -86,7 +85,6 @@ namespace FundApp.Controllers
                 return NotFound();
             }
         }
-
 
         // POST api/<FundraiserCreationController>
         [HttpPost]
