@@ -38,14 +38,6 @@ namespace FundApp.Controllers
             return true;
         }
 
-        // GET: api/<FundraiserCreationController>
-        [HttpGet]
-        [Route("sum/{id}")]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
 
         // GET api/<FundraiserController>/5
         [HttpGet]
