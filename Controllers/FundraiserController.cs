@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Npgsql;
 using FundApp.Models;
+using System.Text.RegularExpressions;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -37,19 +38,55 @@ namespace FundApp.Controllers
             return true;
         }
 
-        // GET: api/<FundraiserCreationController>
+
+        // GET api/<FundraiserController>/5
         [HttpGet]
-        public IEnumerable<string> Get()
+        [Route("{id}")]
+        public IActionResult Get(int id)
         {
-            return new string[] { "value1", "value2" };
+            NpgsqlConnection conn = new NpgsqlConnection(_configuration.GetConnectionString("localconnection").ToString());
+            NpgsqlCommand cmd = new NpgsqlCommand(@"
+                SELECT F.*, SUM(D.""donationAmount"") AS ""totalDonations""
+                FROM ""Fundraiser"" f
+                INNER JOIN ""Donations"" D ON F.""fundraiserID"" = D.""fundraiserID""
+                WHERE F.""fundraiserID"" = @id
+                GROUP BY F.""fundraiserID"";", conn);
+            cmd.Parameters.AddWithValue("id", id);
+
+            conn.Open();
+            NpgsqlDataReader reader = cmd.ExecuteReader();
+
+
+
+
+            if (reader.HasRows)
+            {
+                reader.Read();
+
+                Fundraiser fundraiser = new Fundraiser()
+                {
+                    fundraiserID = reader.GetInt32(0),
+                    userID = reader.GetInt32(1),
+                    fundraiserStatus = reader.GetString(2),
+                    fundraiserName = reader.GetString(3),
+                    fundraiserSummary = reader.GetString(4),
+                    fundraiserGoalAmount = reader.GetDouble(5),
+                    totalDonations = reader.GetDouble(7),
+                    fundraiserDateCreated = DateOnly.FromDateTime(reader.GetDateTime(6))
+                };
+
+                conn.Close();
+
+                return Ok(fundraiser);
+            }
+            else
+            {
+                conn.Close();
+
+                return NotFound();
+            }
         }
 
-        // GET api/<FundraiserCreationController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
 
         // POST api/<FundraiserCreationController>
         [HttpPost]

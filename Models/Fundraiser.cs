@@ -14,6 +14,7 @@ namespace FundApp.Models
         public string? fundraiserSummary { get; set; }
         public double? fundraiserGoalAmount { get; set; }
         //The 4 variables above are required for fundraiser creation
+        public double? totalDonations { get; set; }
         public int? fundraiserID { get; set; }
         public DateOnly? fundraiserDateCreated { get; set; }
         public string? fundraiserStatus { get; set; }
