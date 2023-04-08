@@ -6,6 +6,7 @@
 import React, { useState, useEffect } from 'react'
 import { Grid } from '@mui/material'
 import axios from 'axios';
+import FundraiserCard from './FundraiserContainer'
 
 
 
@@ -27,6 +28,21 @@ const FundraisersList = () => {
   }, []);
 
   const renderFundraiser = () => {
-    return 
-  }
-}
+    return fundraisers.map((fundraiser) => (
+      <Grid key={fundraiser.fundraiserID} item xs={12} sm={6}>
+        <FundraiserCard fundraiser={fundraiser} />
+      </Grid>
+    ));
+  };
+
+  return (
+    <div>
+      <Grid container spacing={2}>
+        {reunderFundraisers()}
+
+      </Grid>
+    </div>
+  );
+};
+
+export default FundraisersList;

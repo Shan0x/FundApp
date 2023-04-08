@@ -1,5 +1,5 @@
 ﻿/**
- * @fileoverview Layout of individual fundraisers.
+ * @fileoverview Modular view of entire fundraiser.
  * 
  * */
 import React from 'react';
