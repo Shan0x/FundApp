@@ -11,6 +11,7 @@ export class Layout extends Component {
     return (
       <div
         style={{
+          height: "100vh",
           backgroundColor: "#B5E3BB",
           padding: 40
         }}>
