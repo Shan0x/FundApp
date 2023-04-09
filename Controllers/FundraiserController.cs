@@ -37,7 +37,6 @@ namespace FundApp.Controllers
 
             return true;
         }
-
         // GET: api/<FundraiserController>
         [HttpGet]
         public IActionResult Get()
