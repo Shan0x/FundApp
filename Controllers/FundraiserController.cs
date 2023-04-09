@@ -100,6 +100,9 @@ namespace FundApp.Controllers
             conn.Open();
             NpgsqlDataReader reader = cmd.ExecuteReader();
 
+
+
+
             if (reader.HasRows)
             {
                 reader.Read();

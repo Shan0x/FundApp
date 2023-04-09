@@ -30,10 +30,16 @@ const theme = createTheme({
 const FundraiserCard = ({ fundraiser,open,setOpen }) => {
   return (
     <ThemeProvider theme={theme}>
+      <Grid item xs={12} sm={6} md={4} lg={3}>
       <Card
         sx={{
+          marginTop: 4,
           borderRadius: '10%',
-          maxWidth: 345,
+            boxShadow: '2',
+            flexDirection: 'column',
+            maxWidth: 300,
+            minWidth: 250,
+            
         }}
       >
         <CardActionArea>
@@ -47,16 +53,17 @@ const FundraiserCard = ({ fundraiser,open,setOpen }) => {
               {fundraiser.fundraiserName}
             </Typography>
             <Box sx={{
+              fontWeight: 'bold',
               borderBottom: '1px solid',
               borderColor: 'primary.main',
-              padding: '8px 2px'
+              paddingTop: '5px'
             }}>
               <Typography variant="body2" color="text.secondary">
                 {fundraiser.fundraiserSummary.length <= 60 ?
                   fundraiser.fundraiserSummary : (
                     <span>
                       <span >{fundraiser.fundraiserSummary.substr(0, 60)}</span>
-                      <span style={{ color: theme.palette.primary.main}}> more...</span>
+                      <span style={{ color: theme.palette.primary.main }}> more...</span>
                     </span>
                   )}
               </Typography>
@@ -67,8 +74,9 @@ const FundraiserCard = ({ fundraiser,open,setOpen }) => {
           <Button onClick={()=>setOpen(!open)} size="med" color="secondary">
             Donate
           </Button>
-            </CardActions>
+        </CardActions>
         </Card>
+        </Grid>
     </ThemeProvider>
   )
 };
