@@ -57,10 +57,6 @@ export function CreateFundraiserForm() {
 
   // Handle form submission.
   const handleSubmit = (event) => {
-    if (error) {
-      return;
-    }
-    console.log("Submitted summary:", summary); // test
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
@@ -71,7 +67,16 @@ export function CreateFundraiserForm() {
       fundraiserSummary: data.get('fundraiserSummary'),
       fundraiserGoalAmount: data.get('fundraiserGoalAmount'),
     };
+
     // Use axios to post fundraiser data to the database.
+    axios.post('https://localhost:44442/api/fundraiser', newFundraiser)
+      .then(response => {
+        console.log(response.data);
+        window.location.href = '/browse/fundraisers';
+      })
+      .catch(error => {
+        console.error(error);
+      });
   };
 
 
@@ -154,7 +159,12 @@ export function CreateFundraiserForm() {
             </Paper>
           </Box>
           <Box display="flex" justifyContent="flex-end" alignItems="flex-end">
-            <Button type="submit" size="medium" variant="contained" align="right" sx={{ mt: 3, mb: 2 }}>
+            <Button
+              type="submit"
+              size="medium"
+              variant="contained"
+              align="right" sx={{ mt: 3, mb: 2 }}
+            >
               Create
             </Button>
           </Box>
