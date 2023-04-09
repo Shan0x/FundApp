@@ -37,6 +37,7 @@ namespace FundApp.Controllers
 
             return true;
         }
+
         // GET: api/<FundraiserController>
         [HttpGet]
         public IActionResult Get()
@@ -44,7 +45,11 @@ namespace FundApp.Controllers
             try
             {
                 NpgsqlConnection conn = new NpgsqlConnection(_configuration.GetConnectionString("localconnection").ToString());
-                NpgsqlCommand cmd = new NpgsqlCommand("SELECT * FROM \"Fundraiser\";", conn);
+                NpgsqlCommand cmd = new NpgsqlCommand(@"
+                SELECT F.*, SUM(D.""donationAmount"") AS ""totalDonations""
+                FROM ""Fundraiser"" f
+                INNER JOIN ""Donations"" D ON F.""fundraiserID"" = D.""fundraiserID""
+                GROUP BY F.""fundraiserID"";", conn);
 
                 conn.Open();
                 NpgsqlDataReader reader = cmd.ExecuteReader();
