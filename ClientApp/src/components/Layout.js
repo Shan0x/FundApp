@@ -13,7 +13,7 @@ export class Layout extends Component {
         style={{
           height: "100vh",
           backgroundColor: "#B5E3BB",
-          padding: 48
+          padding: 40
         }}>
         <div
           style={{
@@ -22,7 +22,7 @@ export class Layout extends Component {
             backgroundColor: "aliceblue"
           }}>
           <NavMenu />
-          <Container style={{ height: "100%" }}>
+          <Container >
             {this.props.children}
           </Container>
         </div>

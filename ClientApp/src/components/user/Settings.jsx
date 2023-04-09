@@ -1,102 +1,116 @@
 /**
  * @format
  * @fileoverview User settings page to update profile details.
- * @author
-I updated the implementation for AccountSettingsController. There are 3 POST requests possible: update email, update password, and delete account.
-
-* notes backend from Cris
-The request's body format for an email update(request URL, "api/accountsettings/update/email"):
-"body":{
-  "userName": "<whatever their current username is>",
-  "userPassword": "<whatever their current password is>",
-  "userEmail": "<whatever their new/updated email is>"
-}
-
-
-The request's body format for a password update(request URL, "api/accountsettings/update/password"):
-"body":{
-  "userName": "<whatever their current username is>",
-  "userPassword": "<whatever their current password is>",
-  "newUserPassword": "<whatever their new/updated password is>"
-}
-
-
-The request's body format for account deletion(request URL, "api/accountsettings/update/delete"):
-"body":{
-  "userName": "<whatever their current username is>",
-  "userPassword": "<whatever their current password is>"
-}
- So @SBD if you look at my Signup.js
-I created a new object 
-const newUser = {
-    userName: data.get('username'),
-    ...
-    userEmail: data.get('email')
-};
-
-then used axios to create a post request to /api/Signup with the new object I created. 
-
-This is also within a function 'handleSubmit', which is called when they click the submit button.
-
-I imagine it will be a similar concept using the update settings api Cris created. You will just have to grab any missing data from the user session. 
-I think. Not 100% sure about it. That's just my thought process right now. (edited)
-
-1
-
- Notes from Shanne
+ * @author SBD
  */
 
 import React, { useState } from "react";
+import {useNavigate} from "react-router-dom"
 // import { createTheme, ThemeProvider, useTheme } from "@mui/material/styles";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Typography from "@mui/material/Typography";
+import { styled } from "@mui/material/styles";
 import { Box, TextField, Stack, Button } from "@mui/material/";
 import axios from "axios";
 import { UserInfo } from "./DonationInfo/UserInfo";
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions
+} from "@mui/material";
 
 export const Settings = () => {
   const [newEmail, setNewEmail] = useState("");
   const [newPassword, setNewPassword] = useState("");
+  const [openDialog, setOpenDialog] = useState(false);
+  const navigate = useNavigate()
   const user = UserInfo();
-  console.log(user, "user");
+
+const StyledButton = styled(Button)(() => ({
+  borderRadius: "20px",
+  backgroundColor: "#B5E3BB",
+  color: "black",
+  fontSize: 12,
+  width: "85%",
+  margin: "0 auto"
+}));
 
   //added this to handle passworda and email
   const handleUpdate = () => {
-    const url = newEmail.includes("@") ? "/api/accountsettings/update/email" : "/api/accountsettings/update/password"
+    const url = newEmail.includes("@")
+      ? "/api/accountsettings/update/email"
+      : "/api/accountsettings/update/password";
     const payload = newEmail.includes("@")
-      ? { userName: user.userName,userPassword: user.userPassword , userEmail: newEmail }
-      : { userName: user.userName, userPassword: user.userPassword , newUserPassword: newPassword };
+      ? {
+          userName: user.userName,
+          userEmail: newEmail
+        }
+      : {
+          userName: user.userName,
+          userPassword: user.userPassword,
+          newUserPassword: newPassword
+        };
     axios
-      .post(url,payload)
+      .post(url, payload)
       .then((response) => {
+        navigate("/u/home")
+        setNewEmail("")
+        setNewPassword("")
         console.log(response.data);
         // show success message to user
       })
       .catch((error) => {
         console.log(error);
         // show error message to user
+        // window.location.reload();
       });
   };
-
-  //added to delete account
+  //added alert
   const handleDelete = () => {
+    setOpenDialog(true);
+  };
+
+  const handleDialogClose = () => {
+    setOpenDialog(false);
+  };
+  //added to delete account
+  const handleAccountDelete = () => {
     axios
       .post("api/accountsettings/update/delete", {
         userName: user.userName,
         userPassword: user.userPassword
       })
       .then((response) => {
+        navigate("/")
+        setNewEmail("")
+        setNewPassword("")
         console.log(response.data);
         // show success message to user and redirect to login page
+        //alert("Your account has been deleted.");
+        //window.location.href = "/u/home";
       })
       .catch((error) => {
         console.log(error);
         // show error message to user
       });
+    setOpenDialog(false);
+    const password = prompt(
+      "Please enter your password to confirm account deletion:"
+    );
+
+    if (password === user.userPassword) {
+      setOpenDialog(true);
+    } else {
+      // Show an error message to the user if the password is incorrect
+      alert("Incorrect password. Please try again.");
+    }
   };
+  
 
   return (
     <>
@@ -234,20 +248,40 @@ export const Settings = () => {
               onClick={handleDelete}>
               Delete Account
             </Button>
-            <div>
-              <Button
-                variant='contained'
-                sx={{
-                  height: 40,
-                  width: 200,
-                  backgroundColor: "#B5E3BB",
-                  color: "black",
-                  borderRadius: "20px"
-                }}
-                onClick={handleUpdate}>
-                Update
-              </Button>
-            </div>
+          </Stack>
+          <Dialog
+            open={openDialog}
+            onClose={handleDialogClose}
+            aria-labelledby='alert-dialog-title'
+            aria-describedby='alert-dialog-description'>
+            <DialogTitle id='alert-dialog-title'>
+              {"Delete Account"}
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText id='alert-dialog-description'>
+                Are you sure you want to delete your account?
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <StyledButton onClick={handleDialogClose}>Cancel</StyledButton>
+              <StyledButton onClick={handleAccountDelete} autoFocus>
+                Delete
+              </StyledButton>
+            </DialogActions>
+          </Dialog>
+          <Stack sx={{ position: "absolute", bottom: "10px", right: "10px" }}>
+            <Button
+              variant='contained'
+              sx={{
+                height: 40,
+                width: 200,
+                backgroundColor: "#B5E3BB",
+                color: "black",
+                borderRadius: "20px"
+              }}
+              onClick={handleUpdate}>
+              Update
+            </Button>
           </Stack>
         </Stack>
       </Stack>

@@ -97,6 +97,9 @@ export class Home extends Component {
           <li>
             <a href='/u/settings'>Account Settings</a>
           </li>
+          <li>
+            <a href='/u/donate-modal'>Donate-Modal</a>
+          </li>
         </ul>
       </div>
     );
