@@ -4,13 +4,19 @@
  **/
 
 import React, { useState, useEffect } from 'react'
-import { Grid } from '@mui/material'
 import axios from 'axios';
 import FundraiserCard from './FundraiserContainer'
+import {
+  Card,
+  CardContent,
+  Button,
+  Box,
+  Typography,
+  Grid
+} from '@mui/material'
 
 
-
-const FundraisersList = () => {
+export const FundraisersList = () => {
   const [fundraisers, setFundraisers] = useState([]);
 
   const getFundraisers = async () => {
@@ -27,22 +33,20 @@ const FundraisersList = () => {
     getFundraisers()
   }, []);
 
-  const renderFundraiser = () => {
-    return fundraisers.map((fundraiser) => (
-      <Grid key={fundraiser.fundraiserID} item xs={12} sm={6}>
-        <FundraiserCard fundraiser={fundraiser} />
-      </Grid>
-    ));
-  };
 
   return (
-    <div>
+    <Box>
       <Grid container spacing={2}>
-        {reunderFundraisers()}
-
+        
+        {fundraisers.slice(0, 5).map((fundraiser) => (
+          <Grid item xs={12} sm={6} md={4} key={fundraiser.fundraiserID}>
+            <FundraiserCard fundraiser={fundraiser} />
+          </Grid>
+        ))}
       </Grid>
-    </div>
+    </Box>
   );
-};
+  };
+
 
 export default FundraisersList;

@@ -37,10 +37,50 @@ namespace FundApp.Controllers
 
             return true;
         }
+        // GET: api/<FundraiserController>
+        [HttpGet]
+        public IActionResult Get()
+        {
+            try
+            {
+                NpgsqlConnection conn = new NpgsqlConnection(_configuration.GetConnectionString("localconnection").ToString());
+                NpgsqlCommand cmd = new NpgsqlCommand("SELECT * FROM \"Fundraiser\";", conn);
 
+                conn.Open();
+                NpgsqlDataReader reader = cmd.ExecuteReader();
+
+                List<Fundraiser> fundraisers = new List<Fundraiser>();
+
+                while (reader.Read())
+                {
+                    Fundraiser fundraiser = new Fundraiser
+                    {
+                        // Update with appropriate column names from your database
+                        fundraiserID = reader.GetInt32(0),
+                        userID = reader.GetInt32(1),
+                        fundraiserStatus = reader.GetString(2),
+                        fundraiserName = reader.GetString(3),
+                        fundraiserSummary = reader.GetString(4),
+                        fundraiserGoalAmount = reader.GetDouble(5),
+                        totalDonations = reader.GetDouble(7),
+                        fundraiserDateCreated = DateOnly.FromDateTime(reader.GetDateTime(6))
+                    };
+
+                    fundraisers.Add(fundraiser);
+                }
+
+                conn.Close();
+
+                return Ok(fundraisers);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Error getting fundraisers: " + ex.Message);
+            }
+        }
 
         // GET api/<FundraiserController>/5
-        [HttpGet]
+        [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
             NpgsqlConnection conn = new NpgsqlConnection(_configuration.GetConnectionString("localconnection").ToString());
@@ -54,9 +94,6 @@ namespace FundApp.Controllers
 
             conn.Open();
             NpgsqlDataReader reader = cmd.ExecuteReader();
-
-
-
 
             if (reader.HasRows)
             {
