@@ -10,50 +10,75 @@ import {
   CardActionArea,
   CardActions,
   Button,
+  Box,
   Typography,
-  makeStyles
+  Grid
 } from '@mui/material'
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-// Style for fundraiser card.
-const fundraiserStyle = makeStyles((theme) => ({
-  card: {
-    borderRadius: theme.spacing(2),
-    boxShadow: theme.shadows[2],
-    padding: theme.spacing(2),
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#B5E3BB',
+    },
+    secondary: {
+      main: '#F589A3',
+    },
   },
-
-  // Additional Styles
-
-}));
+});
 
 const FundraiserCard = ({ fundraiser }) => {
-  const clases = fundraiserStyle();
-
   return (
-    <Card className={classes.card}>
-      <CardActionArea>
-      <CardMedia
-        component="img"
-        height="140"
-        image="https://source.unsplash.com/random/?charity"
-      />
-      <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
-          Fundraiser Name
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Fundraiser Summary goes here.
-        </Typography>
-      </CardContent>
-      </CardActionArea>
-      <CardActions>
-        <Button size="small" color="primary">
-          Donate
-        </Button>
-      </CardActions>
-    </Card>
-    )
-  
-}
+    <ThemeProvider theme={theme}>
+      <Grid item xs={12} sm={6} md={4} lg={3}>
+      <Card
+        sx={{
+          marginTop: 4,
+          borderRadius: '10%',
+            boxShadow: '2',
+            flexDirection: 'column',
+            maxWidth: 300,
+            minWidth: 250,
+            
+        }}
+      >
+        <CardActionArea>
+          <CardMedia
+            component="img"
+            height="150"
+            image="https://source.unsplash.com/random/?charity"
+          />
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="div">
+              {fundraiser.fundraiserName}
+            </Typography>
+            <Box sx={{
+              fontWeight: 'bold',
+              borderBottom: '1px solid',
+              borderColor: 'primary.main',
+              paddingTop: '5px'
+            }}>
+              <Typography variant="body2" color="text.secondary">
+                {fundraiser.fundraiserSummary.length <= 60 ?
+                  fundraiser.fundraiserSummary : (
+                    <span>
+                      <span >{fundraiser.fundraiserSummary.substr(0, 60)}</span>
+                      <span style={{ color: theme.palette.primary.main }}> more...</span>
+                    </span>
+                  )}
+              </Typography>
+            </Box>
+          </CardContent>
+        </CardActionArea>
+        <CardActions>
+          <Button size="med" color="secondary">
+            Donate
+          </Button>
+        </CardActions>
+        </Card>
+        </Grid>
+    </ThemeProvider>
+  )
+};
 
 export default FundraiserCard;

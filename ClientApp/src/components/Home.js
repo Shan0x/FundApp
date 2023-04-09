@@ -84,7 +84,7 @@ export class Home extends Component {
             <a href='/sign-up'>Signup Page</a>
           </li>
           <li>
-            <a href='/fundraisers'>Fundraiser List</a>
+            <a href='browse/fundraisers'>Fundraiser List</a>
           </li>
           <li>
             <a href='/donate'>Donation Page</a>
