@@ -2,7 +2,7 @@
  * @fileoverview Sign-up page for FundFriends.
  * */
 import React, { Component } from 'react';
-import { SignUpForm } from '../forms/Signup';
+import { SignUpForm } from '../forms/SignupForm';
 
 export class Signup extends Component {
   static displayName = Signup.name;

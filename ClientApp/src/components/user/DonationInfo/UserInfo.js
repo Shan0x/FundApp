@@ -39,6 +39,7 @@ export function UserInfo() {
         console.error("Error getting user information:", error);
       });
   }, []);
+  // Return user state containing user's information
   return user;
 }
 
