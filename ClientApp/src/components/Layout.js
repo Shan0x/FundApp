@@ -11,15 +11,15 @@ export class Layout extends Component {
     return (
       <div
         style={{
-          height: "100vh",
           backgroundColor: "#B5E3BB",
-          padding: 48
+          padding: 40
         }}>
         <div
           style={{
-            height: "100%",
+            height: "auto",
             borderRadius: "20px",
-            backgroundColor: "aliceblue"
+            backgroundColor: "aliceblue",
+            paddingBottom: '20px'
           }}>
           <NavMenu />
           <Container style={{ height: "100%" }}>

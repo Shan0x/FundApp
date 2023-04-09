@@ -6,7 +6,9 @@
 
 import React, { Component } from "react";
 import { Box, Button } from "@mui/material";
-import { styled} from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
+import { FundraisersList } from './fundraiser/FundraisersList'
+
 
 const StyledDiv = styled("div")(({ imageUrl }) => ({
   backgroundColor: "lightgrey",
@@ -54,31 +56,7 @@ export class Home extends Component {
           </Button>
         </div>
         <h5 style={{ paddingTop: 16 }}>Newest Campaigns</h5>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "center",
-            paddingBottom: 48,
-            borderBottom: "1px solid black"
-          }}>
-          {[...Array(4)].map((item, index) => (
-            <StyledDiv key={index} imageUrl={imageUrls[Math.floor(Math.random() * imageUrls.length)]} />
-          ))}
-        </div>
-        <h5 style={{ paddingTop: 16 }}>Local Campaigns</h5>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "center",
-            paddingBottom: 48,
-            borderBottom: "1px solid black"
-          }}>
-          {[...Array(4)].map((item, index) => (
-            <StyledDiv key={index}  imageUrl={imageUrls[Math.floor(Math.random() * imageUrls.length)]} > ></StyledDiv>
-          ))}
-         </div>
+        <FundraisersList />
         <ul>
           <li>
             <a href='/sign-up'>Signup Page</a>

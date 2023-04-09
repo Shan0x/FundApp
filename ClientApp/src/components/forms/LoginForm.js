@@ -59,7 +59,7 @@ export function LoginForm() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Grid container component="main" sx={{ padding: '30px', width: '80%', height: '70vh', margin: 'auto' }}>
+      <Grid container component="main" sx={{ padding: '30px', maxWidth: '75%', margin: 'auto' }}>
         <CssBaseline />
         <Grid item xs={false} sm={4} md={7} sx={{
             backgroundImage: 'url(https://source.unsplash.com/random/?charity)',

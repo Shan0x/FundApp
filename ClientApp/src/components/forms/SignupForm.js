@@ -21,10 +21,10 @@ const zxcvbn = require("zxcvbn");
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#B5E3BB',
+      main: '#F589A3',
     },
     secondary: {
-      main: '#F589A3',
+      main: '#B5E3BB',
       },
     },
   });
@@ -74,11 +74,17 @@ export function SignUpForm() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
+      <Container component="main" maxWidth="xs" sx={{
+        backgroundColor: '#FFFFFF',
+        padding: 2,
+        borderRadius: '3%',
+        boxShadow: 3
+      }}
+      >
         <CssBaseline />
         <Box
           sx={{
-            marginTop: 8,
+            marginTop: 2,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -181,7 +187,7 @@ export function SignUpForm() {
             </Grid>
           </Box>
         </Box>
-      </Container>
+        </Container>
     </ThemeProvider>
   );
 }
