@@ -297,7 +297,7 @@ export const DonateModal = () => {
                   width: 450,
                   height: 200,
                   backgroundColor: "grey",
-                  borderradius: "20"
+                  borderRadius: "20px"
                 }}></Box>
             </Stack>
           </DialogContent>
