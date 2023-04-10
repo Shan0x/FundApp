@@ -12,7 +12,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { CssBaseline, Link, Grid, Box, Typography, Container } from "@mui/material";
-import { Avatar, Button, TextField, } from "@mui/material"
+import { Avatar, Button, TextField } from "@mui/material"
 import axios from 'axios';
 // zxcvbn is a password strength estimator.
 const zxcvbn = require("zxcvbn");
@@ -21,10 +21,10 @@ const zxcvbn = require("zxcvbn");
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#B5E3BB',
+      main: '#F589A3',
     },
     secondary: {
-      main: '#F589A3',
+      main: '#B5E3BB',
       },
     },
   });
@@ -65,6 +65,7 @@ export function SignUpForm() {
     axios.post('https://localhost:44442/api/Signup', newUser)
       .then(response => {
         console.log(response.data);
+        window.location.href = '/login';
       })
       .catch(error => {
         console.error(error);
@@ -73,11 +74,17 @@ export function SignUpForm() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
+      <Container component="main" maxWidth="xs" sx={{
+        backgroundColor: '#FFFFFF',
+        padding: 2,
+        borderRadius: '3%',
+        boxShadow: 3
+      }}
+      >
         <CssBaseline />
         <Box
           sx={{
-            marginTop: 8,
+            marginTop: 2,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -180,7 +187,7 @@ export function SignUpForm() {
             </Grid>
           </Box>
         </Box>
-      </Container>
+        </Container>
     </ThemeProvider>
   );
 }

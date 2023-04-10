@@ -11,5 +11,6 @@ namespace FundApp.Data
 
         //DbSets map models to database tables.
         public DbSet<FundApp.Models.Users> Users { get; set; } = default!;
+
     }
 }

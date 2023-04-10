@@ -23,7 +23,7 @@ const AppRoutes = [
     element: <Login />
   },
   {
-    path: 'browse/fundraisers',
+    path: '/fundraisers',
     element: <Fundraisers />
   },
   {
@@ -35,7 +35,7 @@ const AppRoutes = [
     element: <UserDashboard />
   },
   {
-    path: '/u/create',
+    path: '/create',
     element: <CreateFundraisers />
   },
   {

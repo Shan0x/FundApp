@@ -7,7 +7,10 @@ import { UserDashboard } from "./components/user/UserDashboard";
 import { CreateFundraisers } from "./components/fundraiser/CreateFundraiser";
 import { Settings } from "./components/user/Settings";
 import { ForgotPassword } from "./components/user/ForgotPassword";
+<<<<<<< HEAD
 import {DonateModal} from "./components/DonateModal";
+=======
+>>>>>>> origin/master
 
 const AppRoutes = [
   {
@@ -45,10 +48,13 @@ const AppRoutes = [
   {
     path: '/forgot-password',
     element: <ForgotPassword />
+<<<<<<< HEAD
   },
   {
     path: '/u/donate-modal',
     element: <DonateModal />
+=======
+>>>>>>> origin/master
   }
 
 ];

@@ -1,12 +1,8 @@
-/**
- * @format
- * @fileoverview Landing page for FundFriends App.
- * @author Shannen Lowe
- */
-
 import React, { Component } from "react";
 import { Box, Button } from "@mui/material";
-import { styled} from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
+import { FundraisersList } from './fundraiser/FundraisersList'
+
 
 const StyledDiv = styled("div")(({ imageUrl }) => ({
   backgroundColor: "lightgrey",
@@ -43,47 +39,24 @@ export class Home extends Component {
           }}>
           <Button
             variant='outlined'
+            href="/u/create"
             style={{
               borderRadius: "20px",
               borderWidth: "6px",
               borderColor: "#B5E3BB",
-              color: "black"
+              color: "black",
             }}>
             <h5>Create your community</h5>
           </Button>
         </div>
         <h5 style={{ paddingTop: 16 }}>Newest Campaigns</h5>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "center",
-            paddingBottom: 48,
-            borderBottom: "1px solid black"
-          }}>
-          {[...Array(4)].map((item, index) => (
-            <StyledDiv key={index} imageUrl={imageUrls[Math.floor(Math.random() * imageUrls.length)]} />
-          ))}
-        </div>
-        <h5 style={{ paddingTop: 16 }}>Local Campaigns</h5>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "center",
-            paddingBottom: 48,
-            borderBottom: "1px solid black"
-          }}>
-          {[...Array(4)].map((item, index) => (
-            <StyledDiv key={index}  imageUrl={imageUrls[Math.floor(Math.random() * imageUrls.length)]} > ></StyledDiv>
-          ))}
-         </div>
+        <FundraisersList />
         <ul>
           <li>
             <a href='/sign-up'>Signup Page</a>
           </li>
           <li>
-            <a href='/fundraisers'>Fundraiser List</a>
+            <a href='browse/fundraisers'>Fundraiser List</a>
           </li>
           <li>
             <a href='/donate'>Donation Page</a>
@@ -92,7 +65,7 @@ export class Home extends Component {
             <a href='/u/home'>Dashboard Page</a>
           </li>
           <li>
-            <a href='/create'>Fundraiser Creation Page</a>
+            <a href='/u/create'>Fundraiser Creation Page</a>
           </li>
           <li>
             <a href='/u/settings'>Account Settings</a>
