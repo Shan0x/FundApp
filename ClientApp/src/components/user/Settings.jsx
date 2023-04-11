@@ -139,7 +139,12 @@ const StyledButton = styled(Button)(() => ({
                 borderRadius: "50%",
                 background: "white"
               }}>
-              <Box mt={-2}> Avatar </Box>
+              <img
+                  src='/fund.png'
+                  alt='Avatar'
+                 justify='center'
+                  style={{ width: "100%", height: "100%" }}
+                /> 
             </Stack>
             <Stack mt={8} borderTop={"1px solid black"} textAlign={"center"}>
               <Stack pt={2} pb={2}>
