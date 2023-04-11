@@ -19,7 +19,8 @@ export class Layout extends Component {
             height: "auto",
             borderRadius: "20px",
             backgroundColor: "aliceblue",
-            paddingBottom: '20px'
+            paddingBottom: '20px',
+            
           }}>
           <NavMenu />
           <Container style={{ height: "100%" }}>

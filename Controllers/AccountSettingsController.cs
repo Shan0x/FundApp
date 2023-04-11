@@ -59,7 +59,6 @@ namespace FundApp.Controllers
             //Building query with input from the frontend/user
             NpgsqlConnection conn = new NpgsqlConnection(_configuration.GetConnectionString("localconnection").ToString());
             NpgsqlCommand cmd = new NpgsqlCommand("UPDATE \"Users\" SET \"userEmail\"=\'" + req.userEmail + "\' WHERE \"userName\"=\'" + req.userName + "\';", conn);
-
             conn.Open();
             int queryExecutionStatus = cmd.ExecuteNonQuery();
             conn.Close();

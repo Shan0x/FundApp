@@ -1,4 +1,5 @@
 ﻿/**
+ * @format
  * @name CreateFundraisers.jsx
  * @fileoverview A page containing a form for registered users to create a new fundraiser.
  */
@@ -21,6 +22,8 @@ export class CreateFundraisers extends Component {
           <CreateFundraiserForm />
         </h1>
       </div>
+      //   </Stack>
+      // </Stack>
     );
   }
 }

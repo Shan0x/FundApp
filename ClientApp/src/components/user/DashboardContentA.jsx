@@ -85,20 +85,26 @@ export function DashboardContentA() {
                   borderRadius: "50%",
                   background: "white"
                 }}>
-                <Box mt={-2}> Avatar </Box>
+                
+                 <img
+                  src='/fund.png'
+                  alt='Avatar'
+                 justify='center'
+                  style={{ width: "100%", height: "100%" }}
+                /> 
               </Stack>
-              <Stack mb={2}>Username</Stack><Link to='/fundraiser/CreateFundraiser'>
+              <Stack mb={2}>Username</Stack><Link to='/u/Settings'>
               <Button
-                variant='outlined'
+                variant='contained'
                 style={{
                   borderRadius: "20px",
                   backgroundColor: "#B5E3BB",
                   color: "black",
-                  fontSize: 12,
+                  fontSize: 14,
                   width: "85%",
                   margin: "0 auto"
                 }}>
-                Start a New Fundraiser!
+                USER SETTINGS
               </Button>
               </Link>
             </Stack>
@@ -191,6 +197,3 @@ export function DashboardContentA() {
     </>
   );
 }
-
-
-

@@ -2,16 +2,17 @@
  * @format
  * @fileoverview User settings page to update profile details.
  * @author SBD
-I updated the implementation for AccountSettingsController. There are 3 POST requests possible: update email, update password, and delete account.
  */
 
 import React, { useState } from "react";
+import {useNavigate} from "react-router-dom"
 // import { createTheme, ThemeProvider, useTheme } from "@mui/material/styles";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Typography from "@mui/material/Typography";
+import { styled } from "@mui/material/styles";
 import { Box, TextField, Stack, Button } from "@mui/material/";
 import axios from "axios";
 import { UserInfo } from "./DonationInfo/UserInfo";
@@ -26,7 +27,18 @@ import {
 export const Settings = () => {
   const [newEmail, setNewEmail] = useState("");
   const [newPassword, setNewPassword] = useState("");
+  const [openDialog, setOpenDialog] = useState(false);
+  const navigate = useNavigate()
   const user = UserInfo();
+
+const StyledButton = styled(Button)(() => ({
+  borderRadius: "20px",
+  backgroundColor: "#B5E3BB",
+  color: "black",
+  fontSize: 12,
+  width: "85%",
+  margin: "0 auto"
+}));
 
   //added this to handle passworda and email
   const handleUpdate = () => {
@@ -46,12 +58,16 @@ export const Settings = () => {
     axios
       .post(url, payload)
       .then((response) => {
+        navigate("/u/home")
+        setNewEmail("")
+        setNewPassword("")
         console.log(response.data);
         // show success message to user
       })
       .catch((error) => {
         console.log(error);
         // show error message to user
+        // window.location.reload();
       });
   };
   //added alert
@@ -70,25 +86,31 @@ export const Settings = () => {
         userPassword: user.userPassword
       })
       .then((response) => {
+        navigate("/")
+        setNewEmail("")
+        setNewPassword("")
         console.log(response.data);
         // show success message to user and redirect to login page
+        //alert("Your account has been deleted.");
+        //window.location.href = "/u/home";
       })
       .catch((error) => {
         console.log(error);
         // show error message to user
       });
     setOpenDialog(false);
-const password = prompt("Please enter your password to confirm account deletion:");
-  
-  if (password === user.userPassword) {
-    setOpenDialog(true);
-  } else {
-    // Show an error message to the user if the password is incorrect
-    alert("Incorrect password. Please try again.");
-  }
+    const password = prompt(
+      "Please enter your password to confirm account deletion:"
+    );
 
+    if (password === user.userPassword) {
+      setOpenDialog(true);
+    } else {
+      // Show an error message to the user if the password is incorrect
+      alert("Incorrect password. Please try again.");
+    }
   };
-  const [openDialog, setOpenDialog] = useState(false);
+  
 
   return (
     <>
@@ -117,7 +139,12 @@ const password = prompt("Please enter your password to confirm account deletion:
                 borderRadius: "50%",
                 background: "white"
               }}>
-              <Box mt={-2}> Avatar </Box>
+              <img
+                  src='/fund.png'
+                  alt='Avatar'
+                 justify='center'
+                  style={{ width: "100%", height: "100%" }}
+                /> 
             </Stack>
             <Stack mt={8} borderTop={"1px solid black"} textAlign={"center"}>
               <Stack pt={2} pb={2}>
@@ -241,10 +268,10 @@ const password = prompt("Please enter your password to confirm account deletion:
               </DialogContentText>
             </DialogContent>
             <DialogActions>
-              <Button onClick={handleDialogClose}>Cancel</Button>
-              <Button onClick={handleAccountDelete} autoFocus>
+              <StyledButton onClick={handleDialogClose}>Cancel</StyledButton>
+              <StyledButton onClick={handleAccountDelete} autoFocus>
                 Delete
-              </Button>
+              </StyledButton>
             </DialogActions>
           </Dialog>
           <Stack sx={{ position: "absolute", bottom: "10px", right: "10px" }}>

@@ -1,9 +1,3 @@
-/**
- * @format
- * @fileoverview Landing page for FundFriends App.
- * @author Shannen Lowe
- */
-
 import React, { Component } from "react";
 import { Box, Button } from "@mui/material";
 import { styled } from "@mui/material/styles";
@@ -75,6 +69,9 @@ export class Home extends Component {
           </li>
           <li>
             <a href='/u/settings'>Account Settings</a>
+          </li>
+          <li>
+            <a href='/u/donate-modal'>Donate-Modal</a>
           </li>
         </ul>
       </div>
