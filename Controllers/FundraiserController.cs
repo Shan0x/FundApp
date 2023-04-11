@@ -46,9 +46,9 @@ namespace FundApp.Controllers
             {
                 NpgsqlConnection conn = new NpgsqlConnection(_configuration.GetConnectionString("localconnection").ToString());
                 NpgsqlCommand cmd = new NpgsqlCommand(@"
-                SELECT F.*, SUM(D.""donationAmount"") AS ""totalDonations""
+                SELECT F.*, COALESCE(SUM(D.""donationAmount""), 0) AS ""totalDonations""
                 FROM ""Fundraiser"" f
-                INNER JOIN ""Donations"" D ON F.""fundraiserID"" = D.""fundraiserID""
+                LEFT JOIN ""Donations"" D ON F.""fundraiserID"" = D.""fundraiserID""
                 GROUP BY F.""fundraiserID"";", conn);
 
                 conn.Open();
