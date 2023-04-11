@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @format
  * @fileoverview A page that contains Pup Ups when the donating
  * @author SBD
