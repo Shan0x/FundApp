@@ -38,6 +38,7 @@ namespace FundApp.Controllers
             return true;
         }
         // GET: api/<FundraiserController>
+        // GETs all fundraisers
         [HttpGet]
         public IActionResult Get()
         {
@@ -84,6 +85,7 @@ namespace FundApp.Controllers
         }
 
         // GET api/<FundraiserController>/5
+        // GETs a specific fundraiser
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
@@ -142,7 +144,7 @@ namespace FundApp.Controllers
             double? fundGoalAmt = fundraiser.fundraiserGoalAmount;
             bool isQuerySuccess = true;
 
-            if ((userID < 1) || (fundGoalAmt < 100) || (fundName == "") || (fundSummary == "") || (userID == null) || (fundName == null) || (fundSummary == null) || (fundGoalAmt == null))
+            if ((userID < 1) || (fundName == "") || (fundSummary == "") || (userID == null) || (fundName == null) || (fundSummary == null) || (fundGoalAmt == null))
             {//General variable validation
                 return false;
             }
@@ -155,6 +157,7 @@ namespace FundApp.Controllers
             {//User has not reached fundraiser limit
                 NpgsqlConnection conn = new NpgsqlConnection(_configuration.GetConnectionString("localconnection").ToString());
                 NpgsqlCommand cmd = new NpgsqlCommand("INSERT INTO \"Fundraiser\"(\"userID\", \"fundraiserName\", \"fundraiserSummary\", \"fundraiserGoalAmount\") VALUES(" + userID + ", \'" + fundName + "\', \'" + fundSummary + "\', " + fundGoalAmt + ");", conn);
+
 
                 conn.Open();
                 int queryExecutionStatus = cmd.ExecuteNonQuery();

@@ -30,7 +30,7 @@ const AppRoutes = [
     element: <Donate />
   },
   {
-    path: '/u/home',
+    path: '/u/dashboard',
     element: <UserDashboard />
   },
   {

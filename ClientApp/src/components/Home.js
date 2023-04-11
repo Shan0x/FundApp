@@ -35,7 +35,7 @@ export class Home extends Component {
           style={{
             textAlign: "center",
             paddingBottom: 50,
-            borderBottom: "1px solid black"
+            borderBottom: "2px solid #F589A3",
           }}>
           <Button
             variant='outlined'

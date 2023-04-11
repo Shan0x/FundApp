@@ -38,14 +38,6 @@ export function SignUpForm() {
     setSelectedDate(date);
   };
 
-  const handlePassChange = (event) => {
-      const { name, value } = event.target;
-
-      const score = value ? zxcvbn(value).score + 1 : null;
-      setScore(score);
-      setPassword(value);
-    };
-
 
   const handleSubmit = (event) => {
     event.preventDefault();

@@ -111,7 +111,7 @@ export const FundraisersList = () => {
                 fundraiser={fundraiser}
                 open={open}
                 setOpen={setOpen}
-              />
+              >
             </Box>
           </Grid>
         ))}

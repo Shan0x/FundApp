@@ -3,7 +3,7 @@
  * @todo Only allow logged in users to access this page.
  * */
 import React, { Component } from 'react';
-import { DashboardContent } from './DashboardContent';
+//import { DashboardContent } from './DashboardContent';
 import { DashboardContentA } from './DashboardContentA';
 
 

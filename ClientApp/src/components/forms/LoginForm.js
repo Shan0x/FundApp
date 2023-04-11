@@ -50,7 +50,7 @@ export function LoginForm() {
       .then(response => {
         const userId = response.data.userId;
         console.log('Request successful!' + ' User ID:', userId);
-        window.location.href = '/u/home';
+        window.location.href = '/u/dashboard';
       })
       .catch(error => {
         console.error('Request failed:', error);
