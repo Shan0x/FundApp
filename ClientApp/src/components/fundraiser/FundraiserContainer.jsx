@@ -27,7 +27,7 @@ const theme = createTheme({
   },
 });
 
-const FundraiserCard = ({ fundraiser }) => {
+const FundraiserCard = ({ fundraiser,open,setOpen }) => {
   return (
     <ThemeProvider theme={theme}>
       <Card
@@ -64,7 +64,7 @@ const FundraiserCard = ({ fundraiser }) => {
           </CardContent>
         </CardActionArea>
         <CardActions>
-          <Button size="med" color="secondary">
+          <Button onClick={()=>setOpen(!open)} size="med" color="secondary">
             Donate
           </Button>
             </CardActions>
