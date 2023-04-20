@@ -19,7 +19,6 @@ import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
 import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
@@ -92,6 +91,20 @@ function stringAvatar(name) {
   };
 }
 
+const userAvatar = ({ user }) => {
+  if (!user) {
+    return (
+      <Avatar src="/broken-image.jpg" />
+    );
+  }
+  const userFullName = `${user.userFirstName} ${user.userLastName}`;
+  return (
+    <Avatar
+      {...stringAvatar(userFullName)}
+    />
+  );
+}
+
 const pages = [
   { name: "Fundraiser List", link: "/browse/fundraisers" },
   { name: "Dashboard", link: "/u/dashboard" },
@@ -105,8 +118,8 @@ export const NavMenu =() =>  {
     setCollapsed(!collapsed)
   }
   const user = UserInfo();
+  const userFullName = user ? `${user.userFirstName} ${user.userLastName}` : '';
 
-  const userFullName = `${user.userFirstName} ${user.userLastName}`;
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -163,9 +176,13 @@ export const NavMenu =() =>  {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenNavMenu} sx={{ p: 1 }}>
-                <Avatar
-                  {...stringAvatar(userFullName)}
-                />
+                {user ? (
+                  <Avatar
+                    {...stringAvatar(userFullName)}
+                  />
+                ) : (
+                  <Avatar src="/broken-image.jpg" />
+                )}
               </IconButton>
             </Tooltip>
             <Menu
