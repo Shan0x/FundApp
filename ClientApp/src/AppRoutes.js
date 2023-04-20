@@ -44,7 +44,7 @@ const AppRoutes = [
   {
     path: '/forgot-password',
     element: <ForgotPassword />
-  },
+  }
 
 ];
 
