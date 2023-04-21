@@ -19,6 +19,7 @@ import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
+import MenuIcon from '@mui/icons-material/Menu';
 import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
@@ -104,7 +105,6 @@ const userAvatar = ({ user }) => {
     />
   );
 }
-
 const pages = [
   { name: "Fundraiser List", link: "/browse/fundraisers" },
   { name: "Dashboard", link: "/u/dashboard" },
@@ -112,8 +112,8 @@ const pages = [
   { name: "Donate Page", link: "/donate" }
 ];
 
-export const NavMenu =() =>  {
-  const [collapsed,setCollapsed] = useState(true)
+export const NavMenu = () => {
+  const [collapsed, setCollapsed] = useState(true)
   const toggleCollapse = () => {
     setCollapsed(!collapsed)
   }
@@ -127,46 +127,46 @@ export const NavMenu =() =>  {
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
-    return (
-      <header>
-        <Navbar
-          className='navbar-expand-sm navbar-toggleable-sm ng-white box-shadow mb-3'
-          container
-          light>
-          <NavbarBrand tag={Link} to='/'>
-            <img
-              src='/fund.png'
-              alt='FundFriendsLOGO'
-              style={{ width: "80px", height: "80px" }}
-            />
-          </NavbarBrand>
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder='Fundrasing name, @name, #tags...'
-              inputProps={{ "aria-label": "search" }}
-            />
-          </Search>
-          <NavbarToggler onClick={toggleCollapse} className='mr-2' />
-          <Collapse
-            className='d-sm-inline-flex flex-sm-row-reverse'
-            isOpen={collapsed}
-            navbar>
-            <ul className='navbar-nav flex-grow'>
-              <NavItem >
-                <NavLink tag={Link} className='text-dark' to='/'>
-                  Home
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink tag={Link} className='text-dark' to='/sign-up'>
-                  Create 
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink tag={Link} className='text-dark' to='/login'>
+  return (
+    <header>
+      <Navbar
+        className='navbar-expand-sm navbar-toggleable-sm ng-white box-shadow mb-3'
+        container
+        light>
+        <NavbarBrand tag={Link} to='/'>
+          <img
+            src='/fund.png'
+            alt='FundFriendsLOGO'
+            style={{ width: "80px", height: "80px" }}
+          />
+        </NavbarBrand>
+        <Search>
+          <SearchIconWrapper>
+            <SearchIcon />
+          </SearchIconWrapper>
+          <StyledInputBase
+            placeholder='Fundrasing name, @name, #tags...'
+            inputProps={{ "aria-label": "search" }}
+          />
+        </Search>
+        <NavbarToggler onClick={toggleCollapse} className='mr-2' />
+        <Collapse
+          className='d-sm-inline-flex flex-sm-row-reverse'
+          isOpen={collapsed}
+          navbar>
+          <ul className='navbar-nav flex-grow'>
+            <NavItem >
+              <NavLink tag={Link} className='text-dark' to='/'>
+                Home
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink tag={Link} className='text-dark' to='/sign-up'>
+                Create
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink tag={Link} className='text-dark' to='/login'>
                 Login
                 </NavLink>
               </NavItem>
