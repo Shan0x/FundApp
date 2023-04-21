@@ -10,6 +10,7 @@ import {
   Box
 } from '@mui/material'
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
+import { Modal } from '../../../../node_modules/@mui/material/index';
 
 const style = {
   position: 'absolute',
@@ -38,22 +39,23 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
 }));
 
 //const FundraiserItem = ({ fundraiser }) => {
-const FundraiserItem = () => {
+export const FundraiserView = ({ fundraiser } ) => {
+ 
+
   return (
     <Box sx={style}>
-      <Typography id="fundraiser-modal" variant="h5" component="h2">
-        Fundraiser name
-      </Typography>
-      <Box sx={{ m: 2 }}>
-        <BorderLinearProgress variant="determinate" value={60 } />
-      </Box>
-      <Box sx={{ m: 3 }}>
-      <Typography id="fundraiser-modal-summary" sx={{ mt: 2 }}>
-        Fundraiser summary
-      </Typography>
-      </Box>
+        <Typography id="fundraiser-modal" variant="h5" component="h2">
+        {fundraiser.fundraiserName}
+        </Typography>
+        <Box sx={{ m: 2 }}>
+          <BorderLinearProgress variant="determinate" value={60 } />
+        </Box>
+        <Box sx={{ m: 3 }}>
+        <Typography id="fundraiser-modal-summary" sx={{ mt: 2 }}>
+          {fundraiser.fundraiserSummary }
+        </Typography>
+        </Box>
     </Box>
   )
 };
 
-export default FundraiserItem;

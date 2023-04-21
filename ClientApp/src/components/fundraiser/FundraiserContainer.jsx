@@ -12,9 +12,10 @@ import {
   Button,
   Box,
   Typography,
-  Grid
+  Modal,
 } from '@mui/material'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { FundraiserView } from './FundraiserView';
 
 const theme = createTheme({
   palette: {
@@ -27,16 +28,32 @@ const theme = createTheme({
   },
 });
 
-const FundraiserCard = ({ fundraiser,open,setOpen }) => {
+
+
+const FundraiserCard = ({ fundraiser, open, setOpen }) => {
+  const [openFundraiser, setOpenFundraiser] = React.useState(false);
+  const handleOpen = () => setOpenFundraiser(true);
+  const handleClose = () => setOpenFundraiser(false);
+
+
   return (
     <ThemeProvider theme={theme}>
+      <Modal
+        open={openFundraiser}
+        onClose={handleClose}
+        aria-labelledby="modal-fundraiser-view"
+        aria-describedby="modal-fundraiser-modal"
+      >
+        <FundraiserView fundraiser={fundraiser} />
+      </Modal>
       <Card
         sx={{
           borderRadius: '10%',
           maxWidth: 345,
         }}
       >
-        <CardActionArea>
+        <CardActionArea onClick={handleOpen}>
+
           <CardMedia
             component="img"
             height="150"
