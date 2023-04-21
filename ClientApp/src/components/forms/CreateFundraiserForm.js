@@ -2,6 +2,7 @@
  * @fileoverview Form to create a new fundraiser.
  * */
 import * as React from 'react';
+import { useState } from 'react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {
   CssBaseline,
@@ -17,7 +18,6 @@ import {
   InputAdornment,
   FormControl,
 } from "@mui/material";
-import { useState } from 'react';
 import axios from 'axios';
 import { UserInfo } from "../user/DonationInfo/UserInfo";
 
@@ -42,6 +42,7 @@ export function CreateFundraiserForm() {
   const WORD_LIMIT = 500;
   const [summary, setSummary] = useState("");
   const [wordCount, setWordCount] = useState(0);
+  const [goalAmount, setGoalAmount] = useState("");
   const [error, setError] = useState("");
 
   // Handle summary word count limit.
@@ -65,11 +66,11 @@ export function CreateFundraiserForm() {
       userID: user.userID,
       fundraiserName: data.get('fundraiserName'),
       fundraiserSummary: data.get('fundraiserSummary'),
-      fundraiserGoalAmount: data.get('fundraiserGoalAmount'),
+      fundraiserGoalAmount: goalAmount,
     };
-
+    //console.log(newFundraiser);
     // Use axios to post fundraiser data to the database.
-    axios.post('https://localhost:44442/api/fundraiser', newFundraiser)
+    axios.post('https://localhost:44442/api/fundraiser/create', newFundraiser)
       .then(response => {
         console.log(response.data);
         window.location.href = '/browse/fundraisers';
@@ -109,13 +110,15 @@ export function CreateFundraiserForm() {
                   </Grid>
                 <Grid item xs={12} sm={6} sx={{ pb: 2 }}>
                   <FormControl variant="outlined">
-                    <InputLabel htmlFor="standard-adornment-amount">Goal Amount</InputLabel>
+                      <InputLabel htmlFor="goalAmount">Goal Amount</InputLabel>
                       <OutlinedInput
                         required
                         id="goalAmount"
-                        label="goalAmount"
+                        type="number"
                         startAdornment={<InputAdornment position="start">$</InputAdornment>}
                         endAdornment={<InputAdornment position="end">USD</InputAdornment>}
+                        value={goalAmount}
+                        onChange={(event) => setGoalAmount(event.target.value)}
                     />
                   </FormControl>
                 </Grid>
@@ -155,9 +158,6 @@ export function CreateFundraiserForm() {
                     />
                   </Grid>
                 </Grid>
-              </Box>
-            </Paper>
-          </Box>
           <Box display="flex" justifyContent="flex-end" alignItems="flex-end">
             <Button
               type="submit"
@@ -167,6 +167,9 @@ export function CreateFundraiserForm() {
             >
               Create
             </Button>
+          </Box>
+              </Box>
+            </Paper>
           </Box>
         </Container>
       </ThemeProvider>

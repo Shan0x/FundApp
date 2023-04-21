@@ -11,16 +11,21 @@ export class Layout extends Component {
     return (
       <div
         style={{
+          height: "100vh",
           backgroundColor: "#B5E3BB",
-          padding: 40
+          padding: "40px",
+          flex: "auto",
+          justifyContent: "center",
+          alignItems: "center",
+          overflow: "auto",
         }}>
         <div
           style={{
-            height: "auto",
+            minHeight: "100%",
             borderRadius: "20px",
             backgroundColor: "aliceblue",
-            paddingBottom: '20px',
-            
+            padding: "40px",
+            overflow: "auto",
           }}>
           <NavMenu />
           <Container style={{ height: "100%" }}>

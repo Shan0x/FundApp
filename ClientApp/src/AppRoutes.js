@@ -30,7 +30,7 @@ const AppRoutes = [
     element: <Donate />
   },
   {
-    path: '/u/home',
+    path: '/u/dashboard',
     element: <UserDashboard />
   },
   {
@@ -44,7 +44,7 @@ const AppRoutes = [
   {
     path: '/forgot-password',
     element: <ForgotPassword />
-  },
+  }
 
 ];
 

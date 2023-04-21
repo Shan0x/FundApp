@@ -4,6 +4,7 @@
  * */
 import React, { Component } from 'react';
 import { FundraisersList } from './FundraisersList'
+import { Box } from '@mui/material'
 
 export class Fundraisers extends Component {
   static displayName = Fundraisers.name;
@@ -17,7 +18,9 @@ export class Fundraisers extends Component {
       <div>
         <h1>
           Browse Fundraisers
-          <FundraisersList />
+          <Box sx={{ py: 4  }}>
+            <FundraisersList />
+          </Box>
         </h1>
       </div>
     );

@@ -29,15 +29,19 @@ export function UserInfo() {
   useEffect(() => {
     // Get the user ID from the cookie.
     const userID = getCookie("UserID");
-    axios
-      .get("/api/users/" + userID)
-      .then(function (response) {
-        // Set the user information in the state.
-        setUser(response.data);
-      })
-      .catch(function (error) {
-        console.error("Error getting user information:", error);
-      });
+    if (userID !== null) {
+      axios
+        .get("/api/users/" + userID)
+        .then(function (response) {
+          // Set the user information in the state.
+          setUser(response.data);
+        })
+        .catch(function (error) {
+          console.error("Error getting user information:", error);
+        });
+    } else {
+      setUser(null);
+    }
   }, []);
   // Return user state containing user's information
   return user;
