@@ -10,7 +10,7 @@ import {
   Box
 } from '@mui/material'
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
-import { Modal } from '../../../../node_modules/@mui/material/index';
+import { Modal } from '@mui/material/index';
 
 const style = {
   position: 'absolute',
