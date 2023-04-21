@@ -26,7 +26,7 @@ const style = {
   p: 4,
 };
 
-const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
+const LinearProgressWithLabel = styled(LinearProgress)(({ theme }) => ({
   height: 40,
   borderRadius: 20,
   [`&.${linearProgressClasses.colorPrimary}`]: {
@@ -39,8 +39,13 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
 }));
 
 //const FundraiserItem = ({ fundraiser }) => {
-export const FundraiserView = ({ fundraiser } ) => {
- 
+export const FundraiserView = ({ fundraiser, progress } ) => {
+  const [goalProgress, setGoalProgress] = React.useState(progress);
+
+  const handleNewDonation = () => {
+    // Update the goalProgress
+    setGoalProgress(progress / 100);
+  };
 
   return (
     <Box sx={style}>
@@ -48,7 +53,7 @@ export const FundraiserView = ({ fundraiser } ) => {
         {fundraiser.fundraiserName}
         </Typography>
         <Box sx={{ m: 2 }}>
-          <BorderLinearProgress variant="determinate" value={60 } />
+        <LinearProgressWithLabel variant="determinate" value={goalProgress} />
         </Box>
         <Box sx={{ m: 3 }}>
         <Typography id="fundraiser-modal-summary" sx={{ mt: 2 }}>

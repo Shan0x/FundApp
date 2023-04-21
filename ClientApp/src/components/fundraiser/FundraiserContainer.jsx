@@ -44,7 +44,7 @@ const FundraiserCard = ({ fundraiser, open, setOpen }) => {
         aria-labelledby="modal-fundraiser-view"
         aria-describedby="modal-fundraiser-modal"
       >
-        <FundraiserView fundraiser={fundraiser} />
+        <FundraiserView fundraiser={fundraiser} progress={20} />
       </Modal>
       <Card
         sx={{
@@ -65,6 +65,7 @@ const FundraiserCard = ({ fundraiser, open, setOpen }) => {
             }}>
               <Typography gutterBottom variant="h5" component="div"
                 sx={{
+                  fontSize: 21,
                   maxWidth: '80%', // set the maximum width to 80% of the container
                   overflow: 'hidden',
                   textOverflow: 'ellipsis',
