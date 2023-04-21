@@ -81,7 +81,14 @@ const FundraiserCard = ({ fundraiser, open, setOpen }) => {
               borderColor: 'primary.main',
               padding: '8px 2px'
             }}>
-              <Typography variant="body2" color="text.secondary">
+              <Typography variant="body2" color="text.secondary"
+                sx={{
+                  minHeight: 80,
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'wrap'
+                }}
+              >
                 {fundraiser.fundraiserSummary.length <= 60 ?
                   fundraiser.fundraiserSummary : (
                     <span>
