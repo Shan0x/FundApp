@@ -43,15 +43,34 @@ const FundraiserCard = ({ fundraiser,open,setOpen }) => {
             image="https://source.unsplash.com/random/?charity"
           />
           <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
-              {fundraiser.fundraiserName}
-            </Typography>
+            <Box sx={{
+              maxHeight: 35
+            }}>
+              <Typography gutterBottom variant="h5" component="div"
+                sx={{
+                  maxWidth: '80%', // set the maximum width to 80% of the container
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap'
+                }}
+              >
+                {fundraiser.fundraiserName}
+              </Typography>
+            </Box>
+
             <Box sx={{
               borderBottom: '1px solid',
               borderColor: 'primary.main',
               padding: '8px 2px'
             }}>
-              <Typography variant="body2" color="text.secondary">
+              <Typography variant="body2" color="text.secondary"
+                sx={{
+                  minHeight: 80,
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'wrap'
+                }}
+              >
                 {fundraiser.fundraiserSummary.length <= 60 ?
                   fundraiser.fundraiserSummary : (
                     <span>

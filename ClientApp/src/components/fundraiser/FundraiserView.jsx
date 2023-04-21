@@ -41,7 +41,7 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
 const FundraiserItem = () => {
   return (
     <Box sx={style}>
-      <Typography id="fundraiser-modal-title" variant="h5" component="h2">
+      <Typography id="fundraiser-modal" variant="h5" component="h2">
         Fundraiser name
       </Typography>
       <Box sx={{ m: 2 }}>
