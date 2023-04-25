@@ -8,6 +8,7 @@ import { CreateFundraisers } from "./components/fundraiser/CreateFundraiser";
 import { Settings } from "./components/user/Settings";
 import { ForgotPassword } from "./components/user/ForgotPassword";
 
+
 const AppRoutes = [
   {
     index: true,
@@ -22,7 +23,7 @@ const AppRoutes = [
     element: <Login />
   },
   {
-    path: 'browse/fundraisers',
+    path: '/browse/fundraisers',
     element: <Fundraisers />
   },
   {

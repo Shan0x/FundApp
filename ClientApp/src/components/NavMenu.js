@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { Component, useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Collapse,
   Navbar,
@@ -9,7 +9,7 @@ import {
   NavItem,
   NavLink
 } from "reactstrap";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import "./NavMenu.css";
 import { styled } from "@mui/material/styles";
 import SearchIcon from "@mui/icons-material/Search";
@@ -19,10 +19,10 @@ import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
 import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
+import { AuthContext } from "./user/AuthContext";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -105,15 +105,19 @@ const userAvatar = ({ user }) => {
     />
   );
 }
+
 const pages = [
   { name: "Fundraiser List", link: "/browse/fundraisers" },
   { name: "Dashboard", link: "/u/dashboard" },
   { name: "Settings", link: "/u/settings" },
-  { name: "Donate Page", link: "/donate" }
 ];
+
+
+
 
 export const NavMenu = () => {
   const [collapsed, setCollapsed] = useState(true)
+
   const toggleCollapse = () => {
     setCollapsed(!collapsed)
   }
@@ -127,12 +131,25 @@ export const NavMenu = () => {
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
+
+  //const { logout } = useContext(AuthContext);
+
+  //const handleLogout = () => {
+  //  // Logout the user
+  //  logout();
+  //  // Delete the user's cookie
+  //  document.cookie = 'userID=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/login;';
+  //  setUser(null);
+  //  // Redirect
+  //};
+
   return (
     <header>
       <Navbar
         className='navbar-expand-sm navbar-toggleable-sm ng-white box-shadow mb-3'
         container
-        light>
+        light
+      >
         <NavbarBrand tag={Link} to='/'>
           <img
             src='/fund.png'
@@ -166,9 +183,16 @@ export const NavMenu = () => {
               </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink tag={Link} className='text-dark' to='/login'>
-                Login
+              {user ? (
+                <NavLink tag={Link} className='text-dark' to='/'>
+                {/*<NavLink tag={Link} className='text-dark' onClick={handleLogout} to='/'>*/}
+                  Logout
                 </NavLink>
+              ) : (
+                  <NavLink tag={Link} className='text-dark' to='/login'>
+                  Login
+                </NavLink>
+              )}
               </NavItem>
             </ul>
             

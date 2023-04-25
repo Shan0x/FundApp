@@ -8,7 +8,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 // Takes the name of a cookie as a parameter and returns its value.
-function getCookie(name) {
+export function getCookie(name) {
   const cookies = document.cookie.split(';');
   for (let i = 0; i < cookies.length; i++) {
     const cookie = cookies[0].trim();
@@ -23,12 +23,11 @@ function getCookie(name) {
 }
 
 // Store user information in a state.
-export function UserInfo() {
+export function UserInfo(userID) {
   const [user, setUser] = useState({});
 
   useEffect(() => {
-    // Get the user ID from the cookie.
-    const userID = getCookie("UserID");
+
     if (userID !== null) {
       axios
         .get("/api/users/" + userID)
@@ -42,7 +41,7 @@ export function UserInfo() {
     } else {
       setUser(null);
     }
-  }, []);
+  }, [userID]);
   // Return user state containing user's information
   return user;
 }

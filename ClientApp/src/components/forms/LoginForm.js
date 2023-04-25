@@ -5,6 +5,8 @@
  * */
 
 import * as React from 'react';
+import { useContext } from "react";
+import { AuthContext } from "../user/AuthContext.js";
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {
@@ -35,6 +37,9 @@ const theme = createTheme({
 });
 
 export function LoginForm() {
+
+  const { login } = useContext(AuthContext);
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -55,7 +60,12 @@ export function LoginForm() {
       .catch(error => {
         console.error('Request failed:', error);
       });
+
+    // Login the user
+    login();
   };
+
+
 
   return (
     <ThemeProvider theme={theme}>
