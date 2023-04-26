@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @format
  * @fileoverview List of all fundraisers created.
  * @todo Implement pages.
@@ -44,7 +44,7 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   borderRadius: 20
 }));
 
-export const FundraisersList = (props = { fundraiserID: null }) => {
+export const FundraisersList = (props) => {
   const [fundraisers, setFundraisers] = useState([]);
   const [open, setOpen] = useState(false);
   const [openThankYouDialog, setOpenThankYouDialog] = useState(false);
@@ -59,6 +59,7 @@ export const FundraisersList = (props = { fundraiserID: null }) => {
   const [fundraiserID, setFundraiserID] = useState(props.fundraiserID);
 
   const handleDonate = async () => {
+    // Perform donation logic here
     const donationData = {
       donationAmount,
       fundraiserID,
@@ -337,7 +338,7 @@ export const FundraisersList = (props = { fundraiserID: null }) => {
                 borderRadius: "20px"
               }}>
               <Typography variant='h6' textAlign='center'>
-                You donated {donationAmount} to Fundraiser {fundraiserID}
+                You donated {donationAmount} to this Fundraiser {fundraiserID}
               </Typography>
               <Typography variant='h6' textAlign='center'>
                 We appreciate your support{donatorName}!
@@ -354,5 +355,4 @@ export const FundraisersList = (props = { fundraiserID: null }) => {
     </>
   );
 };
-
 export default FundraisersList;
