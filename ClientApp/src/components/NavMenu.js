@@ -1,6 +1,4 @@
-/** @format */
-
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import {
   Collapse,
   Navbar,
@@ -9,7 +7,7 @@ import {
   NavItem,
   NavLink
 } from "reactstrap";
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./NavMenu.css";
 import { styled } from "@mui/material/styles";
 import SearchIcon from "@mui/icons-material/Search";
@@ -22,7 +20,9 @@ import Menu from '@mui/material/Menu';
 import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import { AuthContext } from "./user/AuthContext";
+import { AuthProvider, useAuth } from './user/AuthContext';
+import axios from 'axios';
+
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -92,19 +92,6 @@ function stringAvatar(name) {
   };
 }
 
-const userAvatar = ({ user }) => {
-  if (!user) {
-    return (
-      <Avatar src="/broken-image.jpg" />
-    );
-  }
-  const userFullName = `${user.userFirstName} ${user.userLastName}`;
-  return (
-    <Avatar
-      {...stringAvatar(userFullName)}
-    />
-  );
-}
 
 const pages = [
   { name: "Fundraiser List", link: "/browse/fundraisers" },
@@ -113,15 +100,12 @@ const pages = [
 ];
 
 
-
-
 export const NavMenu = () => {
   const [collapsed, setCollapsed] = useState(true)
-
   const toggleCollapse = () => {
     setCollapsed(!collapsed)
   }
-  const user = UserInfo();
+  let user = UserInfo();
   const userFullName = user ? `${user.userFirstName} ${user.userLastName}` : '';
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -132,16 +116,23 @@ export const NavMenu = () => {
     setAnchorElNav(null);
   };
 
-  //const { logout } = useContext(AuthContext);
+  const { isLoggedIn, logout } = useAuth();
 
-  //const handleLogout = () => {
-  //  // Logout the user
-  //  logout();
-  //  // Delete the user's cookie
-  //  document.cookie = 'userID=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/login;';
-  //  setUser(null);
-  //  // Redirect
-  //};
+  const handleLogout = () => {
+    axios.post('https://localhost:44442/api/Logout')
+      .then(response => {
+        // handle successful logout
+        console.log('Logout successful.');
+        window.location.href = '/';
+        logout();
+      })
+      .catch(error => {
+        // handle logout error
+        console.error('Logout failed:', error);
+      });
+  };
+
+
 
   return (
     <header>
@@ -182,31 +173,33 @@ export const NavMenu = () => {
                 Create
               </NavLink>
             </NavItem>
-            <NavItem>
-              {user ? (
-                <NavLink tag={Link} className='text-dark' to='/'>
-                {/*<NavLink tag={Link} className='text-dark' onClick={handleLogout} to='/'>*/}
-                  Logout
-                </NavLink>
-              ) : (
+            <AuthProvider>
+              <NavItem>
+                {isLoggedIn ? (
+                  <NavLink tag={Link} className='text-dark' onClick={handleLogout} to='/'>
+                    Logout
+                  </NavLink>
+                ) : (
                   <NavLink tag={Link} className='text-dark' to='/login'>
-                  Login
-                </NavLink>
-              )}
+                    Login
+                  </NavLink>
+                )}
               </NavItem>
+            </AuthProvider>
+
             </ul>
             
           </Collapse>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenNavMenu} sx={{ p: 1 }}>
-                {user ? (
-                  <Avatar
-                    {...stringAvatar(userFullName)}
-                  />
-                ) : (
-                  <Avatar src="/broken-image.jpg" />
-                )}
+            <IconButton onClick={handleOpenNavMenu} sx={{ p: 1 }}>
+              {isLoggedIn ? (
+                <Avatar
+                  {...stringAvatar(userFullName)}
+                />
+              ) : (
+                <Avatar src="/broken-image.jpg" />
+              )}
               </IconButton>
             </Tooltip>
             <Menu

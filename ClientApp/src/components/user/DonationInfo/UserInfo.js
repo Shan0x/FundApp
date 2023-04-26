@@ -23,11 +23,12 @@ export function getCookie(name) {
 }
 
 // Store user information in a state.
-export function UserInfo(userID) {
+export function UserInfo() {
   const [user, setUser] = useState({});
 
   useEffect(() => {
-
+    // Get the user ID from the cookie.
+    const userID = getCookie("UserID");
     if (userID !== null) {
       axios
         .get("/api/users/" + userID)
@@ -41,7 +42,7 @@ export function UserInfo(userID) {
     } else {
       setUser(null);
     }
-  }, [userID]);
+  }, []);
   // Return user state containing user's information
   return user;
 }
