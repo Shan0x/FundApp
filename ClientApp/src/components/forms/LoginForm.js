@@ -5,6 +5,7 @@
  * */
 
 import * as React from 'react';
+import { useAuth, AuthProvider } from "../user/AuthContext.js";
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {
@@ -35,6 +36,10 @@ const theme = createTheme({
 });
 
 export function LoginForm() {
+
+
+  const { login } = useAuth();
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -51,11 +56,15 @@ export function LoginForm() {
         const userId = response.data.userId;
         console.log('Request successful!' + ' User ID:', userId);
         window.location.href = '/u/dashboard';
+        login();
       })
       .catch(error => {
         console.error('Request failed:', error);
       });
+
   };
+
+
 
   return (
     <ThemeProvider theme={theme}>
@@ -86,6 +95,7 @@ export function LoginForm() {
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
+            <AuthProvider>
             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
               <TextField
                 margin="normal"
@@ -133,7 +143,8 @@ export function LoginForm() {
                 </Grid>
                </Grid>
               </Grid>
-            </Box>
+              </Box>
+            </AuthProvider>
           </Box>
         </Grid>
       </Grid>

@@ -1,6 +1,4 @@
-/** @format */
-
-import React, { Component, useState } from "react";
+import React, { useState } from "react";
 import {
   Collapse,
   Navbar,
@@ -19,10 +17,12 @@ import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
 import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
+import { AuthProvider, useAuth } from './user/AuthContext';
+import axios from 'axios';
+
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -92,32 +92,20 @@ function stringAvatar(name) {
   };
 }
 
-const userAvatar = ({ user }) => {
-  if (!user) {
-    return (
-      <Avatar src="/broken-image.jpg" />
-    );
-  }
-  const userFullName = `${user.userFirstName} ${user.userLastName}`;
-  return (
-    <Avatar
-      {...stringAvatar(userFullName)}
-    />
-  );
-}
+
 const pages = [
   { name: "Fundraiser List", link: "/browse/fundraisers" },
   { name: "Dashboard", link: "/u/dashboard" },
   { name: "Settings", link: "/u/settings" },
-  { name: "Donate Page", link: "/donate" }
 ];
+
 
 export const NavMenu = () => {
   const [collapsed, setCollapsed] = useState(true)
   const toggleCollapse = () => {
     setCollapsed(!collapsed)
   }
-  const user = UserInfo();
+  let user = UserInfo();
   const userFullName = user ? `${user.userFirstName} ${user.userLastName}` : '';
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -127,12 +115,32 @@ export const NavMenu = () => {
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
+
+  const { isLoggedIn, logout } = useAuth();
+
+  const handleLogout = () => {
+    axios.post('https://localhost:44442/api/Logout')
+      .then(response => {
+        // handle successful logout
+        console.log('Logout successful.');
+        window.location.href = '/';
+        logout();
+      })
+      .catch(error => {
+        // handle logout error
+        console.error('Logout failed:', error);
+      });
+  };
+
+
+
   return (
     <header>
       <Navbar
         className='navbar-expand-sm navbar-toggleable-sm ng-white box-shadow mb-3'
         container
-        light>
+        light
+      >
         <NavbarBrand tag={Link} to='/'>
           <img
             src='/fund.png'
@@ -159,30 +167,49 @@ export const NavMenu = () => {
               <NavLink tag={Link} className='text-dark' to='/'>
                 Home
               </NavLink>
+
             </NavItem>
-            <NavItem>
-              <NavLink tag={Link} className='text-dark' to='/sign-up'>
-                Create
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink tag={Link} className='text-dark' to='/login'>
-                Login
+            <AuthProvider>
+              <NavItem>
+              {isLoggedIn ? (
+                <NavLink tag={Link} className='text-dark' to='/u/create'>
+                  Create
                 </NavLink>
+              ) : (
+                <NavLink tag={Link} className='text-dark' to='/sign-up'>
+                  Create
+                </NavLink>
+                  )}
               </NavItem>
+            </AuthProvider>
+ 
+            <AuthProvider>
+              <NavItem>
+                {isLoggedIn ? (
+                  <NavLink tag={Link} className='text-dark' onClick={handleLogout} to='/'>
+                    Logout
+                  </NavLink>
+                ) : (
+                  <NavLink tag={Link} className='text-dark' to='/login'>
+                    Login
+                  </NavLink>
+                )}
+              </NavItem>
+            </AuthProvider>
+
             </ul>
             
           </Collapse>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenNavMenu} sx={{ p: 1 }}>
-                {user ? (
-                  <Avatar
-                    {...stringAvatar(userFullName)}
-                  />
-                ) : (
-                  <Avatar src="/broken-image.jpg" />
-                )}
+            <IconButton onClick={handleOpenNavMenu} sx={{ p: 1 }}>
+              {isLoggedIn ? (
+                <Avatar
+                  {...stringAvatar(userFullName)}
+                />
+              ) : (
+                <Avatar src="/broken-image.jpg" />
+              )}
               </IconButton>
             </Tooltip>
             <Menu

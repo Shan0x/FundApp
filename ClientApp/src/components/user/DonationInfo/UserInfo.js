@@ -8,7 +8,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 // Takes the name of a cookie as a parameter and returns its value.
-function getCookie(name) {
+export function getCookie(name) {
   const cookies = document.cookie.split(';');
   for (let i = 0; i < cookies.length; i++) {
     const cookie = cookies[0].trim();
