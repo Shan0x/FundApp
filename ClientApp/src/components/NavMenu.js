@@ -167,12 +167,22 @@ export const NavMenu = () => {
               <NavLink tag={Link} className='text-dark' to='/'>
                 Home
               </NavLink>
+
             </NavItem>
-            <NavItem>
-              <NavLink tag={Link} className='text-dark' to='/sign-up'>
-                Create
-              </NavLink>
-            </NavItem>
+            <AuthProvider>
+              <NavItem>
+              {isLoggedIn ? (
+                <NavLink tag={Link} className='text-dark' to='/u/create'>
+                  Create
+                </NavLink>
+              ) : (
+                <NavLink tag={Link} className='text-dark' to='/sign-up'>
+                  Create
+                </NavLink>
+                  )}
+              </NavItem>
+            </AuthProvider>
+ 
             <AuthProvider>
               <NavItem>
                 {isLoggedIn ? (
