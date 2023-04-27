@@ -56,27 +56,46 @@ export const FundraisersList = (props) => {
   const [routingNumber, setRoutingNumber] = useState("");
   const [accountNumber, setAccountNumber] = useState("");
   const [donatorName, setDonatorName] = useState("");
-  const [fundraiserID, setFundraiserID] = useState(props.fundraiserID);
+  const [fundraiserID, setFundraiserID] = useState("");
+  const [updatedAmount, setUpdatedAmount] = useState(0);
+  const [selectedFundraiser, setSelectedFundraiser] = useState(null);
+
+ useEffect(() => {
+  const getFundraisers = async () => {
+    // Fetch all fundraisers from database.
+    try {
+      const response = await axios.get("/api/fundraiser");
+      setFundraisers(response.data);
+    } catch (error) {
+      console.error("Error getting fundraisers: ", error);
+    }
+  };
+    getFundraisers();
+  }, []);
+
 
   const handleDonate = async () => {
-    // Perform donation logic here
+    
     const donationData = {
       donationAmount,
-      fundraiserID,
-      donatorName
+      fundraiserID : selectedFundraiser.fundraiserID,
+      donatorName : selectedFundraiser.fundraiserName
     };
+     try {
+    const response = await axios.post("/api/donations", donationData);
+    console.log(response.data);
 
-    try {
-      const response = await axios.post("/api/donations", donationData);
-      debugger;
-      console.log(response.data);
+    
+      // Display the thank you dialog
       setOpen(false);
       setOpenThankYouDialog(true);
+      
+      
     } catch (error) {
       console.error("Error submitting donation: ", error);
     }
     console.log(
-      `Donation of ${`50`} made using ${
+      `Donation of ${donationAmount} made using ${
         paymentMethod === "credit" ? "credit card" : "bank account"
       }`
     );
@@ -84,7 +103,6 @@ export const FundraisersList = (props) => {
     setOpen(false);
     setOpenThankYouDialog(true);
   };
-
   const handlePaymentMethodChange = (event) => {
     setPaymentMethod(event.target.value);
   };
@@ -102,21 +120,7 @@ export const FundraisersList = (props) => {
       }
     }
   };
-
-  const getFundraisers = async () => {
-    // Fetch all fundraisers from database.
-    try {
-      const response = await axios.get("/api/fundraiser");
-      setFundraisers(response.data);
-    } catch (error) {
-      console.error("Error getting fundraisers: ", error);
-    }
-  };
-
-  useEffect(() => {
-    getFundraisers();
-  }, []);
-
+  
   return (
     <>
       <Grid container spacing={2}>
@@ -127,6 +131,7 @@ export const FundraisersList = (props) => {
                 maxHeight: "350px"
               }}>
               <FundraiserCard
+                setSelectedFundraiser={setSelectedFundraiser}
                 fundraiser={fundraiser}
                 open={open}
                 setOpen={setOpen}
