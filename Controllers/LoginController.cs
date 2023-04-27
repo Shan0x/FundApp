@@ -1,7 +1,11 @@
-﻿using FundApp.Models;
+using FundApp.Models;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.Scripting;
 using Npgsql;
 using System.Data;
+using static System.Net.WebRequestMethods;
+using System.Net;
 
 namespace FundApp.Controllers
 {
@@ -39,6 +43,5 @@ namespace FundApp.Controllers
             else
                 return Unauthorized();
         }
-
     }
 }
