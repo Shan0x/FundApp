@@ -1,4 +1,5 @@
 ﻿/**
+ * @format
  * @fileoverview List of all fundraisers created.
  * @todo Implement pages.
  */
@@ -12,6 +13,7 @@ import LinearProgress, {
 import {
   Button,
   Dialog,
+  Typography,
   InputAdornment,
   DialogActions,
   DialogContent,
@@ -42,7 +44,7 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   borderRadius: 20
 }));
 
-export const FundraisersList = () => {
+export const FundraisersList = (props) => {
   const [fundraisers, setFundraisers] = useState([]);
   const [open, setOpen] = useState(false);
   const [openThankYouDialog, setOpenThankYouDialog] = useState(false);
@@ -53,11 +55,47 @@ export const FundraisersList = () => {
   const [paymentMethod, setPaymentMethod] = useState("credit");
   const [routingNumber, setRoutingNumber] = useState("");
   const [accountNumber, setAccountNumber] = useState("");
+  const [donatorName, setDonatorName] = useState("");
+  const [fundraiserID, setFundraiserID] = useState("");
+  const [updatedAmount, setUpdatedAmount] = useState(0);
+  const [selectedFundraiser, setSelectedFundraiser] = useState(null);
 
-  const handleDonate = () => {
-    // Perform donation logic here
+ useEffect(() => {
+  const getFundraisers = async () => {
+    // Fetch all fundraisers from database.
+    try {
+      const response = await axios.get("/api/fundraiser");
+      setFundraisers(response.data);
+    } catch (error) {
+      console.error("Error getting fundraisers: ", error);
+    }
+  };
+    getFundraisers();
+  }, []);
+
+
+  const handleDonate = async () => {
+    
+    const donationData = {
+      donationAmount,
+      fundraiserID : selectedFundraiser.fundraiserID,
+      donatorName : selectedFundraiser.fundraiserName
+    };
+     try {
+    const response = await axios.post("/api/donations", donationData);
+    console.log(response.data);
+
+    
+      // Display the thank you dialog
+      setOpen(false);
+      setOpenThankYouDialog(true);
+      
+      
+    } catch (error) {
+      console.error("Error submitting donation: ", error);
+    }
     console.log(
-      `Donation of ${`50`} made using ${
+      `Donation of ${donationAmount} made using ${
         paymentMethod === "credit" ? "credit card" : "bank account"
       }`
     );
@@ -65,7 +103,6 @@ export const FundraisersList = () => {
     setOpen(false);
     setOpenThankYouDialog(true);
   };
-
   const handlePaymentMethodChange = (event) => {
     setPaymentMethod(event.target.value);
   };
@@ -83,21 +120,7 @@ export const FundraisersList = () => {
       }
     }
   };
-
-  const getFundraisers = async () => {
-    // Fetch all fundraisers from database.
-    try {
-      const response = await axios.get("/api/fundraiser");
-      setFundraisers(response.data);
-    } catch (error) {
-      console.error("Error getting fundraisers: ", error);
-    }
-  };
-
-  useEffect(() => {
-    getFundraisers();
-  }, []);
-
+  
   return (
     <>
       <Grid container spacing={2}>
@@ -108,6 +131,7 @@ export const FundraisersList = () => {
                 maxHeight: "350px"
               }}>
               <FundraiserCard
+                setSelectedFundraiser={setSelectedFundraiser}
                 fundraiser={fundraiser}
                 open={open}
                 setOpen={setOpen}
@@ -296,27 +320,44 @@ export const FundraisersList = () => {
         </DialogActions>
       </Dialog>
       <Dialog
-          open={openThankYouDialog}
-          onClose={() => setOpenThankYouDialog(false)}
-          aria-labelledby='alert-dialog-title'
-          aria-describedby='alert-dialog-description'>
-          <DialogTitle id='alert-dialog-title'>
-            Thank you for your donation!
-          </DialogTitle>{" "}
-          <DialogContent>
-            <Stack>
-              <Box
-                sx={{
-                  width: 450,
-                  height: 200,
-                  backgroundColor: "grey",
-                  borderRadius: "20px"
-                }}></Box>
-            </Stack>
-          </DialogContent>
-        </Dialog>
+        open={openThankYouDialog}
+        onClose={() => setOpenThankYouDialog(false)}
+        aria-labelledby='alert-dialog-title'
+        aria-describedby='alert-dialog-description'
+        donationAmount={donationAmount}
+        donatorName={donatorName}>
+        <DialogTitle id='alert-dialog-title'>
+          Thank you for your donation!
+        </DialogTitle>{" "}
+        <DialogContent>
+          <Stack>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                width: 450,
+                height: 200,
+                backgroundColor: "grey",
+                borderRadius: "20px"
+              }}>
+              <Typography variant='h6' textAlign='center'>
+                You donated {donationAmount} to this Fundraiser {fundraiserID}
+              </Typography>
+              <Typography variant='h6' textAlign='center'>
+                We appreciate your support{donatorName}!
+              </Typography>
+            </Box>
+          </Stack>
+        </DialogContent>
+        <DialogActions>
+          <StyledButton onClick={() => setOpenThankYouDialog(false)}>
+            Close
+          </StyledButton>
+        </DialogActions>
+      </Dialog>
     </>
   );
 };
-
 export default FundraisersList;

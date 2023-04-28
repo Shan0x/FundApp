@@ -69,7 +69,7 @@ export const Settings = () => {
     axios
       .post(url, payload)
       .then((response) => {
-        navigate("/u/home");
+        window.location.reload();
         setNewEmail("");
         setNewPassword("");
         console.log(response.data);

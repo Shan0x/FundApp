@@ -10,8 +10,11 @@ import {
   Stack,
   TextField
 } from "@mui/material";
+import {UserInfo} from "./DonationInfo/UserInfo.js"
 
 const PersonalInformation = () => {
+  const user  = UserInfo()
+  console.log(user,"user")
   return (
     <Stack
       position='relative'
@@ -21,11 +24,13 @@ const PersonalInformation = () => {
       pt={8}
       width='70%'
       direction='column'
-      textAlign='left'>
-      <Stack direction='row' columnGap={5}>
-        <Stack>stack 1</Stack>
-        <Stack>stack 2</Stack>
-        <Stack>stack 3</Stack>
+      textAlign='left'
+      margin='0 auto'
+      >
+      <Stack direction='row' columnGap={5} >
+        <Stack>{user.userFirstName}</Stack>
+        <Stack>{user.userLastName}</Stack>
+        <Stack>{user.userEmail}</Stack>
       </Stack>
       <Button>Update</Button>
     </Stack>
