@@ -1,3 +1,4 @@
+/** @format */
 
 import { styled } from "@mui/material/styles";
 import Accordion from "@mui/material/Accordion";
@@ -5,28 +6,28 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Typography from "@mui/material/Typography";
- import {
+import {
   Dialog,
   DialogTitle,
   DialogContent,
   DialogContentText,
   DialogActions,
   Button,
-  Stack,TextField
+  Stack,
+  TextField
 } from "@mui/material";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 import SettingsIcon from "@mui/icons-material/Settings";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
- 
- 
- const StyledButton = styled(Button)(() => ({
-    borderRadius: "20px",
-    backgroundColor: "#B5E3BB",
-    color: "black",
-    fontSize: 12,
-    width: "85%",
-    margin: "0 auto"
-  }));
+
+const StyledButton = styled(Button)(() => ({
+  borderRadius: "20px",
+  backgroundColor: "#B5E3BB",
+  color: "black",
+  fontSize: 12,
+  width: "85%",
+  margin: "0 auto"
+}));
 
 const AccountSettings = ({
   setNewEmail,
@@ -55,11 +56,13 @@ const AccountSettings = ({
           aria-controls='panel1a-content'
           id='panel1a-header'>
           <Typography>
-            <b>Update Email</b>
+            <b>UPDATE EMAIL</b>
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <Typography>Enter your new email:</Typography>
+          <Typography>
+            <b>Enter your new email:</b>
+          </Typography>
           <TextField
             fullWidth
             lablel='Email'
@@ -70,7 +73,9 @@ const AccountSettings = ({
           />
         </AccordionDetails>
         <AccordionDetails>
-          <Typography>Re-Enter your new email:</Typography>
+          <Typography>
+            <b>Re-Enter your new email:</b>
+          </Typography>
           <TextField
             fullWidth
             lablel='New Email'
@@ -85,11 +90,13 @@ const AccountSettings = ({
           aria-controls='panel1a-content'
           id='panel1a-header'>
           <Typography>
-            <b>Update Password</b>
+            <b>UPDATE PASSWORD</b>
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <Typography>Enter your new password</Typography>
+          <Typography>
+            <b>Enter your new password:</b>
+          </Typography>
           <TextField
             fullWidth
             lablel='New Email'
@@ -102,7 +109,7 @@ const AccountSettings = ({
         </AccordionDetails>
         <AccordionDetails>
           <Typography sx={{ width: "60%", flexShrink: 0 }}>
-            Re-Enter your new password
+            <b>Re-Enter your new password:</b>
           </Typography>
           <TextField
             fullWidth
