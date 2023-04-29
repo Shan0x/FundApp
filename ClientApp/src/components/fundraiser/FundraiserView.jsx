@@ -91,18 +91,31 @@ export const FundraiserView = ({ fundraiser, progress, setOpen, setSelectedFundr
           <br />
           {fundraiser.fundraiserSummary }
         </Typography>
-        <Button
-          onClick={() => {
-            setOpen(!open);
-            setSelectedFundraiser(fundraiser);
-          }}
-          size='med'
-          color='secondary'>
-          Donate
-        </Button>
-        <Box bgcolor="#F589A3" borderRadius='20px' height='2px' pt="10px">
-                {creator && <p style={{ margin:'0 8px 0 0' }}>Fundraiser started by: {creator.userName}</p>}
+        {/*<Button*/}
+        {/*  onClick={() => {*/}
+        {/*    setOpen(!open);*/}
+        {/*    setSelectedFundraiser(fundraiser);*/}
+        {/*  }}*/}
+        {/*  size='med'*/}
+        {/*  color='secondary'>*/}
+        {/*  Donate*/}
+        {/*</Button>*/}
+        <Box bgcolor="#F589A3" borderRadius='20px' height='1px'>
+          <Grid container spacing={2} alignItems="flex-end" justifyContent="flex-end" p='2px'>
+            <Grid item>
+              <Grid container alignItems='center'>
+                {creator && <p style={{ margin: '0 8px 0 0' }}>Fundraiser started by: {creator.userFirstName} {creator.userLastName}</p>}
+                <Avatar
+                  {...stringAvatar(creator?.userFirstName + " " + creator?.userLastName)}
+                />
+              </Grid>
+
+            </Grid>
+
+          </Grid>
         </Box>
+      </Box>
+
     </Box>
   )
 };
