@@ -42,7 +42,7 @@ const LinearProgressWithLabel = styled(LinearProgress)(({ theme }) => ({
   },
 }));
 
-export const FundraiserView = ({ fundraiser, progress } ) => {
+export const FundraiserView = ({ fundraiser, progress, setOpen, setSelectedFundraiser } ) => {
   const [goalProgress, setGoalProgress] = React.useState(progress);
   const [creator, setCreator] = useState();
 
@@ -78,27 +78,28 @@ export const FundraiserView = ({ fundraiser, progress } ) => {
         <Box sx={{ m: 2 }}>
         <LinearProgressWithLabel variant="determinate" value={goalProgress} />
         </Box>
-        <Box sx={{ m: 3 }}>
-        <Typography id="fundraiser-modal-summary" sx={{ m: 2 }}>
-          Progress: {progress} <br />
-          Goal: {fundraiser.fundraiserGoalAmount}
+        <Box sx={{ m: 3, pb: 3 }}>
+        <Typography id="fundraiser-modal-summary" sx={{ m: 2, pb: 2 }}>
+          Progress: ${progress}
+          <br />
+          Goal: ${fundraiser.fundraiserGoalAmount}
           <br />
           {fundraiser.fundraiserSummary }
         </Typography>
-        <Button
-          onClick={() => {
-            setOpen(!open);
-            setSelectedFundraiser(fundraiser);
-          }}
-          size='med'
-          color='secondary'>
-          Donate
-        </Button>
-        <Box bgcolor="#F589A3" borderRadius='20px' height='2px' pt="10px">
+        {/*<Button*/}
+        {/*  onClick={() => {*/}
+        {/*    setOpen(!open);*/}
+        {/*    setSelectedFundraiser(fundraiser);*/}
+        {/*  }}*/}
+        {/*  size='med'*/}
+        {/*  color='secondary'>*/}
+        {/*  Donate*/}
+        {/*</Button>*/}
+        <Box bgcolor="#F589A3" borderRadius='20px' height='1px'>
           <Grid container spacing={2} alignItems="flex-end" justifyContent="flex-end" p='2px'>
             <Grid item>
               <Grid container alignItems='center'>
-                {creator && <p style={{ margin:'0 8px 0 0' }}>Fundraiser started by: {creator.userName}</p>}
+                {creator && <p style={{ margin: '0 8px 0 0' }}>Fundraiser started by: {creator.userFirstName} {creator.userLastName}</p>}
                 <Avatar
                   {...stringAvatar(creator?.userFirstName + " " + creator?.userLastName)}
                 />
