@@ -43,7 +43,7 @@ namespace FundApp.Controllers
                         // Update totalDonation in Fundraiser table
                         using (NpgsqlCommand updateCmd = new NpgsqlCommand(
                             "UPDATE \"Fundraiser\" " +
-                            "SET \"totalDonation\" = \"totalDonation\" + @donationAmount " +
+                            "SET \"totalDonations\" = \"totalDonations\" + @donationAmount " +
                             "WHERE \"fundraiserID\" = @fundraiserID", conn))
                         {
                             updateCmd.Parameters.AddWithValue("@fundraiserID", donations.fundraiserID);
