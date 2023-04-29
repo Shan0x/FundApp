@@ -29,6 +29,7 @@ import {
   TextField
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { UserInfo } from "../user/DonationInfo/UserInfo";
 
 const StyledButton = styled(Button)(() => ({
   borderRadius: "20px",
@@ -55,10 +56,10 @@ export const FundraisersList = (props) => {
   const [paymentMethod, setPaymentMethod] = useState("credit");
   const [routingNumber, setRoutingNumber] = useState("");
   const [accountNumber, setAccountNumber] = useState("");
-  const [donatorName, setDonatorName] = useState("");
   const [fundraiserID, setFundraiserID] = useState("");
-  const [updatedAmount, setUpdatedAmount] = useState(0);
   const [selectedFundraiser, setSelectedFundraiser] = useState(null);
+
+
 
  useEffect(() => {
   const getFundraisers = async () => {
@@ -73,23 +74,22 @@ export const FundraisersList = (props) => {
     getFundraisers();
   }, []);
 
+  const user = UserInfo();
+  let donatorName = user ? user.userName : 'Anonymous';
 
   const handleDonate = async () => {
-    
     const donationData = {
       donationAmount,
-      fundraiserID : selectedFundraiser.fundraiserID,
-      donatorName : selectedFundraiser.fundraiserName
+      fundraiserID: selectedFundraiser.fundraiserID,
+      donatorName
     };
      try {
     const response = await axios.post("/api/donations", donationData);
     console.log(response.data);
-
     
       // Display the thank you dialog
       setOpen(false);
       setOpenThankYouDialog(true);
-      
       
     } catch (error) {
       console.error("Error submitting donation: ", error);
@@ -120,8 +120,9 @@ export const FundraisersList = (props) => {
       }
     }
   };
-  
+
   return (
+
     <>
       <Grid container spacing={2}>
         {fundraisers.slice(0, 5).map((fundraiser) => (
@@ -326,7 +327,12 @@ export const FundraisersList = (props) => {
         aria-describedby='alert-dialog-description'
         donationAmount={donationAmount}
         donatorName={donatorName}>
-        <DialogTitle id='alert-dialog-title'>
+        <DialogTitle id='alert-dialog-title'
+          sx={{
+            fontSize: 32,
+            textAlign: 'center'
+          }}
+        >
           Thank you for your donation!
         </DialogTitle>{" "}
         <DialogContent>
@@ -338,15 +344,13 @@ export const FundraisersList = (props) => {
                 justifyContent: "center",
                 alignItems: "center",
                 width: 450,
-                height: 200,
-                backgroundColor: "grey",
-                borderRadius: "20px"
+                height: 75,
               }}>
-              <Typography variant='h6' textAlign='center'>
-                You donated {donationAmount} to this Fundraiser {fundraiserID}
+              <Typography variant='h6' textAlign='center' >
+                You donated <span style={{ color: '#89d393', fontWeight: 'bold' }}>{donationAmount}</span> to {selectedFundraiser.fundraiserName}.
               </Typography>
               <Typography variant='h6' textAlign='center'>
-                We appreciate your support{donatorName}!
+                We appreciate your support <span style={{ color: '#F589A3', fontWeight: 'bold' }}>{donatorName}</span>!
               </Typography>
             </Box>
           </Stack>
