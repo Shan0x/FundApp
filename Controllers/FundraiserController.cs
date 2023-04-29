@@ -46,10 +46,8 @@ namespace FundApp.Controllers
             {
                 NpgsqlConnection conn = new NpgsqlConnection(_configuration.GetConnectionString("localconnection").ToString());
                 NpgsqlCommand cmd = new NpgsqlCommand(@"
-                SELECT F.*, COALESCE(SUM(D.""donationAmount""), 0) AS ""totalDonations""
-                FROM ""Fundraiser"" f
-                LEFT JOIN ""Donations"" D ON F.""fundraiserID"" = D.""fundraiserID""
-                GROUP BY F.""fundraiserID"";", conn);
+                SELECT * 
+                FROM ""Fundraiser""", conn);
 
                 conn.Open();
                 NpgsqlDataReader reader = cmd.ExecuteReader();
@@ -91,11 +89,9 @@ namespace FundApp.Controllers
         {
             NpgsqlConnection conn = new NpgsqlConnection(_configuration.GetConnectionString("localconnection").ToString());
             NpgsqlCommand cmd = new NpgsqlCommand(@"
-                SELECT F.*, COALESCE(SUM(D.""donationAmount""), 0) AS ""totalDonations""
-                FROM ""Fundraiser"" f
-                LEFT JOIN ""Donations"" D ON F.""fundraiserID"" = D.""fundraiserID""
-                WHERE F.""fundraiserID"" = @id
-                GROUP BY F.""fundraiserID"";", conn);
+                SELECT * 
+                FROM ""Fundraiser"" 
+                WHERE ""fundraiserID"" = @id", conn);
             cmd.Parameters.AddWithValue("id", id);
 
             conn.Open();
@@ -149,7 +145,7 @@ namespace FundApp.Controllers
                 return false;
             }
 
-            if(!checkUserFundraiserEntries(userID))
+            if (!checkUserFundraiserEntries(userID))
             {//User has reached fundraiser limit
                 return false;
             }
