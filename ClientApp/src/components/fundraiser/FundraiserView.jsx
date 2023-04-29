@@ -1,16 +1,20 @@
 ﻿/**
  * @fileoverview Modular view of entire fundraiser.
  * 
- * */
-import React from 'react';
+* */
+import React, { useEffect, useState } from 'react';
 import {
-  Card,
+  Grid,
   styled,
   Typography,
-  Box
+  Box,
+  Button
 } from '@mui/material'
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
+import axios from "axios";
 import { Modal } from '@mui/material/index';
+import { stringAvatar } from "../NavMenu.js";
+import Avatar from '@mui/material/Avatar';
 
 const style = {
   position: 'absolute',
@@ -38,28 +42,74 @@ const LinearProgressWithLabel = styled(LinearProgress)(({ theme }) => ({
   },
 }));
 
-//const FundraiserItem = ({ fundraiser }) => {
 export const FundraiserView = ({ fundraiser, progress } ) => {
   const [goalProgress, setGoalProgress] = React.useState(progress);
+  const [creator, setCreator] = useState();
 
   const handleNewDonation = () => {
     // Update the goalProgress
-    setGoalProgress(progress / 100);
+    setGoalProgress(progress / fundraiser.fundraiserGoalAmount);
   };
 
+  useEffect(() => {
+    const fetchCreator = async () => {
+      try {
+        const response = await axios.get(`/api/users/${fundraiser.userID}`);
+        setCreator(response.data);
+        console.log('Creator: ', creator.userName);
+      } catch (error) {
+        console.error("Error getting fundraiser creator: ", error);
+      }
+    };
+    fetchCreator();
+  }, [fundraiser.userID]);
+
   return (
+
     <Box sx={style}>
         <Typography id="fundraiser-modal" variant="h5" component="h2">
         {fundraiser.fundraiserName}
-        </Typography>
+      </Typography>
+      <Box display="flex" justifyContent="center">
+        <img src='https://source.unsplash.com/random/?charity'
+          alt="fundraiser-image"
+          style={{ maxWidth: '500px', maxHeight: '200px', width: 'auto', height: 'auto' }} />
+      </Box>
         <Box sx={{ m: 2 }}>
         <LinearProgressWithLabel variant="determinate" value={goalProgress} />
         </Box>
         <Box sx={{ m: 3 }}>
-        <Typography id="fundraiser-modal-summary" sx={{ mt: 2 }}>
+        <Typography id="fundraiser-modal-summary" sx={{ m: 2 }}>
+          Progress: {progress} <br />
+          Goal: {fundraiser.fundraiserGoalAmount}
+          <br />
           {fundraiser.fundraiserSummary }
         </Typography>
+        <Button
+          onClick={() => {
+            setOpen(!open);
+            setSelectedFundraiser(fundraiser);
+          }}
+          size='med'
+          color='secondary'>
+          Donate
+        </Button>
+        <Box bgcolor="#F589A3" borderRadius='20px' height='2px' pt="10px">
+          <Grid container spacing={2} alignItems="flex-end" justifyContent="flex-end" p='2px'>
+            <Grid item>
+              <Grid container alignItems='center'>
+                {creator && <p style={{ margin:'0 8px 0 0' }}>Fundraiser started by: {creator.userName}</p>}
+                <Avatar
+                  {...stringAvatar(creator?.userFirstName + " " + creator?.userLastName)}
+                />
+              </Grid>
+
+            </Grid>
+
+          </Grid>
         </Box>
+      </Box>
+
     </Box>
   )
 };

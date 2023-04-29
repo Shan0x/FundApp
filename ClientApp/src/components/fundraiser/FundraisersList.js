@@ -57,7 +57,7 @@ export const FundraisersList = (props) => {
   const [routingNumber, setRoutingNumber] = useState("");
   const [accountNumber, setAccountNumber] = useState("");
   const [fundraiserID, setFundraiserID] = useState("");
-  const [selectedFundraiser, setSelectedFundraiser] = useState(null);
+  const [selectedFundraiser, setSelectedFundraiser] = useState("");
 
 
 

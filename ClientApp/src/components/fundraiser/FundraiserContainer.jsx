@@ -46,7 +46,7 @@ const FundraiserCard = ({
         onClose={handleClose}
         aria-labelledby='modal-fundraiser-view'
         aria-describedby='modal-fundraiser-modal'>
-        <FundraiserView fundraiser={fundraiser} progress={20} />
+        <FundraiserView fundraiser={fundraiser} progress={fundraiser.totalDonations} />
       </Modal>
       <Card
         sx={{
