@@ -40,7 +40,21 @@ namespace FundApp.Controllers
 
                     if (queryExecutionStatus > 0)
                     {
-                        querySuccess = true;
+                        // Update totalDonation in Fundraiser table
+                        using (NpgsqlCommand updateCmd = new NpgsqlCommand(
+                            "UPDATE \"Fundraiser\" " +
+                            "SET \"totalDonations\" = \"totalDonations\" + @donationAmount " +
+                            "WHERE \"fundraiserID\" = @fundraiserID", conn))
+                        {
+                            updateCmd.Parameters.AddWithValue("@fundraiserID", donations.fundraiserID);
+                            updateCmd.Parameters.AddWithValue("@donationAmount", donations.donationAmount);
+
+                            int updateQueryExecutionStatus = updateCmd.ExecuteNonQuery();
+                            if (updateQueryExecutionStatus > 0)
+                            {
+                                querySuccess = true;
+                            }
+                        }
                     }
                 }
             }
