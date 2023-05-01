@@ -1,5 +1,4 @@
 ﻿/**
- * @format
  * @fileoverview List of all fundraisers created.
  * @todo Implement pages.
  */
