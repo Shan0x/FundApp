@@ -1,0 +1,35 @@
+CREATE TYPE Status AS ENUM ('ACTIVE', 'INACTIVE');
+
+CREATE TABLE Users (
+    userID smallserial PRIMARY KEY,
+    userName character varying(255) UNIQUE,
+    userPassword character varying(255),
+    userFirstName character varying(255),
+    userLastName character varying(255),
+    userEmail character varying(255) UNIQUE,
+    userDOB date
+);
+
+CREATE TABLE Payment (
+    userID smallserial REFERENCES Users(userID) PRIMARY KEY,
+    cardNumber smallint UNIQUE,
+    cardholderName character varying(255),
+    cvcNumber smallint,
+    expirationDate date
+);
+
+CREATE TABLE Fundraiser (
+    fundraiserID smallserial PRIMARY KEY,
+    userID smallserial REFERENCES Users(userID),
+    fundraiserStatus Status DEFAULT 'ACTIVE',
+    fundraiserSummary VARCHAR(255),
+    fundraiserGoalAmount money
+);
+
+CREATE TABLE Donations (
+    donationID smallserial PRIMARY KEY,
+    fundraiserID smallserial REFERENCES Fundraiser(fundraiserID),
+    donationAmount money,
+    donatorName varchar(255) DEFAULT 'Anonymous',
+    donationDate date DEFAULT CURRENT_DATE
+);
