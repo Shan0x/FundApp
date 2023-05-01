@@ -8,6 +8,7 @@ import {
   styled,
   Typography,
   Box,
+  Stack,
   Button
 } from '@mui/material'
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
@@ -75,14 +76,20 @@ export const FundraiserView = ({ fundraiser, progress, setOpen, setSelectedFundr
           alt="fundraiser-image"
           style={{ maxWidth: '500px', maxHeight: '200px', width: 'auto', height: 'auto' }} />
       </Box>
-        <Box sx={{ m: 2 }}>
-        <LinearProgressWithLabel variant="determinate" value={goalProgress} />
+      <Box sx={{ m: 2 }}>
+
+          <LinearProgressWithLabel variant="determinate" value={goalProgress} />
+        <Typography align="center" color="textSecondary"
+          sx={{ fontWeight: 'bold' }}
+        >
+          {`${goalProgress}%`}
+        </Typography>
         </Box>
         <Box sx={{ m: 3, pb: 3 }}>
-        <Typography id="fundraiser-modal-summary" sx={{ m: 2, pb: 2 }}>
-          Progress: ${progress}
+        <Typography alignItems="center" id="fundraiser-modal-summary" sx={{ m: 2, pb: 2 }}>
+          Progress: ${progress} out of 
+          Goal: ${fundraiser.fundraiserGoalAmount} reached.
           <br />
-          Goal: ${fundraiser.fundraiserGoalAmount}
           <br />
           {fundraiser.fundraiserSummary }
         </Typography>

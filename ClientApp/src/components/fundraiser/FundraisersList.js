@@ -151,29 +151,6 @@ export const FundraisersList = (props) => {
           Please Confirm your donation
         </DialogTitle>
         <DialogContent>
-          <Stack position='relative' justifyContent='center' mb={2}>
-            {" "}
-            <Stack
-              width='100%'
-              textAlign='center'
-              zIndex='10'
-              fontWeight='bold'
-              position='absolute'
-              margin='0 auto'>
-              60%
-            </Stack>{" "}
-            <BorderLinearProgress
-              variant='determinate'
-              value={60}
-              sx={{
-                borderRadius: "20px",
-                backgroundColor: "white",
-                "& .MuiLinearProgress-bar": {
-                  backgroundColor: "#B5E3BB"
-                }
-              }}
-            />
-          </Stack>
 
           <Stack direction='row' rowGap={2}>
             <Stack border={"1px solid black"} borderRadius={2} p={2} mr={2}>
