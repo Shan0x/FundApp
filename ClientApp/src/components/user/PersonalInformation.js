@@ -27,13 +27,22 @@ const PersonalInformation = () => {
       textAlign='left'
       margin='0 auto'
       >
-      <Stack direction='row' columnGap={5} >
-        <Stack>{user.userFirstName}</Stack>
-        <Stack>{user.userLastName}</Stack>
-        <Stack>{user.userEmail}</Stack>
-      </Stack>
-      <Button>Update</Button>
-    </Stack>
+      <Stack direction='column' spacing={2}>
+  <Stack direction='row' columnGap={5}>
+    <span style={{fontWeight: 'bold'}}>First Name:</span>
+    <span>{user.userFirstName}</span>
+  </Stack>
+  <Stack direction='row' columnGap={5}>
+    <span style={{fontWeight: 'bold'}}>Last Name:</span>
+    <span>{user.userLastName}</span>
+  </Stack>
+  <Stack direction='row' columnGap={5}>
+    <span style={{fontWeight: 'bold'}}>Email:</span>
+    <span>{user.userEmail}</span>
+  </Stack>
+</Stack>
+</Stack>
+
   );
 };
 
