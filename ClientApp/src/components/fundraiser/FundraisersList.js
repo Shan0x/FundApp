@@ -77,6 +77,7 @@ export const FundraisersList = (props) => {
   let donatorName = user ? user.userName : 'Anonymous';
 
   const handleDonate = async () => {
+    
     const donationData = {
       donationAmount,
       fundraiserID: selectedFundraiser.fundraiserID,

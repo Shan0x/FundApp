@@ -47,9 +47,9 @@ export const FundraiserView = ({ fundraiser, progress, setOpen, setSelectedFundr
   const [goalProgress, setGoalProgress] = React.useState(progress);
   const [creator, setCreator] = useState();
 
-  const handleNewDonation = () => {
+  const handleDonation = () => {
     // Update the goalProgress
-    setGoalProgress(progress / fundraiser.fundraiserGoalAmount);
+    setGoalProgress((progress / fundraiser.fundraiserGoalAmount) * 100);
   };
 
   useEffect(() => {
@@ -63,10 +63,10 @@ export const FundraiserView = ({ fundraiser, progress, setOpen, setSelectedFundr
       }
     };
     fetchCreator();
+    handleDonation();
   }, [fundraiser.userID]);
 
   return (
-
     <Box sx={style}>
         <Typography id="fundraiser-modal" variant="h5" component="h2">
         {fundraiser.fundraiserName}
