@@ -145,7 +145,7 @@ namespace FundApp.Controllers
                 return false;
             }
 
-            if(!checkUserFundraiserEntries(userID))
+            if (!checkUserFundraiserEntries(userID))
             {//User has reached fundraiser limit
                 return false;
             }
