@@ -1,8 +1,6 @@
 ﻿/**
  * @fileoverview: Registration form for new users using MaterialUI.
  * @todo
-* //const FormValidators = require("./validate");
-* //const validateRegistration = FormValidators.validateRegistration;
  * */
 
 import * as React from 'react';
@@ -31,17 +29,28 @@ const theme = createTheme({
 
 export function SignUpForm() {
   const [selectedDate, setSelectedDate] = useState(null);
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [score, setScore] = useState(null);
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [passwordsMatch, setPasswordsMatch] = useState(true);
+
+  const [emailValid, setEmailValid] = useState(false);
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
   };
 
-
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+
+
+    if (password !== confirmPassword) {
+      setPasswordsMatch(false);
+      return;
+    }
 
     // Create a new user object
     const newUser = {
@@ -50,7 +59,7 @@ export function SignUpForm() {
         userFirstName: data.get('firstName'),
         userLastName: data.get('lastName'),
         userEmail: data.get('email'),
-      userDOB: selectedDate ? selectedDate.format('YYYY-MM-DD') : null, // This will log the selected date in the format "YYYY-MM-DD"
+        userDOB: selectedDate ? selectedDate.format('YYYY-MM-DD') : null, // This will log the selected date in the format "YYYY-MM-DD"
     };
 
     // POST the user data to the server using axios
@@ -63,6 +72,22 @@ export function SignUpForm() {
         console.error(error);
       });
   };
+
+  const [passwordStrength, setPasswordStrength] = useState(0);
+
+  const handlePasswordChange = (event) => {
+    setPassword(event.target.value);
+    setPasswordsMatch(true);
+    setPasswordStrength(zxcvbn(event.target.value).score);
+  };
+
+  const handleConfirmPasswordChange = (event) => {
+    setConfirmPassword(event.target.value);
+    setPasswordsMatch(true);  // reset to true when confirm password changes
+  };
+
+
+
 
   return (
     <ThemeProvider theme={theme}>
@@ -97,7 +122,11 @@ export function SignUpForm() {
                   fullWidth
                   id="firstName"
                   label="First Name"
+                  value={firstName}
                   autoFocus
+                  onChange={(event) => {
+                    setFirstName(event.target.value);
+                  }}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -107,6 +136,10 @@ export function SignUpForm() {
                   label="Last Name"
                   name="lastName"
                   autoComplete="family-name"
+                  value={lastName}
+                  onChange={(event) => {
+                    setLastName(event.target.value);
+                  }}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -148,6 +181,13 @@ export function SignUpForm() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  value={email}
+                  onChange={(event) => {
+                    setEmail(event.target.value);
+                    setEmailValid(event.target.value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i) !== null);
+                  }}
+                  error={!emailValid}
+                  helperText={!emailValid && email !== '' ? 'Please enter a valid email address' : ''}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -159,6 +199,24 @@ export function SignUpForm() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                  value={password}
+                  onChange={handlePasswordChange}
+                  helperText={`Password strength: ${["Very weak", "Weak", "Okay", "Strong", "Very strong"][passwordStrength]}`}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="confirmPassword"
+                  label="Confirm Password"
+                  type="password"
+                  id="confirmPassword"
+                  autoComplete="new-password"
+                  value={confirmPassword}
+                  onChange={handleConfirmPasswordChange}
+                  error={!passwordsMatch}
+                  helperText={!passwordsMatch && "Passwords do not match"}
                 />
               </Grid>
             </Grid>

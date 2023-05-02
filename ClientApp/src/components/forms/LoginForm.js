@@ -36,9 +36,8 @@ const theme = createTheme({
 });
 
 export function LoginForm() {
-
-
   const { login } = useAuth();
+  const [error, setError] = React.useState('');
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -50,7 +49,6 @@ export function LoginForm() {
       userPassword: data.get('password')
     };
 
-
     axios.post('https://localhost:44442/api/Login', User)
       .then(response => {
         const userId = response.data.userId;
@@ -60,8 +58,8 @@ export function LoginForm() {
       })
       .catch(error => {
         console.error('Request failed:', error);
+        setError("Incorrect username or password");
       });
-
   };
 
 
@@ -108,14 +106,16 @@ export function LoginForm() {
                 autoFocus
               />
               <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                  error={Boolean(error)}
+                  helperText={error}
               />
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
